@@ -161,3 +161,10 @@ matters for the convergence behaviour.
 
 Reference polars and coordinates from
 [airfoiltools.com](http://airfoiltools.com/). MIT licensed.
+
+## A note on how this was built
+
+Built with Claude as a coding and research partner. I set the direction,
+reviewed every numerical result, and chased down the bugs the studies
+surfaced. Every number in this README was independently reverified before
+being written down.
