@@ -24,7 +24,7 @@ __all__ = ["REYNOLDS_AVAILABLE", "cache_dir", "airfoil_index", "load_airfoil",
            "load_xfoil_polar", "PolarKey"]
 
 BASE = "http://airfoiltools.com"
-_UA = "airfoil-vv/1.0 (engineering study; contact via github.com/urgoy)"
+_UA = "airfoil-vv/1.0 (engineering study; contact via github.com/ianstanojevic)"
 _DELAY = 0.5
 
 # The Reynolds numbers airfoiltools publishes XFOIL polars for.

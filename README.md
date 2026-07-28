@@ -8,12 +8,12 @@ validation campaign around it: 4,592 comparison points against XFOIL across 28
 sections and four Reynolds numbers, with the solver's own numerical uncertainty
 quantified first so the disagreement means something.
 
-Ian Stanojevic · [github.com/urgoy](https://github.com/urgoy)
+Ian Stanojevic · [github.com/ianstanojevic](https://github.com/ianstanojevic)
 
-[![tests](https://github.com/urgoy/airfoil-vv/actions/workflows/tests.yml/badge.svg)](https://github.com/urgoy/airfoil-vv/actions/workflows/tests.yml)
+[![tests](https://github.com/ianstanojevic/airfoil-vv/actions/workflows/tests.yml/badge.svg)](https://github.com/ianstanojevic/airfoil-vv/actions/workflows/tests.yml)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-**[Try the interactive solver in your browser →](https://urgoy.github.io/airfoil-vv/)**
+**[Try the interactive solver in your browser →](https://ianstanojevic.github.io/airfoil-vv/)**
 No install: pick an airfoil, sweep angle of attack, watch lift, drag, transition
 and separation update live on the same physics this study validates.
 
@@ -157,7 +157,7 @@ matters for the convergence behaviour.
 | `tests/` | physics invariants, closed-form limits, measured-data checks |
 | `studies/` | the three studies; each writes its own figures and JSON |
 | `report/` | generated results, figures and data |
-| `web/` | interactive browser front-end, live at [urgoy.github.io/airfoil-vv](https://urgoy.github.io/airfoil-vv/) |
+| `web/` | interactive browser front-end, live at [ianstanojevic.github.io/airfoil-vv](https://ianstanojevic.github.io/airfoil-vv/) |
 
 Reference polars and coordinates from
 [airfoiltools.com](http://airfoiltools.com/). MIT licensed.
