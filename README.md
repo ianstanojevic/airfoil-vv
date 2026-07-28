@@ -10,6 +10,9 @@ quantified first so the disagreement means something.
 
 Ian Stanojevic · [github.com/urgoy](https://github.com/urgoy)
 
+[![tests](https://github.com/urgoy/airfoil-vv/actions/workflows/tests.yml/badge.svg)](https://github.com/urgoy/airfoil-vv/actions/workflows/tests.yml)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 ![Convergence against the exact Joukowski solution](report/figures/fig1_verification.png)
 
 ---
