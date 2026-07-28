@@ -13,6 +13,10 @@ Ian Stanojevic · [github.com/urgoy](https://github.com/urgoy)
 [![tests](https://github.com/urgoy/airfoil-vv/actions/workflows/tests.yml/badge.svg)](https://github.com/urgoy/airfoil-vv/actions/workflows/tests.yml)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+**[Try the interactive solver in your browser →](https://urgoy.github.io/airfoil-vv/)**
+No install: pick an airfoil, sweep angle of attack, watch lift, drag, transition
+and separation update live on the same physics this study validates.
+
 ![Convergence against the exact Joukowski solution](report/figures/fig1_verification.png)
 
 ---
@@ -153,7 +157,7 @@ matters for the convergence behaviour.
 | `tests/` | physics invariants, closed-form limits, measured-data checks |
 | `studies/` | the three studies; each writes its own figures and JSON |
 | `report/` | generated results, figures and data |
-| `web/` | an interactive browser front-end to the same physics |
+| `web/` | interactive browser front-end, live at [urgoy.github.io/airfoil-vv](https://urgoy.github.io/airfoil-vv/) |
 
 Reference polars and coordinates from
 [airfoiltools.com](http://airfoiltools.com/). MIT licensed.
