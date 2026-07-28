@@ -36,8 +36,8 @@ an error it cannot otherwise see.
 **2. Drag error does not improve the same way. It plateaus near 11 %.**
 
 Once the flow is attached, refining the separation prediction buys nothing more.
-That floor is the price of one-way coupling — the boundary layer never feeds back
-into the pressure distribution — and no amount of attached flow removes it. It is
+That floor is the price of one-way coupling: the boundary layer never feeds back
+into the pressure distribution, and no amount of attached flow removes it. It is
 five times larger than the solver's own numerical uncertainty (2.6 %), so it is a
 modelling error, not a discretisation error.
 
@@ -52,7 +52,7 @@ about 2×10⁵ that is where the drag lives.
 Accepting a point only when the predicted separation is aft of 0.95c *and*
 Re ≥ 2×10⁵ splits the population cleanly: median drag error 11.7 % on accepted
 points against 27.8 % on rejected ones. Fitted on 27 sections and scored on the
-28th, held out — 89 % of accepted points fall inside the band the training
+28th, held out, 89 % of accepted points fall inside the band the training
 sections predicted.
 
 The band is wide (34 %). This is an honest limit, not a good number: the rule
@@ -86,7 +86,7 @@ Two things this exposed that would otherwise have been invisible:
 
 - Below N ≈ 256 the trailing-edge-clustered node distribution produces panels
   whose lengths differ by more than 1000:1 and the solution is unusable. The
-  failure is silent — the solver returns a plausible-looking number.
+  failure is silent: the solver returns a plausible-looking number.
 - Re-panelling onto chordwise stations biases the lift by up to 2.5 % on a cusped
   trailing edge, and **refining the panel count does not remove it**, because the
   near-degenerate panel pair at the cusp is reproduced at every resolution. It is
@@ -102,7 +102,7 @@ limited by the kink rather than by the method.
 Study 2 compares against XFOIL, which is another code. That bounds *consistency
 with an accepted method*, not agreement with reality, and it is labelled that way
 throughout. XFOIL is the right reference because it solves the same physics with
-one difference — its viscous-inviscid coupling is two-way and iterated — so every
+one difference: its viscous-inviscid coupling is two-way and iterated, so every
 number here estimates what the one-way approximation costs.
 
 The only true experimental comparisons are in
@@ -137,7 +137,7 @@ condition. The system is factorised once per geometry for freestream (1,0) and
 rather than a hundred.
 
 Drag comes from an integral boundary layer marched on the inviscid surface
-velocity — Thwaites laminar, Michel transition, Head's entrainment method
+velocity: Thwaites laminar, Michel transition, Head's entrainment method
 turbulent, Squire-Young for profile drag. Transition and separation are located
 between stations by interpolation rather than snapped to the nearest panel, which
 matters for the convergence behaviour.
