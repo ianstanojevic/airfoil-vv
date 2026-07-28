@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Airfoil — 2D potential flow</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#0b0e11; --panel:#12161a; --panel2:#171c21; --line:#232a31;
+    --ink:#c9d2da; --ink2:#8c98a4; --ink3:#5d6873;
+    --up:#3D8FD0;      /* upper surface — validated categorical pair (dark) */
+    --lo:#C0842A;      /* lower surface — validated categorical pair (dark) */
+    --warn:#d4783a; --ok:#4f9e6a;
+    --mono:ui-monospace,"Cascadia Mono","Consolas","DejaVu Sans Mono",monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;
+    display:flex;gap:10px;padding:10px;overflow:hidden;
+  }
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:3px;display:flex;flex-direction:column;min-height:0}
+  .box>h2{
+    font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink3);padding:9px 12px;border-bottom:1px solid var(--line);flex:0 0 auto;
+  }
+
+  /* ---------- left: parameters ---------- */
+  #params{flex:0 0 340px}
+  #paramBody{overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:14px}
+  #paramBody::-webkit-scrollbar{width:9px}
+  #paramBody::-webkit-scrollbar-thumb{background:#242c34;border-radius:5px}
+
+  .group{display:flex;flex-direction:column;gap:7px}
+  .glabel{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+
+  #search{
+    width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+    padding:6px 8px;border-radius:3px;font-family:var(--sans);font-size:12px;
+  }
+  #search:focus{outline:none;border-color:#33414e}
+  #list{
+    height:190px;overflow-y:auto;border:1px solid var(--line);border-radius:3px;background:var(--panel2);
+  }
+  #list::-webkit-scrollbar{width:9px}
+  #list::-webkit-scrollbar-thumb{background:#242c34;border-radius:5px}
+  .item{
+    display:flex;justify-content:space-between;gap:8px;padding:4px 8px;cursor:pointer;
+    border-bottom:1px solid #1a2026;line-height:1.35;
+  }
+  .item:hover{background:#1b2229}
+  .item.sel{background:#1e2a35;color:#e6eef5}
+  .item .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+  .item .tc{font-family:var(--mono);font-size:10px;color:var(--ink3);flex:0 0 auto}
+  .item.sel .tc{color:#8fb4d4}
+
+  .slider{display:flex;flex-direction:column;gap:3px}
+  .srow{display:flex;justify-content:space-between;align-items:baseline}
+  .srow label{font-size:12px;color:var(--ink2)}
+  .srow input[type=number]{
+    width:74px;text-align:right;background:var(--panel2);border:1px solid var(--line);
+    color:var(--ink);font-family:var(--mono);font-size:12px;padding:2px 5px;border-radius:2px;
+  }
+  .srow input[type=number]:focus{outline:none;border-color:#33414e}
+  input[type=range]{
+    -webkit-appearance:none;width:100%;height:3px;background:#252d35;border-radius:2px;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+    background:var(--ink2);border:2px solid var(--panel);cursor:pointer;
+  }
+  input[type=range]:active::-webkit-slider-thumb{background:var(--up)}
+
+  .toggles{display:flex;flex-direction:column;gap:5px}
+  .tg{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--ink2);font-size:12px}
+  .tg input{accent-color:var(--up);width:13px;height:13px;cursor:pointer}
+  .tg:hover{color:var(--ink)}
+
+  .hint{font-size:10.5px;color:var(--ink3);line-height:1.5}
+  .btn{
+    background:var(--panel2);border:1px solid var(--line);color:var(--ink2);
+    padding:5px 9px;border-radius:3px;cursor:pointer;font-family:var(--sans);font-size:11.5px;
+  }
+  .btn:hover{border-color:#33414e;color:var(--ink)}
+
+  /* ---------- right: results ---------- */
+  #results{flex:1 1 auto;min-width:0}
+  #resBody{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;padding:10px;gap:8px}
+  /* The canvases are absolutely positioned. Otherwise flexbox min-height:auto
+     lets the canvas height attribute grow the box, which grows the canvas… */
+  #flowWrap{flex:1 1 auto;position:relative;min-height:60px;border:1px solid var(--line);border-radius:2px;overflow:hidden;background:#080a0d}
+  #flow{position:absolute;inset:0;display:block;width:100%;height:100%;cursor:grab}
+  #flow.drag{cursor:grabbing}
+  #legend{
+    position:absolute;left:8px;bottom:8px;background:rgba(10,13,16,.82);border:1px solid var(--line);
+    border-radius:2px;padding:5px 7px;font-family:var(--mono);font-size:9.5px;color:var(--ink2);
+    display:flex;align-items:center;gap:6px;pointer-events:none;
+  }
+  #legend canvas{display:block;border:1px solid #2a323a}
+  #busy{
+    position:absolute;right:8px;top:8px;font-family:var(--mono);font-size:10px;color:var(--ink3);
+    background:rgba(10,13,16,.82);border:1px solid var(--line);border-radius:2px;padding:3px 6px;
+    opacity:0;transition:opacity .12s;pointer-events:none;
+  }
+  #busy.on{opacity:1}
+
+  #cpWrap{flex:0 0 186px;min-height:0;position:relative;border:1px solid var(--line);border-radius:2px;background:#0d1114;overflow:hidden}
+  #cp{position:absolute;inset:0;display:block;width:100%;height:100%}
+  #cpread{
+    position:absolute;right:8px;top:6px;font-family:var(--mono);font-size:10px;color:var(--ink3);
+  }
+
+  #nums{
+    flex:0 0 auto;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);border-radius:2px;
+  }
+  .cell{background:var(--panel);padding:5px 8px}
+  .cell .k{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
+  .cell .k i{display:inline-block;width:6px;height:6px;border-radius:1px;margin-right:4px;vertical-align:middle}
+  .cell .v{font-family:var(--mono);font-size:14px;color:#e2e9f0;margin-top:1px}
+  .cell .v small{font-size:10px;color:var(--ink3)}
+
+  #foot{flex:0 0 auto;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  #assume{font-size:10px;color:var(--ink3);font-family:var(--mono)}
+  #warn{font-size:11px;color:var(--warn);min-height:14px}
+  #warn.ok{color:var(--ink3)}
+  a{color:var(--ink3)}
+</style>
+</head>
+<body>
+
+<!-- ============ LEFT: PARAMETERS ============ -->
+<section class="box" id="params">
+  <h2>Parameters</h2>
+  <div id="paramBody">
+
+    <div class="group">
+      <div class="glabel">Airfoil</div>
+      <input id="search" type="text" placeholder="search (naca, eppler, clark …)" autocomplete="off" spellcheck="false">
+      <div id="list"></div>
+      <div class="hint">Arrow ↑/↓ changes airfoil. Drop your own <b>.dat</b> file
+        (Selig or Lednicer) anywhere on the window to load it.</div>
+    </div>
+
+    <div class="group" id="sliders"></div>
+
+    <div class="group">
+      <div class="glabel">Show</div>
+      <div class="toggles" id="toggles"></div>
+    </div>
+
+    <div class="group">
+      <div class="glabel">Field</div>
+      <div class="toggles" id="fieldmode"></div>
+    </div>
+
+    <div class="group">
+      <button class="btn" id="reset">Reset (R)</button>
+      <div class="hint">
+        Space pauses the particles. Drag in the flow view to pan,
+        scroll to zoom.<br><br>
+        Airfoil data from <a href="http://airfoiltools.com/" target="_blank" rel="noopener">airfoiltools.com</a>.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ RIGHT: RESULTS ============ -->
+<section class="box" id="results">
+  <h2>Results</h2>
+  <div id="resBody">
+    <div id="flowWrap">
+      <canvas id="flow"></canvas>
+      <div id="legend"><span id="legLo"></span><canvas id="legCv" width="110" height="8"></canvas><span id="legHi"></span><span id="legTx"></span></div>
+      <div id="busy">computing field…</div>
+    </div>
+    <div id="cpWrap"><canvas id="cp"></canvas><div id="cpread"></div></div>
+    <div id="nums"></div>
+    <div id="foot">
+      <div id="warn"></div>
+      <div id="assume">2D · steady · incompressible · one-way coupled integral boundary layer · no separated-flow model</div>
+    </div>
+  </div>
+</section>
+
+<script src="airfoils.js"></script>
+<script>
+"use strict";
+const TAU = Math.PI*2, I2PI = 1/TAU, D2R = Math.PI/180;
+const RHO = 1.225;
+
+/* =====================================================================
+   1. GEOMETRY
+   ===================================================================== */
+
+// Natural cubic spline through (xs, ys) with increasing xs.
+function spline(xs, ys){
+  const n = xs.length, y2 = new Float64Array(n), u = new Float64Array(n);
+  for(let i=1;i<n-1;i++){
+    const sig = (xs[i]-xs[i-1])/(xs[i+1]-xs[i-1]);
+    const p = sig*y2[i-1] + 2;
+    y2[i] = (sig-1)/p;
+    let t = (ys[i+1]-ys[i])/(xs[i+1]-xs[i]) - (ys[i]-ys[i-1])/(xs[i]-xs[i-1]);
+    u[i] = (6*t/(xs[i+1]-xs[i-1]) - sig*u[i-1])/p;
+  }
+  for(let k=n-2;k>=0;k--) y2[k] = y2[k]*y2[k+1] + u[k];
+  return function(x){
+    let lo=0, hi=n-1;
+    while(hi-lo>1){const m=(hi+lo)>>1; if(xs[m]>x) hi=m; else lo=m;}
+    const h = xs[hi]-xs[lo];
+    if(h<=1e-12) return ys[lo];
+    const a=(xs[hi]-x)/h, b=(x-xs[lo])/h;
+    return a*ys[lo] + b*ys[hi] + ((a*a*a-a)*y2[lo] + (b*b*b-b)*y2[hi])*h*h/6;
+  };
+}
+
+// Reads Selig OR Lednicer format. Returns {name, pts} in Selig ordering.
+function parseDat(text){
+  let name = "", nums = [];
+  for(const raw of text.split(/\r?\n/)){
+    const line = raw.trim();
+    if(!line) continue;
+    const p = line.replace(/,/g," ").split(/\s+/);
+    if(p.length>=2){
+      const a=parseFloat(p[0]), b=parseFloat(p[1]);
+      if(isFinite(a)&&isFinite(b)){ nums.push([a,b]); continue; }
+    }
+    if(!name) name = line;
+  }
+  if(nums.length<20) return null;
+
+  // A header line with point counts ("61. 61.") means Lednicer.
+  let counts = null;
+  if(Math.abs(nums[0][0])>1.5 || Math.abs(nums[0][1])>1.5){
+    counts = [Math.round(nums[0][0]), Math.round(nums[0][1])];
+    nums = nums.slice(1);
+  }
+  let pts;
+  if(counts || nums[0][0] < 0.5){          // Lednicer: two groups from the leading edge
+    let n1 = (counts && counts[0]+counts[1] <= nums.length) ? counts[0] : -1;
+    if(n1 < 0){
+      n1 = nums.length>>1;
+      for(let i=1;i<nums.length;i++)
+        if(nums[i][0] < nums[i-1][0] && nums[i][0] < 0.15){ n1 = i; break; }
+    }
+    const up = nums.slice(0,n1), lo = nums.slice(n1);
+    if(!up.length || !lo.length) return null;
+    pts = up.slice().reverse().concat(lo);
+  } else {
+    pts = nums;
+  }
+  // Drop duplicate points
+  const clean = [pts[0]];
+  for(let i=1;i<pts.length;i++){
+    const q = clean[clean.length-1];
+    if(Math.abs(pts[i][0]-q[0])>1e-9 || Math.abs(pts[i][1]-q[1])>1e-9) clean.push(pts[i]);
+  }
+  return {name: name||"loaded airfoil", pts: normalize(clean)};
+}
+
+// Leading edge to the origin, chord horizontal and scaled to 1.
+function normalize(pts){
+  const tex = 0.5*(pts[0][0]+pts[pts.length-1][0]);
+  const tey = 0.5*(pts[0][1]+pts[pts.length-1][1]);
+  let li=0, best=-1;
+  for(let i=0;i<pts.length;i++){
+    const d = (pts[i][0]-tex)**2 + (pts[i][1]-tey)**2;
+    if(d>best){best=d;li=i;}
+  }
+  const lx=pts[li][0], ly=pts[li][1];
+  const dx=tex-lx, dy=tey-ly, c=Math.hypot(dx,dy);
+  if(c<1e-9) return null;
+  const ca=dx/c, sa=dy/c, out=[];
+  for(const [x,y] of pts){
+    const ux=x-lx, uy=y-ly;
+    out.push([(ux*ca+uy*sa)/c, (-ux*sa+uy*ca)/c]);
+  }
+  return out;
+}
+
+// Splits into upper/lower surface, both with strictly increasing x.
+function splitSurfaces(pts){
+  let li=0;
+  for(let i=1;i<pts.length;i++) if(pts[i][0] < pts[li][0]) li=i;
+  // The leading edge is pinned to x=0. Points that end up numerically "ahead"
+  // of it (which happens when thickness is applied normal to a camber line
+  // with a steep nose) are dropped by the monotonicity requirement.
+  const mono = arr => {
+    const o=[[0, arr[0][1]]];
+    for(let i=1;i<arr.length;i++)
+      if(arr[i][0] > o[o.length-1][0] + 1e-7) o.push([arr[i][0], arr[i][1]]);
+    return o;
+  };
+  return { upper: mono(pts.slice(0,li+1).reverse()), lower: mono(pts.slice(li)) };
+}
+
+// Surface spline in ξ=√x. Near the leading edge y ~ √x, which a cubic spline
+// in x handles poorly (up to ~0.006c error on a 35-point file). In √x the curve
+// is nearly straight at the nose and the error halves — this matters, because
+// that is exactly where the suction peak sits.
+function surfaceSpline(surf){
+  const s = spline(surf.map(p=>Math.sqrt(p[0]>0?p[0]:0)), surf.map(p=>p[1]));
+  return x => s(Math.sqrt(x>0?x:0));
+}
+
+// Decomposes into camber line + thickness distribution (vertical convention,
+// same as XFOIL's GDES — so a scale of 1.0 reproduces the airfoil exactly).
+function decompose(pts, n){
+  const {upper, lower} = splitSurfaces(pts);
+  const su = surfaceSpline(upper);
+  const sl = surfaceSpline(lower);
+  const xs=new Float64Array(n+1), yc=new Float64Array(n+1), th=new Float64Array(n+1);
+  for(let i=0;i<=n;i++){
+    const x = 0.5*(1-Math.cos(Math.PI*i/n));
+    const yu = i===0 ? 0 : su(x), yl = i===0 ? 0 : sl(x);
+    xs[i]=x; yc[i]=0.5*(yu+yl); th[i]=Math.max(0, yu-yl);
+  }
+  let tmax=0, cmax=0;
+  for(let i=0;i<=n;i++){ tmax=Math.max(tmax,th[i]); cmax=Math.max(cmax,Math.abs(yc[i])); }
+  return {xs, yc, th, n, tmax, cmax};
+}
+
+// Builds the node list in CLOCKWISE order (trailing edge → lower surface →
+// leading edge → upper surface → trailing edge). Clockwise means the normal
+// "left of travel" points outward.
+function rebuild(dec, camberScale, thickScale){
+  const n=dec.n, xs=dec.xs;
+  const yu=new Float64Array(n+1), yl=new Float64Array(n+1);
+  for(let i=0;i<=n;i++){
+    const c = camberScale*dec.yc[i], t = thickScale*dec.th[i];
+    yu[i]=c+0.5*t; yl[i]=c-0.5*t;
+  }
+  // Close the trailing edge (sharp) — removes the ill-conditioned blunt base.
+  const yte = 0.5*(yu[n]+yl[n]); yu[n]=yte; yl[n]=yte;
+  const nd=[];
+  for(let i=n;i>=0;i--) nd.push([xs[i], yl[i]]);   // lower surface, x 1→0
+  for(let i=1;i<=n;i++) nd.push([xs[i], yu[i]]);   // upper surface, x 0→1
+  return nd;                                       // 2n panels, nd[0]==nd[2n]
+}
+
+// Analytic NACA 4-digit (thickness applied normal to the camber line) — used
+// by the validation tests.
+function nacaPoints(m, p, t, n){
+  m/=100; p/=10; t/=100;
+  const up=[], lo=[];
+  for(let i=0;i<=n;i++){
+    const x = 0.5*(1-Math.cos(Math.PI*i/n));
+    const yt = 5*t*(0.2969*Math.sqrt(x) - 0.1260*x - 0.3516*x*x + 0.2843*x*x*x - 0.1015*x*x*x*x);
+    let yc=0, dy=0;
+    if(m>0 && p>0){
+      if(x<p){ yc = m/(p*p)*(2*p*x - x*x);            dy = 2*m/(p*p)*(p-x); }
+      else   { yc = m/((1-p)**2)*((1-2*p)+2*p*x-x*x); dy = 2*m/((1-p)**2)*(p-x); }
+    }
+    const th=Math.atan(dy), s=Math.sin(th), c=Math.cos(th);
+    up.push([x - yt*s, yc + yt*c]);
+    lo.push([x + yt*s, yc - yt*c]);
+  }
+  return normalize(up.slice().reverse().concat(lo.slice(1)));   // Selig ordering
+}
+
+/* =====================================================================
+   2. PANEL METHOD — linear vortex strength, Kutta condition at the TE
+   =====================================================================
+   Derivation (counterclockwise-positive γ, panel 0→L in local coordinates):
+     A = θ₂-θ₁,  B = ln(r₁/r₂)
+     u = -(1/2π)∫γ(ξ)·y/R² dξ ,  v = (1/2π)∫γ(ξ)·(x-ξ)/R² dξ
+   Self-influence at the panel's own control point: A=π, B=0 ⇒ Vt = -γ/2.  */
+
+const _inf = new Float64Array(4);
+function influence(px, py, x1, y1, ct, st, L, self){
+  const dx=px-x1, dy=py-y1;
+  const xp = dx*ct + dy*st, yp = -dx*st + dy*ct;
+  let A, B;
+  if(self){ A = Math.PI; B = 0; }
+  else{
+    const r1 = Math.max(Math.hypot(xp,yp), 1e-12);
+    const r2 = Math.max(Math.hypot(xp-L,yp), 1e-12);
+    A = Math.atan2(yp, xp-L) - Math.atan2(yp, xp);
+    B = Math.log(r1/r2);
+  }
+  const Pa = (xp*A - yp*B)/L, Pb = (xp*B - L + yp*A)/L;
+  const u1 = -(A-Pa)*I2PI, u2 = -Pa*I2PI;
+  const v1 =  (B-Pb)*I2PI, v2 =  Pb*I2PI;
+  _inf[0] = u1*ct - v1*st;  _inf[1] = u1*st + v1*ct;
+  _inf[2] = u2*ct - v2*st;  _inf[3] = u2*st + v2*ct;
+}
+
+function luDecomp(M, n){
+  const piv = new Int32Array(n);
+  for(let i=0;i<n;i++) piv[i]=i;
+  for(let k=0;k<n;k++){
+    let p=k, mx=Math.abs(M[k*n+k]);
+    for(let i=k+1;i<n;i++){ const v=Math.abs(M[i*n+k]); if(v>mx){mx=v;p=i;} }
+    if(p!==k){
+      for(let j=0;j<n;j++){ const t=M[k*n+j]; M[k*n+j]=M[p*n+j]; M[p*n+j]=t; }
+      const t=piv[k]; piv[k]=piv[p]; piv[p]=t;
+    }
+    const d=M[k*n+k];
+    if(Math.abs(d)<1e-14) continue;
+    for(let i=k+1;i<n;i++){
+      const f=M[i*n+k]/d; M[i*n+k]=f;
+      for(let j=k+1;j<n;j++) M[i*n+j]-=f*M[k*n+j];
+    }
+  }
+  return piv;
+}
+function luSolve(M, piv, n, b){
+  const x=new Float64Array(n);
+  for(let i=0;i<n;i++) x[i]=b[piv[i]];
+  for(let i=1;i<n;i++){ let s=x[i]; for(let j=0;j<i;j++) s-=M[i*n+j]*x[j]; x[i]=s; }
+  for(let i=n-1;i>=0;i--){ let s=x[i]; for(let j=i+1;j<n;j++) s-=M[i*n+j]*x[j]; x[i]=s/M[i*n+i]; }
+  return x;
+}
+
+// Solves the geometry for freestream (1,0) and (0,1). Every angle of attack
+// then comes for free by superposition: γ(α) = cosα·γA + sinα·γB.
+function solveGeometry(nodes){
+  const N = nodes.length-1, M1 = N+1;
+  const cx=new Float64Array(N), cy=new Float64Array(N);
+  const nx=new Float64Array(N), ny=new Float64Array(N);
+  const tx=new Float64Array(N), ty=new Float64Array(N), len=new Float64Array(N);
+  for(let i=0;i<N;i++){
+    const dx=nodes[i+1][0]-nodes[i][0], dy=nodes[i+1][1]-nodes[i][1];
+    const L=Math.hypot(dx,dy) || 1e-12;
+    len[i]=L; tx[i]=dx/L; ty[i]=dy/L;
+    nx[i]=-ty[i]; ny[i]=tx[i];               // left of travel = outward
+    cx[i]=0.5*(nodes[i][0]+nodes[i+1][0]);
+    cy[i]=0.5*(nodes[i][1]+nodes[i+1][1]);
+  }
+  const M = new Float64Array(M1*M1);
+  const T = new Float64Array(N*M1);
+  const bA = new Float64Array(M1), bB = new Float64Array(M1);
+  for(let i=0;i<N;i++){
+    for(let j=0;j<N;j++){
+      influence(cx[i], cy[i], nodes[j][0], nodes[j][1], tx[j], ty[j], len[j], i===j);
+      M[i*M1+j]   += _inf[0]*nx[i] + _inf[1]*ny[i];
+      M[i*M1+j+1] += _inf[2]*nx[i] + _inf[3]*ny[i];
+      T[i*M1+j]   += _inf[0]*tx[i] + _inf[1]*ty[i];
+      T[i*M1+j+1] += _inf[2]*tx[i] + _inf[3]*ty[i];
+    }
+    bA[i] = -nx[i];
+    bB[i] = -ny[i];
+  }
+  M[N*M1+0] = 1; M[N*M1+N] = 1;              // Kutta: γ_0 + γ_N = 0
+  const piv = luDecomp(M, M1);
+  const gA = luSolve(M, piv, M1, bA), gB = luSolve(M, piv, M1, bB);
+
+  const vtA=new Float64Array(N), vtB=new Float64Array(N);
+  for(let i=0;i<N;i++){
+    let a=tx[i], b=ty[i];
+    for(let k=0;k<M1;k++){ const t=T[i*M1+k]; a+=t*gA[k]; b+=t*gB[k]; }
+    vtA[i]=a; vtB[i]=b;
+  }
+  return {N, nodes, cx, cy, nx, ny, tx, ty, len, gA, gB, vtA, vtB};
+}
+
+// Evaluates forces and the surface distribution at a given angle of attack.
+function evaluate(S, alphaDeg){
+  const a = alphaDeg*D2R, ca=Math.cos(a), sa=Math.sin(a), N=S.N;
+  const vt=new Float64Array(N), cp=new Float64Array(N);
+  let Cx=0, Cy=0, Mz=0, vmax=0, cpmin=1;
+  for(let i=0;i<N;i++){
+    const v = ca*S.vtA[i] + sa*S.vtB[i];
+    vt[i]=v;
+    const c = 1 - v*v;
+    cp[i]=c;
+    const dFx = -c*S.nx[i]*S.len[i], dFy = -c*S.ny[i]*S.len[i];
+    Cx += dFx; Cy += dFy;
+    Mz += (S.cx[i]-0.25)*dFy - S.cy[i]*dFx;
+    if(Math.abs(v)>vmax) vmax=Math.abs(v);
+    if(c<cpmin) cpmin=c;
+  }
+  return {
+    alpha: alphaDeg, vt, cp,
+    Cl: Cy*ca - Cx*sa,
+    Cdp: Cx*ca + Cy*sa,          // d'Alembert ⇒ should be ≈ 0
+    Cm: -Mz,                     // nose-up positive
+    vmax, cpmin
+  };
+}
+
+/* =====================================================================
+   2b. BOUNDARY LAYER — integral method on top of the inviscid solution
+   =====================================================================
+   Potential flow gives exactly zero drag (d'Alembert). The drag comes from
+   the boundary layer, solved here on the inviscid velocity distribution:
+     laminar     Thwaites (closed form)
+     transition  Michel's criterion, or forced at laminar separation
+     turbulent   Head's entrainment method + Ludwieg–Tillmann for cf
+     drag        Squire–Young on the momentum thickness
+   This is one-way coupling: the boundary layer does not feed back into Cp.
+   That is an approximation — XFOIL iterates the coupling. Close to separation
+   the error grows large, and the app says so.                              */
+
+const NU_AIR = 1.46e-5;          // kinematic viscosity, air at 15 °C [m²/s]
+
+function thwaitesH(l){
+  if(l>0) return 2.61 - 3.75*l + 5.24*l*l;
+  return 2.088 + 0.0731/(l + 0.14);
+}
+function h1FromH(H){
+  return H<=1.6 ? 3.3 + 0.8234*Math.pow(Math.max(0.01,H-1.1), -1.287)
+                : 3.3 + 1.5501*Math.pow(Math.max(0.01,H-0.6778), -3.064);
+}
+function hFromH1(H1){
+  const h1=Math.max(3.05,H1);
+  return h1>=5.3 ? 1.1 + 0.86*Math.pow(h1-3.3, -0.777)
+                 : 0.6778 + 1.1536*Math.pow(h1-3.3, -0.326);
+}
+
+// Stations along one surface, arc length measured from the stagnation point
+// (x0,y0). The two marches must NOT share a starting station: the stagnation
+// point lies between two control points, so a shared start puts one station on
+// the wrong side and the lower-surface march can collapse.
+function blStations(S, ev, i0, dir, x0, y0){
+  const s=[], ue=[], idx=[];
+  let acc=0, px=x0, py=y0;
+  for(let i=i0; i>=0 && i<S.N; i+=dir){
+    acc += Math.hypot(S.cx[i]-px, S.cy[i]-py);
+    px=S.cx[i]; py=S.cy[i];
+    s.push(acc); ue.push(Math.abs(ev.vt[i])); idx.push(i);
+  }
+  return {s, ue, idx};
+}
+
+function marchBL(stn, Re){
+  const {s, ue} = stn, n = s.length;
+  const th=new Float64Array(n), H=new Float64Array(n);
+  let trans=-1, sep=-1;
+  const dud = k => k===0     ? (ue[1]-ue[0])/Math.max(1e-9,s[1]-s[0])
+                 : k===n-1   ? (ue[n-1]-ue[n-2])/Math.max(1e-9,s[n-1]-s[n-2])
+                 :             (ue[k+1]-ue[k-1])/Math.max(1e-9,s[k+1]-s[k-1]);
+
+  // --- laminar: Thwaites, θ² = 0.45/(Re·Ue⁶)·∫Ue⁵ds ---
+  // The integral starts at the stagnation point (s=0, Ue=0), which sits s[0]
+  // ahead of the first control point.
+  let I = 0.5*Math.pow(ue[0],5)*s[0];
+  th[0]=Math.sqrt(0.45*I/(Re*Math.pow(Math.max(1e-6,ue[0]),6)));
+  H[0]=2.24;
+  let k=1;
+  for(; k<n; k++){
+    I += 0.5*(Math.pow(ue[k],5)+Math.pow(ue[k-1],5))*(s[k]-s[k-1]);
+    const u=Math.max(1e-6,ue[k]);
+    th[k]=Math.sqrt(0.45*I/(Re*Math.pow(u,6)));
+    const lam=Re*th[k]*th[k]*dud(k);
+    H[k]=thwaitesH(Math.max(-0.0999,Math.min(0.25,lam)));
+    const ret=Re*u*th[k], rex=Re*u*s[k];
+    if(lam < -0.09){ trans=k; break; }                                   // laminar separation
+    if(rex>1e4 && ret > 1.174*(1+22400/rex)*Math.pow(rex,0.46)){ trans=k; break; }  // Michel
+  }
+
+  // --- turbulent: Head's entrainment ---
+  if(trans>=0 && trans<n-1){
+    let t=th[trans], h=Math.min(2.0,Math.max(1.35,H[trans])), h1=h1FromH(h);
+    for(k=trans+1; k<n; k++){
+      const ds=s[k]-s[k-1], M=4, dss=ds/M, du=dud(k);
+      for(let m=0;m<M;m++){
+        const u=Math.max(1e-6, ue[k-1]+(ue[k]-ue[k-1])*(m+0.5)/M);
+        const ret=Math.max(200, Re*u*t);
+        const cf=0.246*Math.pow(10,-0.678*h)*Math.pow(ret,-0.268);
+        const dt=cf/2 - (h+2)*t*du/u;
+        const dh1=(0.0306*Math.pow(Math.max(0.02,h1-3),-0.6169) - h1*dt)/Math.max(1e-9,t);
+        t=Math.max(1e-9, t+dt*dss);
+        h1=Math.max(3.05, h1+dh1*dss);
+        h=hFromH1(h1);
+      }
+      th[k]=t; H[k]=h;
+      if(h>2.4){ sep=k; break; }                                          // turbulent separation
+    }
+  }
+  return {th, H, trans, sep, n};
+}
+
+function boundaryLayer(S, ev, Re){
+  // stagnation point = the sign change in vt closest to the leading edge
+  let iStag=S.N>>1, best=1e9;
+  for(let i=1;i<S.N;i++){
+    if(ev.vt[i-1]*ev.vt[i] < 0){
+      const d=Math.hypot(S.cx[i], S.cy[i]);
+      if(d<best){ best=d; iStag=i; }
+    }
+  }
+  iStag=Math.max(1,Math.min(S.N-2,iStag));
+  // The stagnation point is interpolated between control points iStag-1 and
+  // iStag; the upper surface marches from iStag upward, the lower from
+  // iStag-1 downward, so no station is used on both sides.
+  const va=Math.abs(ev.vt[iStag-1]), vb=Math.abs(ev.vt[iStag]);
+  const f=va+vb>1e-12 ? va/(va+vb) : 0.5;
+  const xSt=S.cx[iStag-1]+f*(S.cx[iStag]-S.cx[iStag-1]);
+  const ySt=S.cy[iStag-1]+f*(S.cy[iStag]-S.cy[iStag-1]);
+
+  const out={cd:0, iStag, xStag:xSt, sides:{}, separated:false};
+  for(const [name,dir,i0] of [["upper",+1,iStag],["lower",-1,iStag-1]]){
+    const stn=blStations(S,ev,i0,dir,xSt,ySt);
+    const m=marchBL(stn,Re);
+    // Squire–Young is evaluated at the last station with x/c ≤ 0.95. The sharp
+    // trailing edge is a stagnation point in potential flow, so Ue→0 over the
+    // last few panels and the formula would give Cd→0 there.
+    let e=-1, kEnd = m.sep>=0 ? m.sep : m.n-1;
+    for(let k=0;k<=kEnd;k++) if(S.cx[stn.idx[k]]<=0.95 && m.th[k]>0) e=k;
+    const side={
+      cd: e<0 ? 0 : 2*m.th[e]*Math.pow(Math.max(1e-6,stn.ue[e]),(m.H[e]+5)/2),
+      xTrans: m.trans>=0 ? S.cx[stn.idx[m.trans]] : null,
+      xSep:   m.sep  >=0 ? S.cx[stn.idx[m.sep]]   : null,
+      iTrans: m.trans>=0 ? stn.idx[m.trans] : -1,
+      iSep:   m.sep  >=0 ? stn.idx[m.sep]   : -1
+    };
+    out.cd += side.cd;
+    // Separation right at the trailing edge is normal and harmless. Only once
+    // it has moved forward past ~85 % chord is the airfoil heading for stall.
+    if(side.xSep!==null && side.xSep<0.85) out.separated=true;
+    out.sides[name]=side;
+  }
+  return out;
+}
+
+// Zero-lift angle from the panel method (Cl is linear in α in practice).
+function alphaL0(S){
+  const c0 = evaluate(S,0).Cl, c5 = evaluate(S,5).Cl;
+  return -c0/((c5-c0)/5);
+}
+// Zero-lift angle from thin airfoil theory, straight from the camber line.
+function alphaL0Thin(dec, camberScale){
+  const K=400; let s=0;
+  for(let k=0;k<K;k++){
+    const th=(k+0.5)*Math.PI/K;
+    s += dycdx(dec,camberScale,0.5*(1-Math.cos(th)))*(Math.cos(th)-1)*(Math.PI/K);
+  }
+  return (-s/Math.PI)/D2R;
+}
+// Cm about c/4 from thin airfoil theory: (π/4)(A₂ − A₁)
+function cmThin(dec, camberScale){
+  const K=400; let A1=0, A2=0;
+  for(let k=0;k<K;k++){
+    const th=(k+0.5)*Math.PI/K, d=dycdx(dec,camberScale,0.5*(1-Math.cos(th)));
+    A1 += d*Math.cos(th)*(Math.PI/K);
+    A2 += d*Math.cos(2*th)*(Math.PI/K);
+  }
+  return Math.PI/4*((2/Math.PI)*A2 - (2/Math.PI)*A1);
+}
+function dycdx(dec, camberScale, x){
+  const h=1e-4, x1=Math.min(1,x+h), x0=Math.max(0,x-h);
+  return camberScale*(splEval(dec,x1)-splEval(dec,x0))/(x1-x0);
+}
+function splEval(dec, x){                    // camber line, interpolated
+  const n=dec.n, xs=dec.xs;
+  let lo=0, hi=n;
+  while(hi-lo>1){ const m=(hi+lo)>>1; if(xs[m]>x) hi=m; else lo=m; }
+  const h=xs[hi]-xs[lo];
+  if(h<=1e-12) return dec.yc[lo];
+  const f=(x-xs[lo])/h;
+  return dec.yc[lo]+f*(dec.yc[hi]-dec.yc[lo]);
+}
+
+/* =====================================================================
+   3. VELOCITY FIELD ON A GRID
+   ===================================================================== */
+const FX0=-0.9, FX1=2.1, FY0=-1.05, FY1=1.05, GW=200, GH=140;
+const gdx=(FX1-FX0)/(GW-1), gdy=(FY1-FY0)/(GH-1);
+
+const fld = {
+  uA:new Float32Array(GW*GH), vA:new Float32Array(GW*GH),
+  uB:new Float32Array(GW*GH), vB:new Float32Array(GW*GH),
+  u :new Float32Array(GW*GH), v :new Float32Array(GW*GH),
+  sp:new Float32Array(GW*GH), mask:new Uint8Array(GW*GH)
+};
+
+function insidePoly(nodes, x, y){
+  let inside=false;
+  for(let i=0, j=nodes.length-2; i<nodes.length-1; j=i++){
+    const xi=nodes[i][0], yi=nodes[i][1], xj=nodes[j][0], yj=nodes[j][1];
+    if((yi>y)!==(yj>y) && x < (xj-xi)*(y-yi)/(yj-yi)+xi) inside=!inside;
+  }
+  return inside;
+}
+function distToBody(S, x, y){
+  let best=1e9;
+  for(let i=0;i<S.N;i++){
+    const ax=S.nodes[i][0], ay=S.nodes[i][1];
+    const bx=S.nodes[i+1][0], by=S.nodes[i+1][1];
+    const dx=bx-ax, dy=by-ay, L2=dx*dx+dy*dy;
+    let t = L2>0 ? ((x-ax)*dx+(y-ay)*dy)/L2 : 0;
+    t = t<0?0:(t>1?1:t);
+    const ex=x-(ax+t*dx), ey=y-(ay+t*dy);
+    const d=ex*ex+ey*ey;
+    if(d<best) best=d;
+  }
+  return Math.sqrt(best);
+}
+
+// Computes the fields for freestream (1,0) and (0,1). Far-field shortcut:
+// panels further away than 5 panel lengths are replaced by a point vortex,
+// which makes the field ~5× faster to compute with no visible difference.
+function computeField(S){
+  const N=S.N, gA=S.gA, gB=S.gB;
+  const gmA=new Float64Array(N), gmB=new Float64Array(N);
+  for(let j=0;j<N;j++){
+    gmA[j]=0.5*(gA[j]+gA[j+1])*S.len[j];
+    gmB[j]=0.5*(gB[j]+gB[j+1])*S.len[j];
+  }
+  for(let iy=0; iy<GH; iy++){
+    const py = FY0 + iy*gdy;
+    for(let ix=0; ix<GW; ix++){
+      const px = FX0 + ix*gdx, k = iy*GW+ix;
+      // mask 2 = inside the body, 1 = fringe zone where the panels are singular
+      const ins = insidePoly(S.nodes, px, py);
+      if(ins || distToBody(S, px, py) < 0.008){
+        fld.mask[k] = ins ? 2 : 1;
+        fld.uA[k]=fld.vA[k]=fld.uB[k]=fld.vB[k]=0;
+        continue;
+      }
+      fld.mask[k]=0;
+      let ua=1, va=0, ub=0, vb=1;
+      for(let j=0;j<N;j++){
+        const ddx=px-S.cx[j], ddy=py-S.cy[j];
+        const r2=ddx*ddx+ddy*ddy, L=S.len[j];
+        if(r2 > 25*L*L){                       // far field: point vortex
+          const f=I2PI/r2;
+          ua += -gmA[j]*ddy*f; va += gmA[j]*ddx*f;
+          ub += -gmB[j]*ddy*f; vb += gmB[j]*ddx*f;
+        }else{                                  // near field: exact panel
+          influence(px, py, S.nodes[j][0], S.nodes[j][1], S.tx[j], S.ty[j], L, false);
+          ua += _inf[0]*gA[j] + _inf[2]*gA[j+1];
+          va += _inf[1]*gA[j] + _inf[3]*gA[j+1];
+          ub += _inf[0]*gB[j] + _inf[2]*gB[j+1];
+          vb += _inf[1]*gB[j] + _inf[3]*gB[j+1];
+        }
+      }
+      fld.uA[k]=ua; fld.vA[k]=va; fld.uB[k]=ub; fld.vB[k]=vb;
+    }
+  }
+}
+// Blends the two fields for the current α — nearly free, so the α slider is smooth.
+function blendField(alphaDeg){
+  const a=alphaDeg*D2R, ca=Math.cos(a), sa=Math.sin(a);
+  for(let k=0;k<GW*GH;k++){
+    const u=ca*fld.uA[k]+sa*fld.uB[k], v=ca*fld.vA[k]+sa*fld.vB[k];
+    fld.u[k]=u; fld.v[k]=v; fld.sp[k]=Math.hypot(u,v);
+  }
+  // Fill pass: the fringe cells take their speed from their neighbours.
+  // Otherwise they are drawn as background and form a false dark rim around
+  // the airfoil that reads as a boundary layer — which the raster does not show.
+  for(let iy=1;iy<GH-1;iy++) for(let ix=1;ix<GW-1;ix++){
+    const k=iy*GW+ix;
+    if(fld.mask[k]!==1) continue;
+    let s=0, n=0;
+    for(let dy=-1;dy<=1;dy++) for(let dx=-1;dx<=1;dx++){
+      const m=k+dy*GW+dx;
+      if(fld.mask[m]===0){ s+=fld.sp[m]; n++; }
+    }
+    if(n) fld.sp[k]=s/n;
+  }
+}
+function sampleField(x, y, out){
+  const fx=(x-FX0)/gdx, fy=(y-FY0)/gdy;
+  const i0=Math.floor(fx), j0=Math.floor(fy);
+  if(i0<0||j0<0||i0>=GW-1||j0>=GH-1){ out[0]=out[1]=0; return false; }
+  const s=fx-i0, t=fy-j0;
+  const k00=j0*GW+i0, k10=k00+1, k01=k00+GW, k11=k01+1;
+  if(fld.mask[k00]||fld.mask[k10]||fld.mask[k01]||fld.mask[k11]){ out[0]=out[1]=0; return false; }
+  const w00=(1-s)*(1-t), w10=s*(1-t), w01=(1-s)*t, w11=s*t;
+  out[0]=fld.u[k00]*w00+fld.u[k10]*w10+fld.u[k01]*w01+fld.u[k11]*w11;
+  out[1]=fld.v[k00]*w00+fld.v[k10]*w10+fld.v[k01]*w01+fld.v[k11]*w11;
+  return true;
+}
+
+/* =====================================================================
+   4. COLOUR SCALES
+   ===================================================================== */
+function mix(c1,c2,f){ return [c1[0]+(c2[0]-c1[0])*f, c1[1]+(c2[1]-c1[1])*f, c1[2]+(c2[2]-c1[2])*f]; }
+const NEUTRAL=[38,43,49];                          // grey midpoint (diverging)
+const COOL_MID=[45,110,180], COOL_HI=[130,205,255];
+const WARM_MID=[176,86,50],  WARM_HI=[236,150,110];
+// Diverging: cool (suction, Cp<0) — grey middle — warm (overpressure, Cp>0)
+function cpColor(cp){
+  if(cp>=0){ const f=Math.min(1,cp); return f<0.5 ? mix(NEUTRAL,WARM_MID,f*2) : mix(WARM_MID,WARM_HI,(f-0.5)*2); }
+  const f=Math.min(1,-cp/3);
+  return f<0.5 ? mix(NEUTRAL,COOL_MID,f*2) : mix(COOL_MID,COOL_HI,(f-0.5)*2);
+}
+// Sequential: one hue, dark → light
+const SEQ=[[13,18,24],[30,66,105],[61,143,208],[160,208,246],[226,240,252]];
+function spColor(s){
+  const f=Math.max(0,Math.min(1,s/2.2))*(SEQ.length-1);
+  const i=Math.min(SEQ.length-2, Math.floor(f));
+  return mix(SEQ[i], SEQ[i+1], f-i);
+}
+
+/* =====================================================================
+   5. STATE AND UI
+   ===================================================================== */
+const DEF = {alpha:4, camber:100, thick:100, vinf:30, chord:1, panels:160};
+const st = Object.assign({}, DEF, {
+  airfoilIdx:0, raw:null, rawName:"", dec:null, S:null, ev:null, bl:null,
+  show:{stream:true, part:true, stag:true}, fieldMode:"cp",
+  paused:false, fieldReady:false
+});
+const view = {x:0.6, y:0, s:1};   // = centre of the field domain
+const AIR = (window.AIRFOILS||[]).slice();
+
+const $ = s => document.querySelector(s);
+const flowCv=$("#flow"), cpCv=$("#cp"), fctx=flowCv.getContext("2d"), cctx=cpCv.getContext("2d");
+const off = document.createElement("canvas"); off.width=GW; off.height=GH;
+const octx = off.getContext("2d"), oimg = octx.createImageData(GW,GH);
+
+/* ---- contents of the left panel ---- */
+const SLIDERS = [
+  {k:"alpha",  lab:"Angle of attack α",  min:-15, max:20,  step:0.1, unit:"°",   geom:false},
+  {k:"camber", lab:"Camber scale",       min:0,   max:200, step:1,   unit:"%",   geom:true},
+  {k:"thick",  lab:"Thickness scale",    min:50,  max:200, step:1,   unit:"%",   geom:true},
+  {k:"vinf",   lab:"Freestream speed V∞",min:5,   max:100, step:1,   unit:" m/s",geom:false},
+  {k:"chord",  lab:"Chord length c",     min:0.05,max:5,   step:0.05,unit:" m",  geom:false},
+  {k:"panels", lab:"Number of panels",   min:40,  max:300, step:2,   unit:"",    geom:true}
+];
+$("#sliders").innerHTML = SLIDERS.map(s=>`
+  <div class="slider">
+    <div class="srow"><label for="r_${s.k}">${s.lab}</label>
+      <input type="number" id="n_${s.k}" min="${s.min}" max="${s.max}" step="${s.step}"></div>
+    <input type="range" id="r_${s.k}" min="${s.min}" max="${s.max}" step="${s.step}">
+  </div>`).join("");
+
+const TOGGLES=[["stream","Streamlines"],["part","Animated particles"],["stag","Stagnation points"]];
+$("#toggles").innerHTML = TOGGLES.map(([k,l])=>
+  `<label class="tg"><input type="checkbox" id="t_${k}"><span>${l}</span></label>`).join("");
+const MODES=[["cp","Pressure field Cp"],["sp","Velocity field |V|/V∞"],["none","No field"]];
+$("#fieldmode").innerHTML = MODES.map(([k,l])=>
+  `<label class="tg"><input type="radio" name="fm" id="m_${k}" value="${k}"><span>${l}</span></label>`).join("");
+
+const NUMS=[
+  ["Cl","cl"],["Cd","cd"],["L/D","ld"],["Cm c/4","cm"],["Reynolds","re"],["Zero-lift angle","al0"],
+  ["Lift L","lift"],["Drag D","drag"],
+  ["<i style='background:var(--up)'></i>Transition x/c","tr"],
+  ["<i style='background:var(--warn)'></i>Separation x/c","sep"],
+  ["min Cp","cpmin"],["Cl thin airfoil","clt"]
+];
+$("#nums").innerHTML = NUMS.map(([k,id])=>
+  `<div class="cell"><div class="k">${k}</div><div class="v" id="v_${id}">–</div></div>`).join("");
+
+function renderList(){
+  const q = $("#search").value.trim().toLowerCase();
+  const html = AIR.map((a,i)=>{
+    if(q && !(a.name.toLowerCase().includes(q) || a.id.includes(q))) return "";
+    return `<div class="item${i===st.airfoilIdx?" sel":""}" data-i="${i}">
+      <span class="nm">${a.name}</span><span class="tc">${a.t.toFixed(1)}/${a.c.toFixed(1)}</span></div>`;
+  }).join("");
+  $("#list").innerHTML = html || `<div class="item"><span class="nm" style="color:var(--ink3)">no match</span></div>`;
+}
+
+/* =====================================================================
+   6. COMPUTATION CHAIN
+   ===================================================================== */
+function loadAirfoil(i){
+  const a = AIR[i]; if(!a) return;
+  st.airfoilIdx=i; st.rawName=a.name;
+  const pts=[]; for(let k=0;k<a.p.length;k+=2) pts.push([a.p[k], a.p[k+1]]);
+  st.raw=pts;
+  renderList();
+  const sel=$("#list .item.sel"); if(sel) sel.scrollIntoView({block:"nearest"});
+  rebuildGeometry();
+}
+function loadRaw(pts, name){
+  st.raw=pts; st.rawName=name; st.airfoilIdx=-1; renderList(); rebuildGeometry();
+}
+
+let fieldTimer=null;
+function rebuildGeometry(){
+  const nHalf = Math.max(20, Math.round(st.panels/2));
+  st.dec = decompose(st.raw, nHalf);
+  const nodes = rebuild(st.dec, st.camber/100, st.thick/100);
+  st.S = solveGeometry(nodes);
+  st.aL0 = alphaL0(st.S);
+  st.aL0t = alphaL0Thin(st.dec, st.camber/100);
+  st.fieldReady=false;
+  updateAlpha();
+  $("#busy").classList.add("on");
+  clearTimeout(fieldTimer);
+  fieldTimer = setTimeout(()=>{
+    computeField(st.S);
+    st.fieldReady=true;
+    blendField(st.alpha);
+    seedStreamlines(); seedParticles();
+    $("#busy").classList.remove("on");
+    draw();
+  }, 30);
+}
+// Recomputes forces and boundary layer — everything except the field, which
+// is the expensive part.
+function recompute(){
+  st.Re = st.vinf*st.chord/NU_AIR;
+  st.ev = evaluate(st.S, st.alpha);
+  st.bl = boundaryLayer(st.S, st.ev, st.Re);
+  updateNumbers();
+  draw();
+}
+function updateAlpha(){
+  recompute();
+  if(st.fieldReady){ blendField(st.alpha); seedStreamlines(); draw(); }
+}
+function updateNumbers(){
+  const e=st.ev, bl=st.bl;
+  const q = 0.5*RHO*st.vinf*st.vinf*st.chord;   // ⇒ force per metre of span
+  const clThin = 2*Math.PI*(st.alpha - st.aL0t)*D2R;
+  const set=(id,v)=>{ $("#v_"+id).innerHTML=v; };
+  const fmt=(v,d)=>{ const s=v.toFixed(d); return /^-0(\.0*)?$/.test(s) ? s.slice(1) : s; };
+  const cd=bl.cd, o=bl.sides.upper, u=bl.sides.lower;
+  set("cl",   fmt(e.Cl,4));
+  set("cd",   cd>0 ? cd.toFixed(5) : "–");
+  set("ld",   cd>1e-9 ? fmt(e.Cl/cd,1) : "–");
+  set("cm",   fmt(e.Cm,4));
+  set("re",   (st.Re/1e6).toFixed(2)+"<small>·10⁶</small>");
+  set("al0",  fmt(st.aL0,2)+"<small>°</small>");
+  set("lift", fmt(e.Cl*q,0)+"<small> N/m</small>");
+  set("drag", (cd*q).toFixed(1)+"<small> N/m</small>");
+  set("tr",   o.xTrans===null ? "–" : o.xTrans.toFixed(3)+"<small> upper</small>");
+  set("sep",  o.xSep===null ? (u.xSep===null?"none":u.xSep.toFixed(3)+"<small> lower</small>")
+                            : o.xSep.toFixed(3)+"<small> upper</small>");
+  set("cpmin",fmt(e.cpmin,3));
+  set("clt",  fmt(clThin,4));
+
+  const w=$("#warn"), xs = o.xSep!==null ? o.xSep : u.xSep;
+  if(bl.separated){
+    w.className="";
+    w.textContent="⚠ The boundary layer separates at x/c "+xs.toFixed(2)+" — the airfoil is heading "+
+      "for stall. Cl and Cd are unreliable here: the coupling is one-way and there is no "+
+      "separated-flow model.";
+  }else{
+    w.className="ok";
+    w.textContent=st.rawName+"  ·  d'Alembert: inviscid Cd_pressure = "+e.Cdp.toExponential(1)+
+      "  ·  Cd upper "+o.cd.toFixed(5)+" / lower "+u.cd.toFixed(5);
+  }
+}
+
+/* =====================================================================
+   7. STREAMLINES AND PARTICLES
+   ===================================================================== */
+let streams=[], parts=[];
+const _s=[0,0];
+function traceStream(x0,y0){
+  const pts=[[x0,y0]], h=0.008;
+  let x=x0, y=y0;
+  for(let n=0;n<1500;n++){
+    if(!sampleField(x,y,_s)) break;
+    const k1x=_s[0], k1y=_s[1];
+    if(!sampleField(x+0.5*h*k1x, y+0.5*h*k1y,_s)) break;
+    const k2x=_s[0], k2y=_s[1];
+    if(!sampleField(x+0.5*h*k2x, y+0.5*h*k2y,_s)) break;
+    const k3x=_s[0], k3y=_s[1];
+    if(!sampleField(x+h*k3x, y+h*k3y,_s)) break;
+    x += h*(k1x+2*k2x+2*k3x+_s[0])/6;
+    y += h*(k1y+2*k2y+2*k3y+_s[1])/6;
+    if(x>FX1-0.02||x<FX0||y>FY1-0.02||y<FY0+0.02) break;
+    pts.push([x,y]);
+  }
+  return pts;
+}
+function seedStreamlines(){
+  streams=[];
+  if(!st.fieldReady) return;
+  for(let i=0;i<46;i++){
+    const y = FY0+0.05 + (FY1-FY0-0.1)*i/45;
+    streams.push(traceStream(FX0+0.02, y));
+  }
+}
+function seedParticles(){
+  parts=[];
+  for(let i=0;i<1500;i++) parts.push(newParticle(true));
+}
+function newParticle(anywhere){
+  return {
+    x: anywhere ? FX0 + Math.random()*(FX1-FX0) : FX0+0.01,
+    y: FY0 + Math.random()*(FY1-FY0),
+    px:0, py:0, life: 60+Math.random()*400
+  };
+}
+
+/* =====================================================================
+   8. DRAWING
+   ===================================================================== */
+function fitCanvas(cv, ctx){
+  const r=cv.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+  const w=Math.max(1,Math.round(r.width*dpr)), h=Math.max(1,Math.round(r.height*dpr));
+  if(cv.width!==w||cv.height!==h){ cv.width=w; cv.height=h; }
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {w:r.width, h:r.height};
+}
+function W2S(x,y,g){ return [g.cx + (x-view.x)*g.s, g.cy - (y-view.y)*g.s]; }
+// Scaled so the field domain covers the whole view — no black edges around the flow.
+function viewScale(w,h){ return Math.min(w/2.3, h/1.5) * view.s; }
+
+function draw(){
+  const {w,h} = fitCanvas(flowCv, fctx);
+  const g = {cx:w/2, cy:h/2, s:viewScale(w,h)};
+  fctx.clearRect(0,0,w,h);
+  fctx.fillStyle="#080a0d"; fctx.fillRect(0,0,w,h);
+
+  // --- field raster ---
+  if(st.fieldReady && st.fieldMode!=="none"){
+    const d=oimg.data;
+    for(let iy=0;iy<GH;iy++) for(let ix=0;ix<GW;ix++){
+      const k=iy*GW+ix, o=((GH-1-iy)*GW+ix)*4;
+      if(fld.mask[k]===2){ d[o]=8; d[o+1]=10; d[o+2]=13; d[o+3]=255; continue; }
+      const c = st.fieldMode==="cp" ? cpColor(1-fld.sp[k]*fld.sp[k]) : spColor(fld.sp[k]);
+      d[o]=c[0]|0; d[o+1]=c[1]|0; d[o+2]=c[2]|0; d[o+3]=255;
+    }
+    octx.putImageData(oimg,0,0);
+    const [x0,y0]=W2S(FX0,FY1,g), [x1,y1]=W2S(FX1,FY0,g);
+    fctx.imageSmoothingEnabled=true;
+    fctx.drawImage(off, x0, y0, x1-x0, y1-y0);
+  }
+
+  // --- streamlines ---
+  if(st.show.stream && streams.length){
+    fctx.lineWidth=1; fctx.strokeStyle="rgba(190,208,224,.34)";
+    fctx.beginPath();
+    for(const p of streams){
+      if(p.length<2) continue;
+      let [sx,sy]=W2S(p[0][0],p[0][1],g); fctx.moveTo(sx,sy);
+      for(let i=1;i<p.length;i+=2){ const q=W2S(p[i][0],p[i][1],g); fctx.lineTo(q[0],q[1]); }
+    }
+    fctx.stroke();
+  }
+
+  // --- particles ---
+  if(st.show.part && st.fieldReady){
+    fctx.lineWidth=1.2; fctx.strokeStyle="rgba(255,255,255,.44)";
+    fctx.beginPath();
+    for(const p of parts){
+      if(p.px===0&&p.py===0) continue;
+      const a=W2S(p.px,p.py,g), b=W2S(p.x,p.y,g);
+      fctx.moveTo(a[0],a[1]); fctx.lineTo(b[0],b[1]);
+    }
+    fctx.stroke();
+  }
+
+  // --- the airfoil ---
+  const nd=st.S.nodes;
+  fctx.beginPath();
+  let p=W2S(nd[0][0],nd[0][1],g); fctx.moveTo(p[0],p[1]);
+  for(let i=1;i<nd.length;i++){ p=W2S(nd[i][0],nd[i][1],g); fctx.lineTo(p[0],p[1]); }
+  fctx.closePath();
+  fctx.fillStyle="#0e1216"; fctx.fill();
+  fctx.strokeStyle="#dbe3ea"; fctx.lineWidth=1.4; fctx.stroke();
+
+  // --- original outline when the airfoil has been rescaled (drawn on top of
+  //     the fill, otherwise it is hidden when the rescaled shape is thicker) ---
+  if(st.camber!==100 || st.thick!==100){
+    const nd0=rebuild(st.dec,1,1);
+    fctx.strokeStyle="rgba(160,174,188,.5)"; fctx.lineWidth=1; fctx.setLineDash([3,3]);
+    fctx.beginPath();
+    let q=W2S(nd0[0][0],nd0[0][1],g); fctx.moveTo(q[0],q[1]);
+    for(let i=1;i<nd0.length;i++){ q=W2S(nd0[i][0],nd0[i][1],g); fctx.lineTo(q[0],q[1]); }
+    fctx.stroke(); fctx.setLineDash([]);
+  }
+
+  // --- stagnation points ---
+  if(st.show.stag){
+    const S=st.S, e=st.ev;
+    fctx.fillStyle="#e8eef4";
+    for(let i=1;i<S.N;i++){
+      if(e.vt[i-1]*e.vt[i] < 0){
+        const f=Math.abs(e.vt[i-1])/(Math.abs(e.vt[i-1])+Math.abs(e.vt[i]));
+        const x=S.cx[i-1]+f*(S.cx[i]-S.cx[i-1]), y=S.cy[i-1]+f*(S.cy[i]-S.cy[i-1]);
+        const q=W2S(x,y,g);
+        fctx.beginPath(); fctx.arc(q[0],q[1],3.2,0,TAU); fctx.fill();
+      }
+    }
+  }
+  // --- transition (blue tick) and separation (orange diamond) ---
+  if(st.bl){
+    const S=st.S;
+    for(const side of Object.values(st.bl.sides)){
+      if(side.iTrans>=0){
+        const i=side.iTrans, q=W2S(S.cx[i],S.cy[i],g);
+        fctx.strokeStyle=getCss("--up"); fctx.lineWidth=2;
+        fctx.beginPath();
+        fctx.moveTo(q[0]-S.nx[i]*3, q[1]+S.ny[i]*3);
+        fctx.lineTo(q[0]+S.nx[i]*9, q[1]-S.ny[i]*9);
+        fctx.stroke();
+      }
+      if(side.iSep>=0){
+        const i=side.iSep, q=W2S(S.cx[i],S.cy[i],g);
+        fctx.fillStyle=getCss("--warn");
+        fctx.beginPath();
+        fctx.moveTo(q[0],q[1]-5); fctx.lineTo(q[0]+5,q[1]);
+        fctx.lineTo(q[0],q[1]+5); fctx.lineTo(q[0]-5,q[1]);
+        fctx.closePath(); fctx.fill();
+      }
+    }
+  }
+  drawLegend();
+  drawCp();
+}
+
+function drawLegend(){
+  const lc=$("#legCv"), c=lc.getContext("2d");
+  const img=c.createImageData(110,8);
+  for(let x=0;x<110;x++){
+    const f=x/109;
+    const col = st.fieldMode==="cp" ? cpColor(1 - f*4) : spColor(f*2.2);
+    for(let y=0;y<8;y++){ const o=(y*110+x)*4; img.data[o]=col[0]|0; img.data[o+1]=col[1]|0; img.data[o+2]=col[2]|0; img.data[o+3]=255; }
+  }
+  c.putImageData(img,0,0);
+  const cp = st.fieldMode==="cp";
+  $("#legLo").textContent = cp?"Cp +1":"0";
+  $("#legHi").textContent = cp?"−3":"2.2";
+  $("#legTx").textContent = cp?"  pressure coefficient":"  |V|/V∞";
+  $("#legend").style.display = st.fieldMode==="none" ? "none" : "flex";
+}
+
+let cpHover=null;
+function drawCp(){
+  const {w,h}=fitCanvas(cpCv,cctx);
+  cctx.clearRect(0,0,w,h);
+  const S=st.S, e=st.ev;
+  const L=44, R=12, T=12, B=22;
+  const pw=w-L-R, ph=h-T-B;
+
+  let lo=Math.min(-1.2, e.cpmin*1.08), hi=1.08;
+  const X=x=>L+x*pw, Y=cp=>T+(cp-lo)/(hi-lo)*ph;   // inverted: Cp negative upward
+
+  // grid
+  cctx.strokeStyle="#1c2228"; cctx.lineWidth=1; cctx.font="9px "+getComputedStyle(document.body).fontFamily;
+  cctx.fillStyle="#5d6873"; cctx.textAlign="right"; cctx.textBaseline="middle";
+  const step = (hi-lo)>7 ? 2 : 1;
+  for(let cp=Math.ceil(lo/step)*step; cp<=hi; cp+=step){
+    const y=Y(cp);
+    cctx.beginPath(); cctx.moveTo(L,y); cctx.lineTo(L+pw,y); cctx.stroke();
+    cctx.fillText(cp.toFixed(0), L-6, y);
+  }
+  cctx.textAlign="center"; cctx.textBaseline="top";
+  for(let i=0;i<=10;i++){
+    const x=X(i/10);
+    cctx.strokeStyle= i===0||i===10 ? "#232a31":"#161b20";
+    cctx.beginPath(); cctx.moveTo(x,T); cctx.lineTo(x,T+ph); cctx.stroke();
+    if(i%2===0) cctx.fillText((i/10).toFixed(1), x, T+ph+5);
+  }
+  cctx.strokeStyle="#2b333b"; cctx.beginPath(); cctx.moveTo(L,Y(0)); cctx.lineTo(L+pw,Y(0)); cctx.stroke();
+
+  // series: upper / lower surface
+  const half=S.N/2;
+  const series=[
+    {name:"lower", col:getCss("--lo"), from:0,    to:half},
+    {name:"upper", col:getCss("--up"), from:half, to:S.N}
+  ];
+  cctx.lineWidth=2; cctx.lineJoin="round";
+  for(const se of series){
+    cctx.strokeStyle=se.col; cctx.beginPath();
+    let first=true;
+    for(let i=se.from;i<se.to;i++){
+      const x=X(Math.max(0,Math.min(1,S.cx[i]))), y=Y(Math.max(lo,Math.min(hi,e.cp[i])));
+      first ? (cctx.moveTo(x,y), first=false) : cctx.lineTo(x,y);
+    }
+    cctx.stroke();
+  }
+  // direct labels (secondary encoding beyond colour)
+  cctx.textAlign="left"; cctx.textBaseline="middle"; cctx.font="10px "+getComputedStyle(document.body).fontFamily;
+  const iU=Math.round(half+half*0.55), iL=Math.round(half*0.45);
+  cctx.fillStyle=getCss("--up"); cctx.fillText("upper surface", X(S.cx[iU])+4, Y(e.cp[iU])-9);
+  cctx.fillStyle=getCss("--lo"); cctx.fillText("lower surface", X(S.cx[iL])+4, Y(e.cp[iL])+10);
+  cctx.save(); cctx.translate(11,T+ph/2); cctx.rotate(-Math.PI/2);
+  cctx.fillStyle="#5d6873"; cctx.textAlign="center"; cctx.fillText("Cp  (negative upward)",0,0); cctx.restore();
+  cctx.textAlign="center"; cctx.fillStyle="#5d6873"; cctx.fillText("x/c", L+pw/2, h-9);
+
+  // crosshair + readout inside the panel (no floating tooltip)
+  if(cpHover!==null){
+    const x=X(cpHover);
+    cctx.strokeStyle="#3a444e"; cctx.setLineDash([2,3]);
+    cctx.beginPath(); cctx.moveTo(x,T); cctx.lineTo(x,T+ph); cctx.stroke(); cctx.setLineDash([]);
+    const pick=(from,to)=>{ let b=from,bd=9; for(let i=from;i<to;i++){const d=Math.abs(S.cx[i]-cpHover); if(d<bd){bd=d;b=i;} } return e.cp[b]; };
+    $("#cpread").textContent = `x/c ${cpHover.toFixed(3)}   Cp upper ${pick(half,S.N).toFixed(3)}   Cp lower ${pick(0,half).toFixed(3)}`;
+  } else $("#cpread").textContent="";
+}
+function getCss(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+/* ---- animation loop ---- */
+let last=performance.now();
+function loop(now){
+  const dt=Math.min(0.05,(now-last)/1000); last=now;
+  if(st.show.part && st.fieldReady && !st.paused){
+    for(let i=0;i<parts.length;i++){
+      const p=parts[i];
+      p.px=p.x; p.py=p.y;
+      if(!sampleField(p.x,p.y,_s) || --p.life<0){ parts[i]=newParticle(false); parts[i].px=0; parts[i].py=0; continue; }
+      p.x += _s[0]*dt*0.95; p.y += _s[1]*dt*0.95;
+      if(p.x>FX1-0.02){ parts[i]=newParticle(false); parts[i].px=0; parts[i].py=0; }
+    }
+    draw();
+  }
+  requestAnimationFrame(loop);
+}
+
+/* =====================================================================
+   9. EVENTS
+   ===================================================================== */
+function syncControls(){
+  for(const s of SLIDERS){ $("#r_"+s.k).value=st[s.k]; $("#n_"+s.k).value=st[s.k]; }
+  for(const [k] of TOGGLES) $("#t_"+k).checked=st.show[k];
+  $("#m_"+st.fieldMode).checked=true;
+}
+for(const s of SLIDERS){
+  const r=$("#r_"+s.k), n=$("#n_"+s.k);
+  const apply=v=>{
+    v=Math.max(s.min,Math.min(s.max,v)); if(!isFinite(v)) return;
+    st[s.k]=v; r.value=v; n.value=v;
+    s.geom ? scheduleGeom() : (s.k==="alpha" ? updateAlpha() : recompute());
+  };
+  r.addEventListener("input",()=>apply(parseFloat(r.value)));
+  n.addEventListener("change",()=>apply(parseFloat(n.value)));
+}
+let geomTimer=null;
+function scheduleGeom(){ clearTimeout(geomTimer); geomTimer=setTimeout(rebuildGeometry,60); }
+
+for(const [k] of TOGGLES) $("#t_"+k).addEventListener("change",e=>{ st.show[k]=e.target.checked; draw(); });
+for(const [k] of MODES) $("#m_"+k).addEventListener("change",()=>{ st.fieldMode=k; draw(); });
+
+$("#search").addEventListener("input",renderList);
+$("#list").addEventListener("click",e=>{
+  const it=e.target.closest(".item"); if(!it||!it.dataset.i) return;
+  loadAirfoil(+it.dataset.i);
+});
+$("#reset").addEventListener("click",()=>{ Object.assign(st,DEF); syncControls(); rebuildGeometry(); });
+
+document.addEventListener("keydown",e=>{
+  if(e.target.tagName==="INPUT" && e.target.type!=="checkbox" && e.target.type!=="radio") return;
+  if(e.code==="Space"){ st.paused=!st.paused; e.preventDefault(); }
+  else if(e.key==="r"||e.key==="R"){ Object.assign(st,DEF); syncControls(); rebuildGeometry(); }
+  else if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    const d=e.key==="ArrowDown"?1:-1;
+    const i=(st.airfoilIdx<0?0:st.airfoilIdx)+d;
+    if(i>=0&&i<AIR.length) loadAirfoil(i);
+    e.preventDefault();
+  }
+});
+
+// pan / zoom
+let dragStart=null;
+flowCv.addEventListener("mousedown",e=>{ dragStart={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y}; flowCv.classList.add("drag"); });
+window.addEventListener("mousemove",e=>{
+  if(!dragStart) return;
+  const r=flowCv.getBoundingClientRect();
+  const s=viewScale(r.width,r.height);
+  view.x=dragStart.vx-(e.clientX-dragStart.x)/s;
+  view.y=dragStart.vy+(e.clientY-dragStart.y)/s;
+  draw();
+});
+window.addEventListener("mouseup",()=>{ dragStart=null; flowCv.classList.remove("drag"); });
+flowCv.addEventListener("wheel",e=>{
+  e.preventDefault();
+  view.s=Math.max(0.35,Math.min(14,view.s*(e.deltaY<0?1.12:1/1.12)));
+  draw();
+},{passive:false});
+
+cpCv.addEventListener("mousemove",e=>{
+  const r=cpCv.getBoundingClientRect();
+  const f=(e.clientX-r.left-44)/(r.width-56);
+  cpHover=(f>=0&&f<=1)?f:null; drawCp();
+});
+cpCv.addEventListener("mouseleave",()=>{ cpHover=null; drawCp(); });
+
+// drag & drop of your own .dat
+window.addEventListener("dragover",e=>e.preventDefault());
+window.addEventListener("drop",e=>{
+  e.preventDefault();
+  const f=e.dataTransfer.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    const p=parseDat(rd.result);
+    if(p&&p.pts) loadRaw(p.pts, p.name+"  (loaded file)");
+    else alert("Could not read the file as Selig or Lednicer format.");
+  };
+  rd.readAsText(f);
+});
+
+let rzTimer=null;
+window.addEventListener("resize",()=>{ clearTimeout(rzTimer); rzTimer=setTimeout(draw,80); });
+
+/* =====================================================================
+   10. VALIDATION — runs at startup, logged to the console
+   ===================================================================== */
+function validate(){
+  const out=[]; let pass=0, total=0;
+  const chk=(name,value,expected,tol,ref)=>{
+    total++; const ok=Math.abs(value-expected)<=tol; if(ok) pass++;
+    out.push({test:name, value:+value.toFixed(5), expected:+expected.toFixed(5),
+              tolerance:tol, reference:ref||"", status: ok?"OK":"FAIL"});
+  };
+  // Thickness correction (Glauert): a thick airfoil has a steeper lift curve
+  // than thin airfoil theory's 2π. Comparing straight to 2π is the wrong
+  // reference.
+  const KT = t => 1 + 0.77*t;
+
+  // --- geometry pipeline: analytic NACA 2412 → decompose → rebuild ---
+  const an = nacaPoints(2,4,12,400);
+  const A  = splitSurfaces(an);
+  const su = surfaceSpline(A.upper), sl = surfaceSpline(A.lower);
+  const d24 = decompose(an,120), rb = rebuild(d24,1,1);
+  let maxdev=0;
+  for(const [x,y] of rb){ if(x<1e-6||x>0.999) continue;
+    maxdev=Math.max(maxdev, Math.min(Math.abs(y-su(x)),Math.abs(y-sl(x)))); }
+  chk("pipeline: rebuild vs analytic NACA 2412 [c]", maxdev, 0, 5e-4);
+
+  // --- symmetric airfoil ---
+  const S12 = solveGeometry(rebuild(decompose(nacaPoints(0,0,12,400),110),1,1));
+  chk("NACA 0012  Cl(α=0)", evaluate(S12,0).Cl, 0, 0.005);
+  const slope=(evaluate(S12,5).Cl-evaluate(S12,0).Cl)/(5*D2R);
+  chk("NACA 0012  dCl/dα [1/rad]", slope, 2*Math.PI*KT(0.12), 0.15,
+      "2π·(1+0.77·t/c); flat plate = 6.2832");
+  chk("NACA 0012  Cm c/4", evaluate(S12,5).Cm, 0, 0.02);
+  chk("NACA 0012  Cd_pressure (d'Alembert)", evaluate(S12,5).Cdp, 0, 0.005);
+
+  // --- cambered airfoil ---
+  const S24=solveGeometry(rb);
+  const aL0t=alphaL0Thin(d24,1);
+  chk("NACA 2412  α_L0 [°] panel vs thin airfoil", alphaL0(S24), aL0t, 0.35,
+      "thin airfoil "+aL0t.toFixed(2)+"°");
+  const e5=evaluate(S24,5);
+  chk("NACA 2412  Cl(α=5°)", e5.Cl, 2*Math.PI*(5-aL0t)*D2R*KT(0.12), 0.03,
+      "thin airfoil × thickness correction");
+  chk("NACA 2412  Cm c/4 panel vs thin airfoil", e5.Cm, cmThin(d24,1), 0.015,
+      "experiment ≈ −0.05 (viscous decambering makes |Cm| smaller)");
+  chk("NACA 2412  Cd_pressure (d'Alembert)", e5.Cdp, 0, 0.005);
+  const d44=decompose(nacaPoints(4,4,12,400),120);
+  const S44=solveGeometry(rebuild(d44,1,1));
+  chk("NACA 4412  Cm c/4 panel vs thin airfoil", evaluate(S44,5).Cm, cmThin(d44,1), 0.02,
+      "experiment ≈ −0.09");
+
+  // --- panel convergence: Cl should be stable against the panel count ---
+  const clN = n => evaluate(solveGeometry(rebuild(decompose(an,n),1,1)),5).Cl;
+  chk("NACA 2412  Cl(80 panels) vs Cl(300 panels)", clN(40), clN(150), 0.01);
+
+  // --- boundary layer: validated against MEASURED DATA, not against theory ---
+  // Abbott & von Doenhoff, "Theory of Wing Sections" (NACA Report 824), smooth.
+  const cd = (S,a,Re) => boundaryLayer(S, evaluate(S,a), Re).cd;
+  chk("NACA 0012  Cd @ Re 3·10⁶, α=0", cd(S12,0,3e6), 0.0060, 0.0008,
+      "measured ≈ 0.0060 (Abbott & von Doenhoff)");
+  chk("NACA 0012  Cd @ Re 6·10⁶, α=0", cd(S12,0,6e6), 0.0057, 0.0008,
+      "measured ≈ 0.0057");
+  chk("NACA 2412  Cd @ Re 3·10⁶, α=0", cd(S24,0,3e6), 0.0062, 0.0008,
+      "measured ≈ 0.0062 at Cl ≈ 0.23");
+  // Physical trend: profile drag should fall monotonically with Reynolds number
+  const trend=[1e6,3e6,6e6,9e6].map(R=>cd(S12,0,R));
+  const falling = trend.every((v,i)=>i===0||v<trend[i-1]) ? 0 : 1;
+  chk("Cd falls monotonically with Re", falling, 0, 0.5,
+      trend.map(v=>v.toFixed(5)).join(" → "));
+
+  // --- loaded file vs analytic (the file's own resolution sets the limit) ---
+  const file=AIR.find(a=>a.id==="naca2412-il");
+  if(file){
+    const fp=[]; for(let k=0;k<file.p.length;k+=2) fp.push([file.p[k],file.p[k+1]]);
+    const fr=rebuild(decompose(fp,120),1,1);
+    let dv=0;
+    for(const [x,y] of fr){ if(x<1e-6||x>0.999) continue;
+      dv=Math.max(dv, Math.min(Math.abs(y-su(x)),Math.abs(y-sl(x)))); }
+    chk("loaded naca2412-il vs analytic [c]", dv, 0, 3e-3,
+        "the file has only "+(file.p.length/2)+" points — its resolution, not the code's");
+  }
+  console.log("%c VALIDATION  "+pass+"/"+total+" OK ","background:#1e2a35;color:#cfe3f5;font-weight:bold");
+  console.table(out);
+  return {pass,total};
+}
+
+/* =====================================================================
+   11. STARTUP
+   ===================================================================== */
+(function init(){
+  if(!AIR.length){
+    document.body.innerHTML='<div style="margin:auto;color:#c9d2da;font-family:sans-serif;text-align:center">'+
+      '<h1 style="font-size:16px;margin-bottom:8px">airfoils.js is missing</h1>'+
+      '<p style="color:#8c98a4;font-size:13px">Run <code>python fetch_airfoils.py</code> in this folder first.</p></div>';
+    return;
+  }
+  syncControls();
+  const i = AIR.findIndex(a=>a.id==="naca2412-il");
+  loadAirfoil(i<0?0:i);
+  const v = validate();
+  const a=$("#assume");
+  a.textContent = "validation "+v.pass+"/"+v.total+" OK  ·  "+a.textContent;
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
