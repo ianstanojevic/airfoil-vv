@@ -1,4 +1,4 @@
-<title>Halvmarathon 2.10 — 20 veckor</title>
+<title>adidas Stockholm Halvmarathon 2.10</title>
 <style>
 :root{
   --ground:#E9EDF2; --surface:#FFFFFF; --surface-2:#F3F6F9; --sunken:#DFE5EC;
@@ -127,7 +127,8 @@ strong{color:var(--ink); font-weight:650}
 .ln-ref{stroke:var(--muted); stroke-width:1.5; stroke-dasharray:4 3; fill:none}
 .dot-data{fill:var(--data); stroke:var(--data)} .dot-agent{fill:var(--agent); stroke:var(--agent)}
 .cap{stroke:var(--surface); stroke-width:2}
-.bar-data{fill:var(--data)} .bar-agent{fill:var(--agent)} .bar-down{fill:var(--agent); opacity:.45}
+.bar-data{fill:var(--data)} .bar-soft{fill:var(--data); opacity:.42}
+.divider{stroke:var(--line-2); stroke-width:1; stroke-dasharray:2 3} .bar-agent{fill:var(--agent)} .bar-down{fill:var(--agent); opacity:.45}
 .area-agent{fill:var(--agent); opacity:.13}
 .band{fill:var(--data); opacity:.08}
 .band-crit{fill:var(--crit); opacity:.10}
@@ -244,152 +245,102 @@ footer{font-family:var(--font-data); font-size:10px; color:var(--muted); line-he
   .gap{grid-template-columns:1fr; gap:9px}
   .gap-arrow{display:none}
 }
+
+.phases{display:flex; flex-direction:column; gap:7px}
+.phase{background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--data);
+  border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:3px}
+.phase-h{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+.phase-n{font-family:var(--font-data); font-size:9.5px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.phase-t{font-family:var(--font-data); font-size:12.5px; font-weight:650; color:var(--ink)}
+.phase-k{font-family:var(--font-data); font-size:10.5px; color:var(--data);
+  font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap}
+.phase-d{font-size:11.5px; color:var(--muted); line-height:1.42}
+.phase-bar{font-family:var(--font-data); font-size:10px; font-weight:650; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--data); background:var(--data-soft);
+  border-radius:5px; padding:5px 9px; margin:4px 0 2px}
+#plan210{display:flex; flex-direction:column; gap:11px}
+.wk-light .wk-t::after{content:" · lättare vecka"; color:var(--muted); font-weight:400}
 </style>
 
 <div class="wrap">
 
 <header class="top">
   <div class="top-l">
-    <div class="race">Halvmarathon 2.10 · 20 veckor</div>
-    <div class="racedate">start måndag 17 augusti</div>
+    <div class="race">adidas Stockholm Halvmarathon</div>
+    <div class="racedate">2.10 · start 17 augusti</div>
   </div>
   <div class="cd"><b id="cd-n">6</b><span>dagar<br>till v1</span></div>
 </header>
 
-<!-- ============ RECOMMENDATION ============ -->
+<!-- ============ OVERVIEW ============ -->
 <section class="card verdict">
-  <div class="card-h"><h2>Vilket program</h2><span class="note">5 nivåer finns</span></div>
+  <div class="card-h"><h2>Programmet</h2><span class="note">17 aug – 3 jan</span></div>
   <div class="card-b">
-    <div class="vhead">
-      <span class="vtitle">Börja med 2.10</span>
-      <span class="pill p-agent"><span class="dot"></span>Rekommendation</span>
+    <div class="tiles">
+      <div class="tile"><span class="k">Längd</span><span class="v">20<span class="u">v</span></span><span class="s s-mut">17 aug – 3 jan</span></div>
+      <div class="tile"><span class="k">Total volym</span><span class="v">483<span class="u">km</span></span><span class="s s-mut">snitt 24 km/v</span></div>
+      <div class="tile"><span class="k">Pass/vecka</span><span class="v">3–4</span><span class="s s-mut">topp 34 km</span></div>
+      <div class="tile"><span class="k">Långpass</span><span class="v">5→18</span><span class="s s-mut">km</span></div>
+      <div class="tile"><span class="k">Måldag</span><span class="v">2 jan</span><span class="s s-mut">lördag</span></div>
+      <div class="tile"><span class="k">Distans</span><span class="v">21,1<span class="u">km</span></span><span class="s s-mut">halvmarathon</span></div>
     </div>
-    <p class="tight">Marathon.se har fem nivåer: 1.20, 1.30, 1.40, 2.10 och 2.45. Ditt problem
-      är inte motorn — det är chassit. VO2max 53 och tröskelfart 5:05/km hör hemma
-      kring 1:55. Men 7,4 km i veckan och 10,8 km som längsta pass hör hemma i 2.10.</p>
-
-    <div class="gap">
-      <div class="gap-c">
-        <span class="k">1.40 vecka 1</span>
-        <span class="v v-target">30 km</span>
-        <span class="s">4,1× ditt snitt</span>
-      </div>
-      <span class="gap-arrow">→</span>
-      <div class="gap-c">
-        <span class="k">2.10 vecka 1</span>
-        <span class="v v-good">13 km</span>
-        <span class="s">1,8× ditt snitt</span>
-      </div>
-    </div>
-
-    <p class="tight"><strong>Fyra skäl.</strong></p>
-    <ul class="trace">
-      <li><span class="tflag f-good"></span><span class="tk">Vecka 1 går att starta på</span><span class="tv">13 km · 3 pass</span></li>
-      <li><span class="tflag f-good"></span><span class="tk">Snittvecka ≈ din bästa vecka</span><span class="tv">24 mot 25,4 km</span></li>
-      <li><span class="tflag f-good"></span><span class="tk">Programmets lugna fart</span><span class="tv">6:15–6:30 /km</span></li>
-      <li><span class="tflag f-good"></span><span class="tk">Långpasset slutar ändå på</span><span class="tv">21,1 km</span></li>
-    </ul>
-    <p class="tight">Den tredje raden är den viktigaste: 2.10:s "distans lätt" ligger på
-      6:15–6:30/km, vilket är <em>exakt</em> din lugna zon. Du kan köra programmet
-      som det står — ingen översättning, ingen omskalning. 1.40 kräver att varenda
-      fart och volym räknas om.</p>
-    <p class="tight">Och alla fem programmen slutar på samma långpass: 21,1 km. Det är
-      uthålligheten som avgör en halvmara, och 2.10 tar dig dit lika säkert som 1.40 —
-      bara utan att gå sönder på vägen.</p>
+    <p class="tight">Programmet bygger i fem faser. Varje fas introducerar en ny typ av pass
+      och låter den sätta sig innan nästa kommer.</p>
+    <div class="phases" id="phases"></div>
   </div>
 </section>
 
-<!-- ============ COMPARISON ============ -->
+<!-- ============ BEFORE START ============ -->
 <section class="card">
-  <div class="card-h"><h2>Programmen mot din nivå</h2><span class="note">veckovolym</span></div>
+  <div class="card-h"><h2>Innan start · 11–16 aug</h2><span class="note">12 km · 3 pass</span></div>
   <div class="card-b">
-    <div class="legend">
-      <span class="lg"><i style="background:var(--data)"></i>2.10</span>
-      <span class="lg"><i style="background:var(--muted)"></i>1.40</span>
-      <span class="lg"><i style="background:var(--crit)"></i>Din nivå i dag</span>
-    </div>
-    <svg class="chart" id="c-cmp" viewBox="0 0 420 168" role="img"
-      aria-label="Veckovolym över 20 veckor. 2.10 stiger från 13 till som mest 34 km. 1.40 ligger mellan 30 och 60 km. Ditt nuvarande snitt är 7,4 km och din bästa vecka 25,4 km."></svg>
-    <p class="tight">Det röda fältet är där du varit i sommar — snitt 7,4 km, bästa vecka 25,4.
-      2.10:s kurva växer <em>ur</em> det fältet. 1.40 börjar ovanför din bästa vecka någonsin
-      och stannar där i tjugo veckor.</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>Nivå</th><th>Fart</th><th>V1</th><th>Snitt</th><th>Topp</th><th>Totalt</th></tr></thead>
-        <tbody id="cmptbl"></tbody>
-      </table>
-    </div>
-    <p class="tight">1.20 och 1.30 startar på 40–44 km och snittar 56–61 km i veckan.
-      De är inte i närheten. 2.45 startar på 8 km med gånginslag — du är förbi det,
-      du springer redan 10 km i sträck.</p>
+    <p class="tight">Du har inte sprungit på sex dagar. Den här veckan står inte i programmet —
+      den finns bara för att göra måndagens start till en icke-händelse.</p>
+    <div class="days" id="week0"></div>
   </div>
 </section>
 
-<!-- ============ 2.10 CURVE ============ -->
+<!-- ============ WEEK 1 ============ -->
 <section class="card">
-  <div class="card-h"><h2>2.10 över 20 veckor</h2><span class="note">483 km · 17 aug – 3 jan</span></div>
+  <div class="card-h"><h2>Vecka 1 · 17–23 aug</h2><span class="note">13 km · 3 pass</span></div>
   <div class="card-b">
+    <div class="days" id="week1"></div>
+    <p class="tight"><strong>En ändring mot programmet.</strong> Vecka 1–4 anger
+      "distans med gång" för nybörjare. Du springer redan 10,8 km i sträck —
+      spring hela vägen, behåll distanserna. Det är den enda avvikelsen i hela programmet.</p>
+  </div>
+</section>
+
+<!-- ============ CURVES ============ -->
+<section class="card">
+  <div class="card-h"><h2>Uppbyggnaden</h2><span class="note">20 veckor</span></div>
+  <div class="card-b">
+    <svg class="chart" id="c-vol" viewBox="0 0 420 158" role="img"
+      aria-label="Veckovolym över 20 veckor, från 13 km vecka 1 till som mest 34 km vecka 13, med lättare veckor inlagda och nedtrappning i vecka 19."></svg>
+    <p class="tight">Volymen växer i vågor — tre veckor upp, en lättare. Toppen ligger på
+      34 km i vecka 13 och 15. Det är i de lättare veckorna anpassningen faktiskt sker,
+      så de är lika viktiga som de tunga.</p>
     <div class="legend">
       <span class="lg"><i style="background:var(--agent)"></i>Långpass</span>
       <span class="lg"><i style="background:var(--crit)"></i>Ditt rekord i dag · 10,8 km</span>
     </div>
     <svg class="chart" id="c-long" viewBox="0 0 420 140" role="img"
-      aria-label="Långpassets längd i 2.10-programmet, från 5 km vecka 1 till 18 km som längst, och 21,1 km på måldagen."></svg>
+      aria-label="Långpassets längd per vecka, från 5 km vecka 1 till 18 km vecka 18, och 21,1 km på måldagen."></svg>
     <p class="tight" id="longtext"></p>
-    <p class="tight">Programmet är oförändrat — jag har inte skalat om något den här gången.
-      Det är hela poängen med att välja rätt nivå: 2.10 är redan byggt för någon som
-      står där du står.</p>
-  </div>
-</section>
-
-<!-- ============ WEEK 0 + 1 ============ -->
-<section class="card">
-  <div class="card-h"><h2>Innan v1 · 11–16 aug</h2><span class="note">12 km · 3 pass</span></div>
-  <div class="card-b">
-    <p class="tight">Du har inte sprungit på sex dagar. Den här veckan finns bara för att göra
-      måndagens start till en icke-händelse.</p>
-    <div class="days" id="week0"></div>
-  </div>
-</section>
-
-<section class="card">
-  <div class="card-h"><h2>Vecka 1 · 17–23 aug</h2><span class="note">13 km · 3 pass</span></div>
-  <div class="card-b">
-    <div class="swap">
-      <div class="swap-row swap-was">
-        <span class="swap-k">Programmet säger</span>
-        <span class="swap-v">Distans med gång · 4 + 4 + 5 km i 7:45/km</span>
-      </div>
-      <div class="swap-row swap-is">
-        <span class="swap-k">Enda ändringen agenten gör</span>
-        <span class="swap-v">Spring hela vägen · 6:15–6:45/km</span>
-        <span class="swap-m">2.10 börjar med gånginslag för nybörjare. Du springer redan
-          10,8 km i sträck — hoppa över gången, behåll distanserna.</span>
-      </div>
-    </div>
-    <div class="days" id="week1"></div>
   </div>
 </section>
 
 <!-- ============ PACE ============ -->
 <section class="card">
-  <div class="card-h"><h2>Farterna stämmer redan</h2><span class="note">tröskel 5:05</span></div>
+  <div class="card-h"><h2>Dina farter</h2><span class="note">tröskel 5:05 /km</span></div>
   <div class="card-b">
-    <div class="tw">
-      <table class="fixed">
-        <thead><tr><th class="c1">2.10 säger</th><th class="c2">Din zon</th><th class="c3">Passar?</th></tr></thead>
-        <tbody>
-          <tr class="hi"><td class="em">Distans lätt 6:15–6:30</td><td>6:00–6:30</td><td>Ja — kör som det står</td></tr>
-          <tr class="hi"><td class="em">Långpass 6:30–6:40</td><td>6:00–6:30</td><td>Ja — övre änden</td></tr>
-          <tr><td class="em">Distans med gång 7:45</td><td>6:30–7:07</td><td>Spring istället, utan gång</td></tr>
-          <tr><td class="em">Intervaller 6×500 m</td><td>4:28–4:47</td><td>Kör i din zon, inte 2.10-fart</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p class="tight">Zonerna är räknade ur din uppmätta tröskelfart. Programmets lugna pass
+      ligger redan i din lugna zon — dem kör du precis som de står. På de korta, snabba
+      passen håller du din egen zon.</p>
     <div class="zones" id="zones"></div>
-    <p class="tight">Tre av fyra passtyper kan köras rakt av. Bara på de korta, snabba
-      passen ska du springa fortare än programmet anger — där ligger din motor redan före,
-      och det finns ingen anledning att träna långsammare än du kan.</p>
+    <p class="tight">Zonerna räknas om varje gång Coros uppdaterar tröskelfarten.
+      Blir du snabbare flyttas alla pass med.</p>
   </div>
 </section>
 
@@ -397,25 +348,23 @@ footer{font-family:var(--font-data); font-size:10px; color:var(--muted); line-he
 <section class="card verdict">
   <div class="card-h"><h2>Vad du landar på</h2><span class="note">måldag 2 jan</span></div>
   <div class="card-b">
-    <p class="tight"><strong>2:10 är inte ditt tak — det är programmets namn.</strong>
-      Coros prognos i dag är 1:55, och din tröskelfart 5:05/km räcker redan till betydligt
-      snabbare än 6:10/km. Målet med att välja 2.10 är volymen, inte tiden.</p>
+    <p class="tight">Coros prognos i dag är <strong>1:55</strong>, byggd på VO2max 53 och
+      tröskelfart 5:05/km. Din motor ligger alltså redan före programmets namn — det du
+      saknar är kilometrarna i benen, och det är precis vad de här tjugo veckorna lägger till.</p>
     <ul class="trace">
       <li><span class="tflag f-good"></span><span class="tk">Följer programmet &gt; 85 %</span><span class="tv">1:48–1:55</span></li>
       <li><span class="tflag f-warn"></span><span class="tk">Följer 60–70 %</span><span class="tv">1:56–2:05</span></li>
-      <li><span class="tflag f-crit"></span><span class="tk">Som hittills · 16 %</span><span class="tv">oförändrat</span></li>
+      <li><span class="tflag f-crit"></span><span class="tk">Följer under 30 %</span><span class="tv">oförändrat</span></li>
     </ul>
-    <p class="tight">Och det verkliga utfallet ligger inte i tiden. Efter tjugo veckor på
-      2.10 är din nya normalvecka 24 km istället för 7. <strong>Då är 1.40:s program
-      startbart på riktigt</strong> — dess vecka 1 på 30 km blir 1,25× din nivå istället
-      för 4,1×. Det är så du kommer åt 1.40: inte genom att börja där, utan genom att
-      förtjäna ingången.</p>
+    <p class="tight">Det avgörande är följsamheten, inte talangen. Därför är veckorna korta
+      i början — tre pass, 13 km. Ett program du fullföljer slår ett optimalt program
+      du hoppar av.</p>
   </div>
 </section>
 
 <!-- ============ SIGNALS ============ -->
 <section class="card">
-  <div class="card-h"><h2>Utgångsläget</h2><span class="note">COROS R4 · live</span></div>
+  <div class="card-h"><h2>Utgångsläge</h2><span class="note">COROS R4 · live</span></div>
   <div class="card-b">
     <div class="tiles">
       <div class="tile"><span class="k">Återhämtning</span><span class="v">100<span class="u">%</span></span><span class="s s-good">tung träning ok</span></div>
@@ -440,10 +389,10 @@ footer{font-family:var(--font-data); font-size:10px; color:var(--muted); line-he
 
 <!-- ============ AGENT ============ -->
 <section class="card">
-  <div class="card-h"><h2>Så jobbar agenten</h2><span class="note">per pass · per vecka</span></div>
+  <div class="card-h"><h2>Så anpassas programmet</h2><span class="note">per pass</span></div>
   <div class="card-b">
     <p class="tight">Programmet körs som det står. Agenten lägger sig bara i när dagsformen
-      säger något annat än kalendern.</p>
+      säger något annat än kalendern — och varje ändring har en utlösande signal.</p>
     <div class="tw">
       <table class="fixed">
         <thead><tr><th class="c1">Signal</th><th class="c2">Tröskel</th><th class="c3">Åtgärd</th></tr></thead>
@@ -470,25 +419,23 @@ footer{font-family:var(--font-data); font-size:10px; color:var(--muted); line-he
   </div>
 </section>
 
-<details>
-  <summary>Hela 2.10-programmet · 20 veckor · 483 km</summary>
-  <div class="det-b">
-    <p class="tight">Datumen är satta från start 17 augusti. Innehållet är marathon.se:s
-      program oförändrat.</p>
+<!-- ============ FULL PROGRAM ============ -->
+<section class="card">
+  <div class="card-h"><h2>Hela programmet</h2><span class="note">20 veckor · 483 km</span></div>
+  <div class="card-b">
+    <p class="tight">Vecka för vecka, pass för pass. Lättare veckor är markerade.</p>
     <div id="plan210"></div>
   </div>
-</details>
+</section>
 
 <footer>
-  <div>Grundprogram: trana.marathon.se · adidas Stockholm Halvmarathon 2.10 · 20 veckor</div>
+  <div>Program: trana.marathon.se · adidas Stockholm Halvmarathon 2.10 · 20 veckor</div>
   <div>Fysiologi &amp; dagsform: COROS MCP (läsbehörig) · profil Iansta · COROS R4</div>
   <div>Data avläst 11 augusti 2026 · vecka 1 startar 17 augusti · måldag 2 januari 2027</div>
-  <div>1.20 vecka 4 anger 211 km på 67 min på marathon.se — uppenbart källfel, räknat som 11 km.</div>
 </footer>
 
 </div>
 
-<script id="cmp-data" type="application/json">{"cmp5":[["1.20","3:24",1220,44.0,4,61.0,81],["1.30","4:16",1124,40.0,4,56.2,79],["1.40","4:44",881,30.0,4,44.0,60],["2.10","6:10",483,13.0,3,24.2,34],["2.45","7:49",401,8.0,2,20.0,32]],"curves":{"140":[30.0,36.0,47.3,40.3,30.2,42.3,43.2,50.3,58.2,34.2,55.3,34.6,50.0,54.6,34.0,60.4,58.5,39.4,39.0,43.2],"210":[13.0,14.0,16.0,19.2,17.1,19.1,26.2,21.1,22.1,26.9,23.0,31.3,34.3,24.0,34.3,31.3,32.1,26.3,22.3,29.5],"long210":[5.0,5.0,6.0,7.5,7.0,8.0,8.1,9.0,10.0,10.0,11.0,12.0,13.0,13.0,15.0,16.0,15.0,18.0,8.1,21.1]}}</script>
 <script id="plan-data" type="application/json">[[1,"17/8–23/8",13.0,3,5.0,[["måndag","—","Vila"],["tisdag","4 km","Distans med gång 4 km (31 min) · Stretching (5-10 min)"],["onsdag","—","Vila"],["torsdag","4 km","Distans med gång 4 km (31 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","5 km","Distans med gång 5 km (39 min) · Stretching (10 min)"],["söndag","—","Vila"]]],[2,"24/8–30/8",14.0,3,5.0,[["måndag","—","Vila"],["tisdag","4 km","Distans med gång 4 km (31 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","5 km","Distans med gång 5 km (39 min) · Stretching (10 min)"],["fredag","—","Vila"],["lördag","5 km","Distans med gång 5 km (36 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[3,"31/8–6/9",16.0,3,6.0,[["måndag","—","Vila"],["tisdag","5 km","Distans med gång 5 km (38 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","5 km","Distans med gång 5 km (38 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","6 km","Distans med gång 6 km (42 min) · Stretching (10 min)"],["söndag","—","Vila"]]],[4,"7/9–13/9",19.2,3,7.5,[["måndag","—","Vila"],["tisdag","6 km","Distans med gång 6 km (42 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","5,68 km","Distans med gång 5,5 km (37 min) · Koordinationslopp 3x60 m · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","7,50 km","Distans med gång 7,5 km (52 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[5,"14/9–20/9",17.1,3,7.0,[["måndag","—","Vila"],["tisdag","6,12 km","Uppvärmning 2,5 km (16 min) · Koordinationslopp 2x60 m · Intervall kort 10x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["onsdag","—","Vila"],["torsdag","4 km","Distans lätt 4 km (26 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["fredag","—","Vila"],["lördag","7 km","Distans lätt 7 km (45 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[6,"21/9–27/9",19.1,3,8.0,[["måndag","—","Vila"],["tisdag","7,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Fartlek 4 km (24-25 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)"],["onsdag","—","Vila"],["torsdag","4 km","Distans lätt 4 km (25-26 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["fredag","—","Vila"],["lördag","8 km","Distans lätt 8 km (52 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[7,"28/9–4/10",26.2,4,8.1,[["måndag","—","Vila"],["tisdag","6,12 km","Uppvärmning 2,5 km (16 min) · Koordinationslopp 2x60 m · Intervall kort 10x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["onsdag","—","Vila"],["torsdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Snabbdistans 5 km (30 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","4 km","Distans lätt 4 km (26 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["söndag","8 km","Distans lätt 8 km (52 min) · Stretching (5-10 min)"]]],[8,"5/10–11/10",21.1,3,9.0,[["måndag","—","Vila"],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","7,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervaller lång 6x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","9 km","Distans lätt 9 km (58-60 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[9,"12/10–18/10",22.1,3,10.0,[["måndag","—","Vila"],["tisdag","5,12 km","Distans stegrad fart 5 km (31 min) · Koordinationslopp 2x60 m · Allmän styrketräning (15 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","7,02 km","Uppvärmning 3 km (19-20 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","10 km","Långpass lätt fart 10 km (66-67 min) · Stretching (10 min)"],["söndag","—","Vila"]]],[10,"19/10–25/10",26.9,4,10.0,[["måndag","—","Vila"],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (15 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","5,92 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervall kort 3x4x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","6,02 km","Uppvärmning 2 km (13 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["söndag","10 km","Långpass lätt fart 10 km (66-68 min) · Stretching (5-10 min)"]]],[11,"26/10–1/11",23.0,3,11.0,[["måndag","—","Vila"],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (15 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","7,04 km","Uppvärmning 3 km (19-20 min) · Löpskolning 2x20 m (10 min) · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","11 km","Långpass lätt fart 11 km (72-74 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[12,"2/11–8/11",31.3,4,12.0,[["måndag","—","Vila"],["tisdag","7,04 km","Uppvärmning 3 km (19-20 min) · Löpskolning 2x20 m (10 min) · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Styrketräning (15 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Snabbdistans 5 km (29-30 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Stretching (5-10 min)"],["söndag","12 km","Långpass lätt fart 12 km (79-81 min) · Stretching (5-10 min)"]]],[13,"9/11–15/11",34.3,4,13.0,[["måndag","—","Vila"],["tisdag","10 km","Distans lätt 10 km (65-67 min) · Allmän styrketräning (15 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","7,16 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m · Koordinationslopp 2x60 m · Intervaller lång 6x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Stretching (5-10 min)"],["söndag","13 km","Långpass lätt fart 13 km (85-87 min) · Stretching (5-10 min)"]]],[14,"16/11–22/11",24.0,3,13.0,[["måndag","—","Vila"],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (15 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","5,96 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervall kort 4x3x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","13 km","Långpass lätt fart 13 km (85-87 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[15,"23/11–29/11",34.3,4,15.0,[["måndag","—","Vila"],["tisdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Tröskelpass 2x2 km · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["onsdag","—","Vila"],["torsdag","7,02 km","Uppvärmning 3 km (19-20 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Allmän styrketräning (15 min) · Stretching (10 min)"],["söndag","15 km","Långpass lätt fart 15 km (99-101 min) · Stretching (10 min)"]]],[16,"30/11–6/12",31.3,3,16.0,[["måndag","—","Vila"],["tisdag","7,12 km","Uppvärmning 3 km (19-20 min) · Koordinationslopp 2x60 m · Intervall kort 2x5x200 m · Nedjogg 2 km (13-14 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","8,16 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Snabbdistans 5 km (28-29 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","—","Vila"],["söndag","16 km","Långpass lätt fart 16 km (105-108 min) · Stretching (5-10 min)"]]],[17,"7/12–13/12",32.1,4,15.0,[["måndag","—","Vila"],["tisdag","7,14 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervaller lång 6x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["onsdag","—","Vila"],["torsdag","5,96 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervall kort 4x3x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","4 km","Distans lätt 4 km (26 min) · Allmän styrketräning (15 min) · Stretching (10 min)"],["söndag","15 km","Långpass med fartökning 15 km (96-98 min) · Stretching (5-10 min)"]]],[18,"14/12–20/12",26.3,3,18.0,[["måndag","—","Vila"],["tisdag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Allmän styrketräning (15 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","4,16 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervall stege (18 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","18 km","Långpass lätt fart 18 km (118-121 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[19,"21/12–27/12",22.3,3,8.1,[["måndag","—","Vila"],["tisdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Tröskelpass 2x2 km · Nedjogg 2 km (13-14 min) · Allmän styrketräning (10 min) · Stretching (10 min)"],["onsdag","—","Vila"],["torsdag","7,02 km","Uppvärmning 3 km (19-20 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","7,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervaller lång 2x3x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["söndag","—","Vila"]]],[20,"28/12–3/1",29.5,3,21.1,[["måndag","5,32 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervall kort 2x4x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)"],["tisdag","—","Vila"],["onsdag","—","Vila"],["torsdag","3,12 km","Distans lätt 3 km (20 min) · Koordinationslopp 2x60 m · Stretching (5-10 min)"],["fredag","—","Vila"],["lördag","21,10 km","Tävling 21,1 km"],["söndag","—","Vila"]]]]</script>
 <script>
 (function(){
@@ -504,11 +451,18 @@ var LOAD=[["7-15",32,41],["7-16",28,40],["7-17",24,40],["7-18",41,42],["7-19",35
 
 var ZONES=[
  ["Återhämtning","6:30–7:07","Konversationstempo. Ska kännas nästan för lätt.",0],
- ["Lugn distans","6:00–6:30","Grundpasset. Här ligger nästan hela 2.10.",1],
- ["Långpass / tävlingsfart","5:29–5:51","Snabbare än 2.10:s måltid 6:10.",0],
- ["Tröskel","4:56–5:14","Cirka 60 min maxtempo.",0],
- ["Intervall (VO2)","4:28–4:47","Kör programmets intervaller här.",0],
+ ["Lugn distans","6:00–6:30","Grundpasset. Här ligger nästan hela programmet.",1],
+ ["Snabbdistans","5:29–5:51","Stegrad fart och snabbdistans.",0],
+ ["Tröskel","4:56–5:14","Tröskelpassen från vecka 15.",0],
+ ["Intervall (VO2)","4:28–4:47","Långa intervaller, 500 m och uppåt.",0],
  ["Koordination / kort","4:04–4:22","60–300 m, avspänd snabbhet.",0]];
+
+var PHASES=[
+ [1,4,"Grundvänjning","13 → 19 km","Tre pass i veckan. Styrka från vecka 2, koordinationslopp från vecka 4. Långpasset går 5 → 7,5 km."],
+ [5,8,"Löpning i sträck","17 → 26 km","Gånginslagen försvinner. Första intervallerna, fartlek och snabbdistans. Långpasset når 9 km."],
+ [9,14,"Långpass och styrka","22 → 34 km","Långpasset blir ett eget pass. Backlöpning och löpskolning in. Volymtoppen nås i vecka 13."],
+ [15,18,"Tröskel och distans","26 → 34 km","Tröskelpass från vecka 15, långpass med fartökning från 17. Längsta passet, 18 km, ligger i vecka 18."],
+ [19,20,"Nedtrappning","22 → måldag","Volymen ned, skärpan kvar. Lördag 2 januari: 21,1 km."]];
 
 var WEEK0=[
  {wd:"tis",dn:11,k:"easy",today:1,ti:"Lugn distans",km:"3 km",
@@ -523,10 +477,10 @@ var WEEK0=[
 var WEEK1=[
  {wd:"mån",dn:17,k:"rest",ti:"Vila",km:"",m:"",w:""},
  {wd:"tis",dn:18,k:"easy",ti:"Lugn distans",km:"4 km",
-  m:"6:15–6:45/km + stretching 5–10 min.",
-  w:"Programmet: 4 km med gånginslag. Spring hela."},
+  m:"6:15–6:45/km + stretching 5–10 min.",w:""},
  {wd:"ons",dn:19,k:"rest",ti:"Vila",km:"",m:"",w:""},
- {wd:"tors",dn:20,k:"easy",ti:"Lugn distans",km:"4 km",m:"6:15–6:45/km + stretching.",w:""},
+ {wd:"tors",dn:20,k:"easy",ti:"Lugn distans",km:"4 km",
+  m:"6:15–6:45/km + stretching 5–10 min.",w:""},
  {wd:"fre",dn:21,k:"rest",ti:"Vila",km:"",m:"",w:""},
  {wd:"lör",dn:22,k:"key",ti:"Långpass",km:"5 km",
   m:"6:15–6:45/km + stretching 10 min.",
@@ -538,49 +492,55 @@ function el(t,c,x){var e=document.createElementNS("http://www.w3.org/2000/svg",t
 function txt(x,y,s,c,anc,sz){var t=el("text",c||"axis",{x:x,y:y});
   if(anc)t.setAttribute("text-anchor",anc); if(sz)t.setAttribute("font-size",sz);
   t.textContent=s; return t;}
+function sv(n){return String(n).replace(".",",");}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(m){
   return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];});}
-function J(id){try{return JSON.parse(document.getElementById(id).textContent);}catch(e){return null;}}
+function J(id){var n=document.getElementById(id);
+  try{return JSON.parse(n.textContent);}catch(e){return null;}}
 
-var CMP=J("cmp-data")||{cmp5:[],curves:{}};
-var P210=J("plan-data")||[];
+var P=J("plan-data")||[];                    // [w, label, km, sess, long, days[]]
+var KM=P.map(function(r){return r[2];});
+var LG=P.map(function(r){return r[4];});
+function phaseOf(w){for(var i=0;i<PHASES.length;i++) if(w>=PHASES[i][0]&&w<=PHASES[i][1]) return PHASES[i][2]; return "";}
+function isLight(i){return i>0 && KM[i]<KM[i-1];}
 
-/* ---------- comparison: 2.10 vs 1.40 vs your level ---------- */
+/* ---------- weekly volume ---------- */
 (function(){
-var svg=document.getElementById("c-cmp"); if(!svg||!CMP.curves["210"])return;
-var W=420,H=168,L=26,R=8,T=12,B=30, iw=W-L-R, ih=H-T-B, n=20, max=65;
-function X(i){return L+i*(iw/(n-1));}
+var svg=document.getElementById("c-vol"); if(!svg||!KM.length)return;
+var W=420,H=158,L=26,R=8,T=12,B=32, iw=W-L-R, ih=H-T-B, n=KM.length, max=40;
+var band=iw/n, bw=band*0.64;
 function Y(v){return T+ih-v/max*ih;}
-[0,20,40,60].forEach(function(g){
+function Xc(i){return L+i*band+band/2;}
+[0,10,20,30,40].forEach(function(g){
   svg.appendChild(el("line","gridline",{x1:L,x2:W-R,y1:Y(g),y2:Y(g)}));
   svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
-/* your current range: mean 7.4, best week 25.4 */
-svg.appendChild(el("rect","band-crit",{x:L,y:Y(25.4),width:iw,height:Y(7.4)-Y(25.4)}));
-svg.appendChild(el("line","ref-crit",{x1:L,x2:W-R,y1:Y(7.4),y2:Y(7.4)}));
-function line(arr,cls){svg.appendChild(el("path",cls,{d:arr.map(function(v,i){
-  return (i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1);}).join(" ")}));}
-line(CMP.curves["140"],"ln-ref");
-line(CMP.curves["210"],"ln ln-data");
-svg.appendChild(el("circle","dot-data cap",{cx:X(19),cy:Y(CMP.curves["210"][19]),r:4}));
-svg.appendChild(txt(L+3,Y(25.4)-4,"din bästa vecka 25,4","axis halo lbl-crit","start"));
-svg.appendChild(txt(L+3,Y(7.4)+11,"ditt snitt 7,4","axis halo lbl-crit","start"));
-svg.appendChild(txt(X(11),Y(CMP.curves["140"][11])-7,"1.40","axis halo","middle",10));
-svg.appendChild(txt(X(11),Y(CMP.curves["210"][11])+13,"2.10","axis halo lbl-data","middle",10));
+/* phase dividers */
+PHASES.slice(1).forEach(function(p){
+  var x=L+(p[0]-1)*band;
+  svg.appendChild(el("line","divider",{x1:x,x2:x,y1:T,y2:T+ih}));});
+KM.forEach(function(v,i){
+  svg.appendChild(el("rect",isLight(i)?"bar-soft":"bar-data",
+    {x:(Xc(i)-bw/2).toFixed(1),y:Y(v).toFixed(1),width:bw.toFixed(1),
+     height:Math.max(2,ih-(Y(v)-T)).toFixed(1),rx:2}));});
+svg.appendChild(el("line","zeroline",{x1:L,x2:W-R,y1:Y(0),y2:Y(0)}));
+var pk=KM.indexOf(Math.max.apply(null,KM.slice(0,19)));
+svg.appendChild(txt(Xc(pk),Y(KM[pk])-6,sv(KM[pk])+" km","axis halo lbl-data","middle",9.5));
+svg.appendChild(txt(Xc(0),Y(KM[0])-6,sv(KM[0]),"axis halo lbl-data","middle",9.5));
 [0,4,9,14,19].forEach(function(i){
-  svg.appendChild(txt(X(i),H-14,"v"+(i+1),"axis",i===0?"start":(i===19?"end":"middle")));});
-svg.appendChild(txt(L+iw/2,H-2,"veckovolym, km","axis","middle"));
+  svg.appendChild(txt(Xc(i),H-14,"v"+(i+1),"axis","middle"));});
+svg.appendChild(txt(L+iw/2,H-2,"veckovolym, km · streck = fasgräns","axis","middle"));
 })();
 
-/* ---------- 2.10 long run ---------- */
+/* ---------- long run ---------- */
 (function(){
-var svg=document.getElementById("c-long"); if(!svg||!CMP.curves.long210)return;
-var A=CMP.curves.long210, W=420,H=140,L=26,R=8,T=12,B=28, iw=W-L-R, ih=H-T-B, n=A.length, max=24;
+var svg=document.getElementById("c-long"); if(!svg||!LG.length)return;
+var W=420,H=140,L=26,R=8,T=12,B=28, iw=W-L-R, ih=H-T-B, n=LG.length, max=24;
 function X(i){return L+i*(iw/(n-1));}
 function Y(v){return T+ih-v/max*ih;}
 [0,5,10,15,20].forEach(function(g){
   svg.appendChild(el("line","gridline",{x1:L,x2:W-R,y1:Y(g),y2:Y(g)}));
   svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
-var pts=A.map(function(v,i){return [X(i),Y(v)];});
+var pts=LG.map(function(v,i){return [X(i),Y(v)];});
 svg.appendChild(el("path","area-agent",{d:"M"+pts[0][0]+" "+Y(0)+" "+
   pts.map(function(p){return "L"+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ")+
   " L"+pts[n-1][0]+" "+Y(0)+" Z"}));
@@ -588,19 +548,22 @@ svg.appendChild(el("path","ln ln-agent",{d:pts.map(function(p,i){
   return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ")}));
 svg.appendChild(el("line","ref-crit",{x1:L,x2:W-R,y1:Y(10.8),y2:Y(10.8)}));
 svg.appendChild(txt(W-R,Y(10.8)+11,"rekord i dag 10,8","axis halo lbl-crit","end"));
-var rec=-1, peak=0, pi=0;
-A.forEach(function(v,i){if(rec<0&&v>10.8)rec=i; if(i<n-1&&v>peak){peak=v;pi=i;}});
+var rec=-1,peak=0,pi=0;
+LG.forEach(function(v,i){if(rec<0&&v>10.8)rec=i; if(i<n-1&&v>peak){peak=v;pi=i;}});
 [rec,pi,n-1].forEach(function(i){if(i>=0)
   svg.appendChild(el("circle","dot-agent cap",{cx:pts[i][0],cy:pts[i][1],r:4}));});
-if(rec>=0)svg.appendChild(txt(X(rec),Y(A[rec])-8,"v"+(rec+1)+" · rekord","axis halo lbl-agent","middle",9));
-svg.appendChild(txt(X(pi),Y(peak)-8,peak+" km","axis halo lbl-agent","middle",9.5));
-svg.appendChild(txt(X(n-1),Y(A[n-1])+13,"21,1","axis halo lbl-agent","end",9.5));
+if(rec>=0)svg.appendChild(txt(X(rec),Y(LG[rec])-8,"v"+(rec+1)+" · rekord","axis halo lbl-agent","middle",9));
+svg.appendChild(txt(X(pi),Y(peak)-8,sv(peak)+" km","axis halo lbl-agent","middle",9.5));
+svg.appendChild(txt(X(n-1),Y(LG[n-1])+13,"21,1","axis halo lbl-agent","end",9.5));
 [0,4,9,14,19].forEach(function(i){
   svg.appendChild(txt(X(i),H-14,"v"+(i+1),"axis",i===0?"start":(i===19?"end":"middle")));});
 svg.appendChild(txt(L+iw/2,H-2,"långpassets längd, km","axis","middle"));
+var step=0;
+for(var i=1;i<n-1;i++) step=Math.max(step,LG[i]-LG[i-1]);
 var t=document.getElementById("longtext");
-if(t)t.innerHTML="Långpasset går 5 → "+peak+" km och passerar ditt nuvarande rekord på 10,8 km "+
-  "<strong>i vecka "+(rec+1)+"</strong>. Sista steget är måldagen: 21,1 km.";
+if(t)t.innerHTML="Långpasset är passet som avgör halvmaran. Det går "+sv(LG[0])+" → "+sv(peak)+
+  " km och passerar ditt nuvarande rekord på 10,8 km <strong>i vecka "+(rec+1)+"</strong>. "+
+  "Största enskilda steget är "+sv(Math.round(step*10)/10)+" km — resten växer en kilometer i taget.";
 })();
 
 /* ---------- load ---------- */
@@ -637,32 +600,37 @@ function days(host,arr){
       (d.w?'<span class="day-why">'+esc(d.w)+'</span>':'')+'</div></div>';}).join("");}
 days("week0",WEEK0); days("week1",WEEK1);
 
-/* ---------- zones + comparison table ---------- */
+/* ---------- phases + zones ---------- */
 (function(){
+var f=document.getElementById("phases");
+if(f)f.innerHTML=PHASES.map(function(p){
+  return '<div class="phase"><div class="phase-h"><span class="phase-n">Vecka '+p[0]+
+    (p[1]>p[0]?"–"+p[1]:"")+'</span><span class="phase-t">'+esc(p[2])+
+    '</span><span class="phase-k">'+esc(p[3])+'</span></div>'+
+    '<span class="phase-d">'+esc(p[4])+'</span></div>';}).join("");
 var z=document.getElementById("zones");
 if(z)z.innerHTML=ZONES.map(function(r){
   return '<div class="zone'+(r[3]?" z-race":"")+'"><span class="zone-n">'+esc(r[0])+
     '</span><span class="zone-p">'+esc(r[1])+' /km</span>'+
     '<span class="zone-d">'+esc(r[2])+'</span></div>';}).join("");
-var t=document.getElementById("cmptbl");
-if(t)t.innerHTML=CMP.cmp5.map(function(r){
-  return '<tr'+(r[0]==="2.10"?' class="hi"':'')+'><td class="em">'+esc(r[0])+
-    '</td><td>'+esc(r[1])+'</td><td>'+r[3]+'</td><td>'+r[5]+'</td><td>'+r[6]+
-    '</td><td>'+r[2]+'</td></tr>';}).join("");
 })();
 
-/* ---------- full 2.10 plan ---------- */
+/* ---------- full program ---------- */
 (function(){
-var host=document.getElementById("plan210"); if(!host||!P210.length)return;
-host.style.display="flex"; host.style.flexDirection="column"; host.style.gap="14px";
-host.innerHTML=P210.map(function(w){
-  return '<div class="wk"><div class="wk-h"><span class="wk-t">Vecka '+w[0]+' · '+esc(w[1])+
-    '</span><span class="wk-n">'+w[2]+' km · '+w[3]+' pass</span></div><div class="wk-d">'+
+var host=document.getElementById("plan210"); if(!host||!P.length)return;
+var html="", cur=null;
+P.forEach(function(w,i){
+  var ph=phaseOf(w[0]);
+  if(ph!==cur){cur=ph; html+='<div class="phase-bar">'+esc(ph)+'</div>';}
+  html+='<div class="wk'+(isLight(i)?" wk-light":"")+'">'+
+    '<div class="wk-h"><span class="wk-t">Vecka '+w[0]+' · '+esc(w[1])+'</span>'+
+    '<span class="wk-n">'+w[2]+' km · '+w[3]+' pass</span></div><div class="wk-d">'+
     w[5].map(function(d){
       var rest=d[2]==="Vila";
       return '<div class="wk-r'+(rest?" rest":"")+'"><span class="a">'+esc(d[0])+
         '</span><span class="b">'+esc(d[1])+'</span><span class="c">'+esc(d[2])+'</span></div>';
-    }).join("")+'</div></div>';}).join("");
+    }).join("")+'</div></div>';});
+host.innerHTML=html;
 })();
 
 /* ---------- countdown ---------- */

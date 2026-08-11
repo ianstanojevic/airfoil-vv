@@ -28,21 +28,33 @@ bästa vecka 25,4 km, längsta pass 10,8 km, tröskelfart 5:05/km):
 | **2.10** | **6:10** | **13** | **24,2** | **34** | **483** | **1,8×** |
 | 2.45 | 7:49 | 8 | 20,0 | 32 | 401 | 1,1× |
 
-**2.10 är startnivån.** Vecka 1 på 13 km går att starta på, snittveckan (24 km)
+**2.10 är vald nivå.** Vecka 1 på 13 km går att starta på, snittveckan (24 km)
 motsvarar den bästa veckan hittills, och programmets "distans lätt" på
-6:15–6:30/km ligger redan i den uppmätta lugna zonen — det kan alltså köras
+6:15–6:30/km ligger redan i den uppmätta lugna zonen — det körs alltså
 oförändrat, utan omskalning. Alla fem nivåerna slutar ändå på samma långpass,
 21,1 km.
 
 Måltiden 2:10 är inte taket: Coros prognos är 1:55 i dag. Nivån väljs för
-volymen, inte för tiden. Efter tjugo veckor är normalveckan 24 km i stället för
-7, vilket gör 1.40:s vecka 1 till 1,25× i stället för 4,1×.
+volymen, inte för tiden.
 
-Enda ändringen mot programmet: vecka 1–3 anger "distans med gång" för
+Enda ändringen mot programmet: vecka 1–4 anger "distans med gång" för
 nybörjare — de springs hela, eftersom 10,8 km i sträck redan är gjort.
 
-`plan20.py` innehåller den tidigare omskalningen av 1.40 (15 → 48 km över
-20 veckor) och sparas som referens; den behövs inte för 2.10.
+## Programmets faser
+
+| Veckor | Fas | Volym | Innehåll |
+|---|---|---|---|
+| 1–4 | Grundvänjning | 13 → 19 km | Tre pass. Styrka från v2, koordinationslopp från v4. Långpass 5 → 7,5 km. |
+| 5–8 | Löpning i sträck | 17 → 26 km | Gånginslagen bort. Intervaller, fartlek, snabbdistans. Långpass når 9 km. |
+| 9–14 | Långpass och styrka | 22 → 34 km | Långpasset blir eget pass. Backlöpning, löpskolning. Volymtopp v13. |
+| 15–18 | Tröskel och distans | 26 → 34 km | Tröskelpass från v15, långpass med fartökning från v17. Längsta passet 18 km i v18. |
+| 19–20 | Nedtrappning | 22 → måldag | Volym ned, skärpa kvar. 2 januari: 21,1 km. |
+
+Långpasset går 5 → 18 km och passerar nuvarande rekord (10,8 km) i vecka 11.
+Största enskilda steget är 3 km.
+
+`plan20.py` innehåller en tidigare omskalning av 1.40-programmet (15 → 48 km
+över 20 veckor) och sparas som referens; den används inte.
 
 ## Filer
 
