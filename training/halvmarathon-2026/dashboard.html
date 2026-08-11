@@ -1,0 +1,733 @@
+<title>Halvmarathon 1.40 — agentisk plan</title>
+<style>
+:root{
+  --ground:#E9EDF2; --surface:#FFFFFF; --surface-2:#F3F6F9; --sunken:#DFE5EC;
+  --ink:#0E1720; --ink-2:#3A4A59; --muted:#657585; --line:#D3DBE4; --line-2:#C2CCD8;
+  --data:#2563D9; --data-soft:#2563D91F; --agent:#D97A06; --agent-soft:#D97A061F;
+  --good:#17754A; --good-soft:#17754A1A; --warn:#A96206; --warn-soft:#A962061A;
+  --crit:#B32D22; --crit-soft:#B32D221A;
+  --font-data:ui-monospace,"SF Mono",SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace;
+  --font-text:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --r:10px; --shadow:0 1px 2px rgba(14,23,32,.06),0 1px 8px rgba(14,23,32,.04);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#080C11; --surface:#131B24; --surface-2:#18222D; --sunken:#0D141B;
+    --ink:#E4ECF4; --ink-2:#B4C3D2; --muted:#8494A5; --line:#233040; --line-2:#2E3E51;
+    --data:#4C8DF6; --data-soft:#4C8DF626; --agent:#C9821C; --agent-soft:#C9821C26;
+    --good:#3FA877; --good-soft:#3FA87722; --warn:#D99136; --warn-soft:#D9913622;
+    --crit:#E5695C; --crit-soft:#E5695C22;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 1px 10px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#080C11; --surface:#131B24; --surface-2:#18222D; --sunken:#0D141B;
+  --ink:#E4ECF4; --ink-2:#B4C3D2; --muted:#8494A5; --line:#233040; --line-2:#2E3E51;
+  --data:#4C8DF6; --data-soft:#4C8DF626; --agent:#C9821C; --agent-soft:#C9821C26;
+  --good:#3FA877; --good-soft:#3FA87722; --warn:#D99136; --warn-soft:#D9913622;
+  --crit:#E5695C; --crit-soft:#E5695C22;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 1px 10px rgba(0,0,0,.25);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--font-text); font-size:15px; line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:460px; margin:0 auto; padding:0 12px 40px; display:flex; flex-direction:column; gap:14px}
+
+/* ---------- header ---------- */
+.top{
+  position:sticky; top:0; z-index:20; margin:0 -12px 0; padding:10px 16px 11px;
+  background:var(--surface); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.top-l{display:flex; flex-direction:column; gap:2px; min-width:0}
+.race{font-family:var(--font-data); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.racedate{font-family:var(--font-data); font-size:13px; font-weight:600; color:var(--ink)}
+.cd{display:flex; align-items:baseline; gap:5px; flex:none}
+.cd b{font-family:var(--font-data); font-size:30px; font-weight:700; line-height:1;
+  letter-spacing:-.03em; font-variant-numeric:tabular-nums; color:var(--data)}
+.cd span{font-family:var(--font-data); font-size:10px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted)}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  box-shadow:var(--shadow); overflow:hidden}
+.card-h{padding:12px 14px 0; display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.card-b{padding:11px 14px 14px; display:flex; flex-direction:column; gap:11px}
+h2{font-family:var(--font-data); font-size:11px; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted); margin:0}
+.card-h .note{font-family:var(--font-data); font-size:10.5px; color:var(--muted);
+  font-variant-numeric:tabular-nums}
+p{margin:0; color:var(--ink-2); font-size:14px}
+p.tight{font-size:13.5px; line-height:1.48}
+strong{color:var(--ink); font-weight:650}
+.mono{font-family:var(--font-data); font-variant-numeric:tabular-nums}
+
+/* ---------- verdict ---------- */
+.verdict{border-left:3px solid var(--agent)}
+.vhead{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.vtitle{font-family:var(--font-data); font-size:16px; font-weight:700; letter-spacing:-.01em; color:var(--ink)}
+.gap{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px;
+  background:var(--sunken); border-radius:8px; padding:11px 12px}
+.gap-c{display:flex; flex-direction:column; gap:3px; min-width:0}
+.gap-c .k{font-family:var(--font-data); font-size:9.5px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted)}
+.gap-c .v{font-family:var(--font-data); font-size:19px; font-weight:700;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.1}
+.gap-c .s{font-family:var(--font-data); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums}
+.gap-arrow{font-family:var(--font-data); font-size:15px; color:var(--muted)}
+.v-target{color:var(--muted)}
+.v-real{color:var(--agent)}
+
+/* ---------- pills ---------- */
+.pill{display:inline-flex; align-items:center; gap:5px; padding:3px 8px; border-radius:20px;
+  font-family:var(--font-data); font-size:10px; font-weight:600; letter-spacing:.05em;
+  text-transform:uppercase; white-space:nowrap; border:1px solid transparent}
+.p-good{background:var(--good-soft); color:var(--good); border-color:var(--good)}
+.p-warn{background:var(--warn-soft); color:var(--warn); border-color:var(--warn)}
+.p-crit{background:var(--crit-soft); color:var(--crit); border-color:var(--crit)}
+.p-agent{background:var(--agent-soft); color:var(--agent); border-color:var(--agent)}
+.p-data{background:var(--data-soft); color:var(--data); border-color:var(--data)}
+.dot{width:6px; height:6px; border-radius:50%; background:currentColor; flex:none}
+
+/* ---------- signal tiles ---------- */
+.tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+.tile{background:var(--surface-2); border:1px solid var(--line); border-radius:8px;
+  padding:9px 9px 8px; display:flex; flex-direction:column; gap:2px; min-width:0}
+.tile .k{font-family:var(--font-data); font-size:9px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.tile .v{font-family:var(--font-data); font-size:18px; font-weight:700; line-height:1.15;
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums; color:var(--ink)}
+.tile .u{font-size:10px; font-weight:500; color:var(--muted); margin-left:1px}
+.tile .s{font-family:var(--font-data); font-size:9.5px; font-variant-numeric:tabular-nums}
+.s-good{color:var(--good)} .s-warn{color:var(--warn)} .s-crit{color:var(--crit)} .s-mut{color:var(--muted)}
+
+/* ---------- today ---------- */
+.today{border-left:3px solid var(--data)}
+.swap{display:flex; flex-direction:column; gap:0; border:1px solid var(--line);
+  border-radius:8px; overflow:hidden}
+.swap-row{padding:9px 11px; display:flex; flex-direction:column; gap:3px}
+.swap-was{background:var(--surface-2); border-bottom:1px dashed var(--line-2)}
+.swap-is{background:var(--agent-soft)}
+.swap-k{font-family:var(--font-data); font-size:9px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted)}
+.swap-was .swap-v{font-family:var(--font-data); font-size:13px; color:var(--muted);
+  text-decoration:line-through; text-decoration-thickness:1px}
+.swap-is .swap-v{font-family:var(--font-data); font-size:14px; font-weight:650; color:var(--ink)}
+.swap-m{font-size:12.5px; color:var(--ink-2); line-height:1.45}
+
+/* ---------- reasoning trace ---------- */
+.trace{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0;
+  border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.trace li{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:9px;
+  padding:7px 11px; background:var(--surface-2); border-bottom:1px solid var(--line)}
+.trace li:last-child{border-bottom:0}
+.trace .tk{font-family:var(--font-data); font-size:11px; color:var(--ink-2); white-space:nowrap}
+.trace .tv{font-family:var(--font-data); font-size:11px; font-variant-numeric:tabular-nums;
+  color:var(--muted); text-align:right; white-space:nowrap}
+.tflag{width:7px; height:7px; border-radius:50%; flex:none}
+.f-good{background:var(--good)} .f-warn{background:var(--warn)} .f-crit{background:var(--crit)}
+
+/* ---------- charts ---------- */
+.chart{width:100%; display:block; overflow:visible}
+.legend{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+.lg{display:inline-flex; align-items:center; gap:5px; font-family:var(--font-data);
+  font-size:10.5px; color:var(--ink-2)}
+.lg i{width:11px; height:3px; border-radius:2px; flex:none}
+.axis{font-family:var(--font-data); font-size:9px; fill:var(--muted)}
+.gridline{stroke:var(--line); stroke-width:1}
+.zeroline{stroke:var(--line-2); stroke-width:1}
+/* chart marks wear tokens, so a theme switch repaints them */
+.ln{fill:none; stroke-width:2; stroke-linejoin:round; stroke-linecap:round}
+.ln-data,.dot-data{stroke:var(--data)} .ln-agent{stroke:var(--agent)}
+.dot-data{fill:var(--data)} .dot-agent{fill:var(--agent); stroke:var(--agent)}
+.cap{stroke:var(--surface); stroke-width:2}
+.bar-data{fill:var(--data)} .bar-agent{fill:var(--agent)}
+.band{fill:var(--data); opacity:.08}
+.lbl-data{fill:var(--data)} .lbl-agent{fill:var(--agent)}
+.halo{paint-order:stroke; stroke:var(--surface); stroke-width:3px; stroke-linejoin:round}
+
+/* ---------- plan ---------- */
+.blocks{display:flex; flex-direction:column; gap:12px}
+.block-h{display:flex; align-items:baseline; justify-content:space-between; gap:8px;
+  padding-bottom:2px; border-bottom:1px solid var(--line)}
+.block-t{font-family:var(--font-data); font-size:11.5px; font-weight:650; letter-spacing:.03em;
+  text-transform:uppercase; color:var(--ink)}
+.block-n{font-family:var(--font-data); font-size:10px; color:var(--muted); font-variant-numeric:tabular-nums}
+.days{display:flex; flex-direction:column; gap:6px; margin-top:7px}
+.day{display:grid; grid-template-columns:38px 1fr; gap:10px; padding:8px 10px 8px 9px;
+  background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--line-2);
+  border-radius:7px}
+.day-d{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0}
+.day-d .wd{font-family:var(--font-data); font-size:9px; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--muted)}
+.day-d .dn{font-family:var(--font-data); font-size:16px; font-weight:700; line-height:1.1;
+  font-variant-numeric:tabular-nums; color:var(--ink)}
+.day-c{display:flex; flex-direction:column; gap:3px; min-width:0}
+.day-top{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
+.day-t{font-family:var(--font-data); font-size:13px; font-weight:650; color:var(--ink)}
+.day-km{font-family:var(--font-data); font-size:11px; color:var(--muted);
+  font-variant-numeric:tabular-nums; white-space:nowrap}
+.day-m{font-size:12.5px; color:var(--ink-2); line-height:1.45}
+.day-why{font-size:11.5px; color:var(--agent); line-height:1.42; display:flex; gap:5px}
+.day-why::before{content:"⤷"; flex:none; opacity:.8}
+.d-rest{border-left-color:var(--line-2); opacity:.72}
+.d-easy{border-left-color:var(--data)}
+.d-key{border-left-color:var(--agent); background:var(--agent-soft)}
+.d-race{border-left-color:var(--crit); background:var(--crit-soft)}
+.d-today{outline:2px solid var(--data); outline-offset:1px}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line); border-radius:8px}
+table{border-collapse:collapse; width:100%; font-family:var(--font-data); font-size:11.5px}
+th{text-align:left; font-weight:600; font-size:9.5px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted); padding:8px 10px; background:var(--surface-2);
+  border-bottom:1px solid var(--line); white-space:nowrap}
+td{padding:7px 10px; border-bottom:1px solid var(--line); color:var(--ink-2);
+  font-variant-numeric:tabular-nums; white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.em{color:var(--ink); font-weight:650}
+td.wrap{white-space:normal; min-width:150px; font-family:var(--font-text); font-size:12px}
+tr.hi td{background:var(--agent-soft)}
+tr.dim td{color:var(--muted)}
+/* rule table: fixed columns so the action column can never be clipped */
+table.fixed{table-layout:fixed}
+table.fixed td,table.fixed th{white-space:normal; word-break:normal; overflow-wrap:anywhere}
+table.fixed .c1{width:32%} table.fixed .c2{width:24%} table.fixed .c3{width:44%}
+
+/* ---------- zones ---------- */
+.zones{display:flex; flex-direction:column; gap:7px}
+.zone{display:grid; grid-template-columns:1fr auto; gap:4px 10px; padding:8px 10px;
+  background:var(--surface-2); border:1px solid var(--line); border-radius:7px;
+  border-left:3px solid var(--data)}
+.zone-n{font-family:var(--font-data); font-size:12px; font-weight:650; color:var(--ink)}
+.zone-p{font-family:var(--font-data); font-size:12.5px; font-weight:700;
+  font-variant-numeric:tabular-nums; color:var(--data); white-space:nowrap}
+.zone-d{grid-column:1/-1; font-size:11.5px; color:var(--muted); line-height:1.4}
+.z-race{border-left-color:var(--agent)}
+.z-race .zone-p{color:var(--agent)}
+
+/* ---------- loop ---------- */
+.loop{display:flex; flex-direction:column; gap:0}
+.step{display:grid; grid-template-columns:auto 1fr; gap:10px; padding:0 0 13px; position:relative}
+.step:last-child{padding-bottom:0}
+.step::before{content:""; position:absolute; left:10px; top:22px; bottom:0; width:1px;
+  background:var(--line-2)}
+.step:last-child::before{display:none}
+.step-n{width:21px; height:21px; border-radius:50%; background:var(--data); color:#fff;
+  font-family:var(--font-data); font-size:10px; font-weight:700; display:flex;
+  align-items:center; justify-content:center; flex:none; z-index:1}
+.step-c{display:flex; flex-direction:column; gap:2px; padding-top:1px}
+.step-t{font-family:var(--font-data); font-size:12px; font-weight:650; color:var(--ink)}
+.step-d{font-size:12.5px; color:var(--ink-2); line-height:1.45}
+.step-src{font-family:var(--font-data); font-size:10.5px; color:var(--muted); margin-top:1px}
+
+/* ---------- details ---------- */
+details{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  box-shadow:var(--shadow); overflow:hidden}
+summary{padding:12px 14px; cursor:pointer; display:flex; align-items:center;
+  justify-content:space-between; gap:10px; list-style:none;
+  font-family:var(--font-data); font-size:11px; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; font-size:15px; font-weight:400; color:var(--muted); flex:none}
+details[open] summary::after{content:"−"}
+details[open] summary{border-bottom:1px solid var(--line)}
+.det-b{padding:12px 14px 14px; display:flex; flex-direction:column; gap:12px}
+.wk{display:flex; flex-direction:column; gap:5px}
+.wk-h{display:flex; align-items:baseline; justify-content:space-between; gap:8px;
+  font-family:var(--font-data)}
+.wk-t{font-size:11.5px; font-weight:650; color:var(--ink)}
+.wk-n{font-size:10px; color:var(--muted); font-variant-numeric:tabular-nums}
+.wk-d{display:flex; flex-direction:column; gap:2px}
+.wk-r{display:grid; grid-template-columns:52px 46px 1fr; gap:8px; font-family:var(--font-data);
+  font-size:10.5px; padding:3px 0; border-bottom:1px solid var(--line)}
+.wk-r:last-child{border-bottom:0}
+.wk-r .a{color:var(--muted); font-variant-numeric:tabular-nums}
+.wk-r .b{color:var(--ink-2); font-variant-numeric:tabular-nums; text-align:right}
+.wk-r .c{color:var(--ink-2); white-space:normal; line-height:1.4}
+.wk-r.rest .c,.wk-r.rest .a,.wk-r.rest .b{color:var(--muted); opacity:.75}
+
+footer{font-family:var(--font-data); font-size:10px; color:var(--muted); line-height:1.6;
+  padding:2px 4px; display:flex; flex-direction:column; gap:3px}
+.caveat{background:var(--warn-soft); border:1px solid var(--warn); border-radius:8px;
+  padding:10px 12px; font-size:12.5px; color:var(--ink-2); line-height:1.5}
+.caveat b{color:var(--warn); font-family:var(--font-data); font-size:10px; letter-spacing:.07em;
+  text-transform:uppercase; display:block; margin-bottom:3px}
+a{color:var(--data)}
+:focus-visible{outline:2px solid var(--data); outline-offset:2px; border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+@media (max-width:360px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .gap{grid-template-columns:1fr; gap:9px}
+  .gap-arrow{display:none}
+}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="top-l">
+    <div class="race">adidas Stockholm Halvmarathon</div>
+    <div class="racedate">lördag 29 augusti 2026</div>
+  </div>
+  <div class="cd"><b id="cd-n">18</b><span>dagar<br>kvar</span></div>
+</header>
+
+<!-- ============ VERDICT ============ -->
+<section class="card verdict">
+  <div class="card-h"><h2>Agentens bedömning</h2><span class="note">11 aug 07:00</span></div>
+  <div class="card-b">
+    <div class="vhead">
+      <span class="vtitle">1.40 går inte att nå</span>
+      <span class="pill p-agent"><span class="dot"></span>Mål omskrivet</span>
+    </div>
+    <p class="tight">Grundprogrammet förutsätter 20 veckor à 30–60 km. Du har kört <strong>96 km av 612 km</strong>
+      sedan vecka 8 — 16 %. Med 18 dagar kvar finns ingen kondition att bygga; de dagarna avgör bara
+      <em>hur</em> du tar dig i mål. Agenten skriver därför om målet och bygger en plan för det.</p>
+
+    <div class="gap">
+      <div class="gap-c">
+        <span class="k">Programmets mål</span>
+        <span class="v v-target">1:39:52</span>
+        <span class="s">4:44 /km</span>
+      </div>
+      <span class="gap-arrow">→</span>
+      <div class="gap-c">
+        <span class="k">Nytt måltid</span>
+        <span class="v v-real">2:01</span>
+        <span class="s">5:45 /km · plan A</span>
+      </div>
+    </div>
+
+    <ul class="trace">
+      <li><span class="tflag f-crit"></span><span class="tk">Längsta pass hittills</span><span class="tv">10,8 km</span></li>
+      <li><span class="tflag f-crit"></span><span class="tk">Snittvolym per vecka</span><span class="tv">7,4 km</span></li>
+      <li><span class="tflag f-warn"></span><span class="tk">Tröskelfart</span><span class="tv">5:05 /km</span></li>
+      <li><span class="tflag f-crit"></span><span class="tk">1.40 kräver fart av dig</span><span class="tv">4:44 /km</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">VO2max</span><span class="tv">53</span></li>
+    </ul>
+
+    <p class="tight"><strong>Varför 4:44 inte finns:</strong> det är snabbare än din tröskelfart 5:05.
+      Tröskelfart håller du i ungefär en timme — ett 1.40-lopp kräver 1 tim 40 min <em>snabbare än så</em>.
+      Coros egen prognos säger 1:55, men den räknar på VO2max och vet inte att ditt längsta pass är 10,8 km.
+      Halva loppet är oprövad mark, och det är uthålligheten — inte farten — som avgör dagen.</p>
+  </div>
+</section>
+
+<!-- ============ TODAY ============ -->
+<section class="card today">
+  <div class="card-h"><h2>Idag · tisdag 11 aug</h2><span class="note">vecka 18 av 20</span></div>
+  <div class="card-b">
+    <div class="swap">
+      <div class="swap-row swap-was">
+        <span class="swap-k">Grundprogrammet</span>
+        <span class="swap-v">Intervall stege 4×(100-200-300-400) m · 11,2 km</span>
+      </div>
+      <div class="swap-row swap-is">
+        <span class="swap-k">Agenten kör istället</span>
+        <span class="swap-v">Lugn distans 6 km + 4×80 m koordination</span>
+        <span class="swap-m">6:15–6:45/km. Koordinationsloppen sist, avspänt, full vila mellan.</span>
+      </div>
+    </div>
+    <p class="tight"><strong>Varför:</strong> alla dagsignaler är gröna — men du har inte sprungit på
+      <strong>6 dagar</strong>, och en intervallstege 18 dagar före lopp hinner inte ge någon anpassning
+      som landar till loppdagen. Den kostar bara benen inför lördagens långpass, som är veckans enda
+      pass som faktiskt spelar roll. Nedskalat av kalenderskäl, inte av trötthet.</p>
+
+    <ul class="trace">
+      <li><span class="tflag f-good"></span><span class="tk">Återhämtning</span><span class="tv">100 % · tung träning ok</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">Vilopuls mot baslinje 54</span><span class="tv">55 · +1</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">Belastningskvot</span><span class="tv">0,47 · under 0,80</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">Sömnpoäng senast</span><span class="tv">71</span></li>
+      <li><span class="tflag f-warn"></span><span class="tk">Dagar sedan löpning</span><span class="tv">6</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SIGNALS ============ -->
+<section class="card">
+  <div class="card-h"><h2>Coros-signaler</h2><span class="note">COROS R4 · live</span></div>
+  <div class="card-b">
+    <div class="tiles">
+      <div class="tile"><span class="k">Återhämtning</span><span class="v">100<span class="u">%</span></span><span class="s s-good">tung träning ok</span></div>
+      <div class="tile"><span class="k">Vilopuls</span><span class="v">55<span class="u">bpm</span></span><span class="s s-good">baslinje 54</span></div>
+      <div class="tile"><span class="k">Belastn.kvot</span><span class="v">0,47</span><span class="s s-warn">avtagande</span></div>
+      <div class="tile"><span class="k">VO2max</span><span class="v">53</span><span class="s s-good">nivå 74</span></div>
+      <div class="tile"><span class="k">Tröskelfart</span><span class="v">5:05</span><span class="s s-mut">/km</span></div>
+      <div class="tile"><span class="k">Sömn 7 dgr</span><span class="v">6:42</span><span class="s s-warn">snitt · poäng 74</span></div>
+    </div>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--data)"></i>Korttidsbelastning</span>
+      <span class="lg"><i style="background:var(--agent)"></i>Långtidsbelastning</span>
+    </div>
+    <svg class="chart" id="c-load" viewBox="0 0 420 130" role="img"
+      aria-label="Belastning senaste 28 dagarna. Korttidsbelastning faller från 53 den 31 juli till 19 den 11 augusti, långtidsbelastning ligger stilla runt 40."></svg>
+    <p class="tight"><strong>Läsning:</strong> korttidsbelastningen har fallit från 53 till 19 på elva dagar
+      medan långtidsbelastningen ligger platt på 40. Kvoten 0,47 betyder att kroppen är utvilad —
+      men också att formkurvan pekar nedåt. Det är utvilat, inte vasst.</p>
+    <svg class="chart" id="c-rhr" viewBox="0 0 420 108" role="img"
+      aria-label="Vilopuls 13 juli till 9 augusti, mellan 51 och 57 slag per minut, baslinje 54."></svg>
+    <p class="tight">Vilopulsen är stabil kring baslinjen 54 — inget tecken på överbelastning eller
+      begynnande infektion. Den siffran är agentens tidigaste varningslampa de sista 18 dagarna.</p>
+  </div>
+</section>
+
+<!-- ============ COMPLIANCE ============ -->
+<section class="card">
+  <div class="card-h"><h2>Plan mot verklighet</h2><span class="note">vecka 8–20</span></div>
+  <div class="card-b">
+    <div class="legend">
+      <span class="lg"><i style="background:var(--data)"></i>Grundprogram</span>
+      <span class="lg"><i style="background:var(--agent)"></i>Faktiskt sprunget</span>
+    </div>
+    <svg class="chart" id="c-vol" viewBox="0 0 420 150" role="img"
+      aria-label="Veckovolym vecka 8 till 20. Grundprogrammet ligger på 34 till 60 km per vecka, faktiskt sprunget mellan 0 och 25 km."></svg>
+    <p class="tight">Bästa veckan var vecka 16 med <strong>25,4 km</strong> mot programmets 60,4.
+      Den siffran sätter taket för de kommande veckorna: agenten planerar 26 km nästa vecka —
+      din egen toppvecka, inte mer. Att hoppa till programmets 39 km nu vore ett
+      trefaldigat veckosteg 18 dagar före ett lopp.</p>
+  </div>
+</section>
+
+<!-- ============ 18-DAY PLAN ============ -->
+<section class="card">
+  <div class="card-h"><h2>Planen till loppdagen</h2><span class="note">66 km + lopp</span></div>
+  <div class="card-b">
+    <p class="tight">Tre block. Ett enda syfte: ta dig från 10,8 km som längsta pass till 21,1 km
+      i mål utan att gå sönder på vägen.</p>
+    <div class="blocks" id="plan"></div>
+  </div>
+</section>
+
+<!-- ============ DECISION GATE ============ -->
+<section class="card verdict">
+  <div class="card-h"><h2>Beslutspunkt</h2><span class="note">lördag 15 aug</span></div>
+  <div class="card-b">
+    <p class="tight">Långpasset den 15 augusti är inte bara ett pass — det är mätpunkten som väljer
+      din loppstrategi. Agenten läser av det direkt från klockan när du laddat upp det:</p>
+    <div class="tw">
+      <table class="fixed">
+        <thead><tr><th class="c3">Utfall 15 aug</th><th class="c1">Loppstrategi</th><th class="c2">Måltid</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>14 km klart, snittpuls under 160, sista km inte långsammast</td><td class="em">Plan A · 5:45</td><td class="em">2:01</td></tr>
+          <tr><td>14 km klart men tungt sista 3 km</td><td>Plan C · 6:00</td><td>2:07</td></tr>
+          <tr class="dim"><td>Avbrutet före 12 km, eller smärta</td><td>Fullfölj · 6:20+</td><td>2:14+</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tight">Går passet över förväntan lyfter agenten inte målet till 1.40 ändå.
+      Ett bra långpass 14 dagar ut ändrar din uthållighet på loppdagen — det ändrar inte
+      att 4:44/km ligger snabbare än din tröskel.</p>
+  </div>
+</section>
+
+<!-- ============ ZONES ============ -->
+<section class="card">
+  <div class="card-h"><h2>Dina tempozoner</h2><span class="note">från tröskel 5:05</span></div>
+  <div class="card-b">
+    <div class="zones" id="zones"></div>
+    <p class="tight">Räknat från Coros tröskelfart, inte från måltiden. Det är skillnaden mot
+      grundprogrammet: där är farterna satta för någon som redan springer 1.40.</p>
+  </div>
+</section>
+
+<!-- ============ RACE ============ -->
+<section class="card">
+  <div class="card-h"><h2>Loppdagen · plan A</h2><span class="note">21,1 km · negativ split</span></div>
+  <div class="card-b">
+    <div class="tw">
+      <table>
+        <thead><tr><th>Sträcka</th><th>Fart</th><th>Passering</th></tr></thead>
+        <tbody id="splits"></tbody>
+      </table>
+    </div>
+    <p class="tight"><strong>Enda regeln:</strong> första 5 km ska kännas för långsamma.
+      Ligger du under 5:45/km vid 5 km-skylten har du lånat tid du får betala tillbaka dubbelt
+      efter 15 km — och efter 15 km är du längre än du någonsin sprungit.</p>
+    <div class="caveat">
+      <b>Vad agenten inte kan göra</b>
+      Coros-kopplingen är läsbehörig. Jag läser återhämtning, belastning, vilopuls, sömn och
+      varje pass du laddar upp — men MCP:n har inga skrivverktyg, så passen kan inte pushas ut
+      till klockan automatiskt. Du får lägga in dem manuellt, eller be mig läsa av och skriva om
+      planen inför varje pass.
+    </div>
+  </div>
+</section>
+
+<!-- ============ AGENT LOOP ============ -->
+<section class="card">
+  <div class="card-h"><h2>Så jobbar agenten</h2><span class="note">per pass</span></div>
+  <div class="card-b">
+    <div class="loop">
+      <div class="step"><span class="step-n">1</span><div class="step-c">
+        <span class="step-t">Läser av</span>
+        <span class="step-d">Återhämtning, belastningskvot, vilopuls mot 30-dagarsbaslinje, sömnpoäng, och detaljdata från ditt senaste pass.</span>
+        <span class="step-src">queryRecoveryStatus · queryTrainingLoadAssessment · queryRestingHeartRate · querySleepData · querySportRecords</span>
+      </div></div>
+      <div class="step"><span class="step-n">2</span><div class="step-c">
+        <span class="step-t">Väger mot regelverket</span>
+        <span class="step-d">Varje signal har en tröskel och en åtgärd. Tabellen nedan är hela regelverket — inget passet ändras utan att en rad utlöses.</span>
+      </div></div>
+      <div class="step"><span class="step-n">3</span><div class="step-c">
+        <span class="step-t">Skriver om dagens pass</span>
+        <span class="step-d">Volym, intensitet eller vila. Nyckelpass flyttas hellre än stryks; två långpass hamnar aldrig inom fyra dagar.</span>
+      </div></div>
+      <div class="step"><span class="step-n">4</span><div class="step-c">
+        <span class="step-t">Loggar skälet</span>
+        <span class="step-d">Varje ändring får en rad med utlösande signal och värde, så du kan se varför planen ser ut som den gör.</span>
+      </div></div>
+    </div>
+    <div class="tw">
+      <table class="fixed">
+        <thead><tr><th class="c1">Signal</th><th class="c2">Tröskel</th><th class="c3">Åtgärd</th></tr></thead>
+        <tbody>
+          <tr><td class="em">Vilopuls</td><td>≥ 59 bpm</td><td>Kvalitetspass blir lugn distans</td></tr>
+          <tr><td class="em">Vilopuls</td><td>≥ 59 två dgr</td><td>Vila, passet flyttas fram</td></tr>
+          <tr><td class="em">Återhämtning</td><td>&lt; 60 %</td><td>Halverad intervallvolym</td></tr>
+          <tr><td class="em">Återhämtning</td><td>&lt; 40 %</td><td>Vila</td></tr>
+          <tr><td class="em">Belastn.kvot</td><td>&gt; 1,50</td><td>Veckovolym ned 25 %</td></tr>
+          <tr><td class="em">Belastn.kvot</td><td>&lt; 0,80</td><td>Grönt för kvalitet</td></tr>
+          <tr><td class="em">Sömnpoäng</td><td>&lt; 50 två nätter</td><td>Veckans andra kvalitetspass stryks</td></tr>
+          <tr><td class="em">Missat långpass</td><td>—</td><td>Flyttas, aldrig staplat</td></tr>
+          <tr class="hi"><td class="em">Vilopuls sista 5 dgr</td><td>≥ 61 bpm</td><td>Allt utom shakeout stryks</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ORIGINAL ============ -->
+<details>
+  <summary>Grundprogrammet · 20 veckor · 881 km</summary>
+  <div class="det-b">
+    <p class="tight">Hämtat i sin helhet från marathon.se. Vecka 1–17 är passerade och visas för
+      referens; agentens plan ersätter vecka 18–20.</p>
+    <div id="orig"></div>
+  </div>
+</details>
+
+<footer>
+  <div>Grundprogram: trana.marathon.se · adidas Stockholm Halvmarathon 1.40 · 20 veckor</div>
+  <div>Fysiologi &amp; dagsform: COROS MCP (läsbehörig) · profil Iansta · COROS R4</div>
+  <div>Data avläst 11 augusti 2026. Tempozoner härledda ur tröskelfart, inte ur måltid.</div>
+</footer>
+
+</div>
+
+<script id="prog-data" type="application/json">[{"week":1,"total_weeks":20,"sessions":4,"km":30.0,"days":[{"date":"2026-04-13","weekday":"måndag","distance":"6 km","time":"42 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-04-14","weekday":"tisdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-04-15","weekday":"onsdag","distance":"6 km","time":"52 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"10 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-04-16","weekday":"torsdag","distance":"8 km","time":"51 min","moments":[{"type":"Uppvärmning","distance":"1 km","time":"5-6 min","reps":null},{"type":"Distans medelhård fart","distance":"7 km","time":"35 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-04-17","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-04-18","weekday":"lördag","distance":"10 km","time":"64 min","moments":[{"type":"Distans lätt","distance":"10 km","time":"52-54 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-04-19","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":2,"total_weeks":20,"sessions":4,"km":36.0,"days":[{"date":"2026-04-20","weekday":"måndag","distance":"9 km","time":"52 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-42 min","reps":null},{"type":"Koordinationslopp","distance":"6x80 m","time":null,"reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-04-21","weekday":"tisdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-04-22","weekday":"onsdag","distance":"6 km","time":"52 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"10 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-04-23","weekday":"torsdag","distance":"9 km","time":"56 min","moments":[{"type":"Distans stegrad fart","distance":"8 km","time":"39-40 min","reps":null},{"type":"Nedjogg","distance":"1 km","time":"6 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-04-24","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-04-25","weekday":"lördag","distance":"12 km","time":"76 min","moments":[{"type":"Långpass lätt fart","distance":"12 km","time":"63-66 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-04-26","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":3,"total_weeks":20,"sessions":5,"km":47.32,"days":[{"date":"2026-04-27","weekday":"måndag","distance":"9,16 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"15x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":"3 km","time":"5-10 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"15x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-04-28","weekday":"tisdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-04-29","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-04-30","weekday":"torsdag","distance":"9 km","time":"56 min","moments":[{"type":"Distans stegrad fart","distance":"8 km","time":"39-40 min","reps":null},{"type":"Nedjogg","distance":"1 km","time":"6 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-01","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-02","weekday":"lördag","distance":"14 km","time":"87 min","moments":[{"type":"Långpass lätt fart","distance":"14 km","time":"74-77 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-03","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":4,"total_weeks":20,"sessions":4,"km":40.32,"days":[{"date":"2026-05-04","weekday":"måndag","distance":"9,16 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"15x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-05","weekday":"tisdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-06","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-07","weekday":"torsdag","distance":"10,16 km","time":"63 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Fartlek","distance":"4 km","time":"20 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-08","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-09","weekday":"lördag","distance":"15 km","time":"93 min","moments":[{"type":"Långpass lätt fart","distance":"15 km","time":"80-83 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-10","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":5,"total_weeks":20,"sessions":3,"km":30.24,"days":[{"date":"2026-05-11","weekday":"måndag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-12","weekday":"tisdag","distance":"10,24 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Intervaller lång","distance":"4x1 km","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-13","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-14","weekday":"torsdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-05-15","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-16","weekday":"lördag","distance":"14 km","time":"86 min","moments":[{"type":"Långpass med fartökning","distance":"14 km","time":"72-76 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-17","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":6,"total_weeks":20,"sessions":4,"km":42.32,"days":[{"date":"2026-05-18","weekday":"måndag","distance":"11,16 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Tröskelpass","distance":"2x2,5 km","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-19","weekday":"tisdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-20","weekday":"onsdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-05-21","weekday":"torsdag","distance":"9,16 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"15x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-22","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-23","weekday":"lördag","distance":"16 km","time":"98 min","moments":[{"type":"Långpass lätt fart","distance":"16 km","time":"85-88 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-24","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":7,"total_weeks":20,"sessions":4,"km":43.24,"days":[{"date":"2026-05-25","weekday":"måndag","distance":"9 km","time":"50 min","moments":[{"type":"Långpass medelhårt","distance":"8 km","time":"40 min","reps":null},{"type":"Koordinationslopp","distance":"5x100 m","time":null,"reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-26","weekday":"tisdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-27","weekday":"onsdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-05-28","weekday":"torsdag","distance":"11,24 km","time":"66 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Snabbdistans","distance":"5 km","time":"22-23 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-29","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-05-30","weekday":"lördag","distance":"17 km","time":"104 min","moments":[{"type":"Distans lätt","distance":"17 km","time":"90-94 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-05-31","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":8,"total_weeks":20,"sessions":5,"km":50.26,"days":[{"date":"2026-06-01","weekday":"måndag","distance":"9,02 km","time":"52 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-42 min","reps":null},{"type":"Löpskolning","distance":"1x20 m","time":null,"reps":null},{"type":"Koordinationslopp","distance":"5x100 m","time":null,"reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-02","weekday":"tisdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-03","weekday":"onsdag","distance":"7 km","time":"62 min","moments":[{"type":"Distans lätt","distance":"7 km","time":"36-37 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":"7 km","time":"10 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-06-04","weekday":"torsdag","distance":"11,24 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Intervaller lång","distance":"5x1 km","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-05","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-06","weekday":"lördag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-07","weekday":"söndag","distance":"16 km","time":"98 min","moments":[{"type":"Långpass lätt fart","distance":"16 km","time":"85-88 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]}]},{"week":9,"total_weeks":20,"sessions":6,"km":58.18,"days":[{"date":"2026-06-08","weekday":"måndag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-06-09","weekday":"tisdag","distance":"11,16 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Tröskelpass","distance":"2x2,5 km","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-10","weekday":"onsdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-06-11","weekday":"torsdag","distance":"11,02 km","time":"70 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Löpskolning","distance":"1x20 m","time":null,"reps":null},{"type":"Backlöpning lång backe","distance":"4 km","time":"21-22 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-12","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-13","weekday":"lördag","distance":"18 km","time":"110 min","moments":[{"type":"Långpass lätt fart","distance":"18 km","time":"96-100 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-14","weekday":"söndag","distance":"6 km","time":"52 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"10 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]}]},{"week":10,"total_weeks":20,"sessions":3,"km":34.2,"days":[{"date":"2026-06-15","weekday":"måndag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-16","weekday":"tisdag","distance":"11,04 km","time":"71 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21-22 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":null,"reps":null},{"type":"Backlöpning lång backe","distance":"4 km","time":"21-22 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-17","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-18","weekday":"torsdag","distance":"9,16 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"3x5x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-19","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-20","weekday":"lördag","distance":"14 km","time":"101 min","moments":[{"type":"Långpass med fartökning","distance":"14 km","time":"72-76 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-06-21","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":11,"total_weeks":20,"sessions":5,"km":55.28,"days":[{"date":"2026-06-22","weekday":"måndag","distance":"11,24 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Intervaller lång","distance":"5x1 km","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-23","weekday":"tisdag","distance":"7 km","time":"62 min","moments":[{"type":"Distans lätt","distance":"7 km","time":"36-37 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-06-24","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-25","weekday":"torsdag","distance":"11,04 km","time":"80 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Backlöpning lång backe","distance":"4 km","time":"21-22 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-26","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-06-27","weekday":"lördag","distance":"18 km","time":"110 min","moments":[{"type":"Långpass lätt fart","distance":"18 km","time":"96-100 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-28","weekday":"söndag","distance":"8 km","time":"53 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-43 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]}]},{"week":12,"total_weeks":20,"sessions":4,"km":34.56,"days":[{"date":"2026-06-29","weekday":"måndag","distance":"6,28 km","time":"69 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Intervall stege","distance":null,"time":"5-4-3-2-1-1 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-06-30","weekday":"tisdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-01","weekday":"onsdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-07-02","weekday":"torsdag","distance":"11,24 km","time":"66 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Snabbdistans","distance":"5 km","time":"22-23 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-03","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-04","weekday":"lördag","distance":"11,04 km","time":"80 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Backlöpning lång backe","distance":"4 km","time":"21-22 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-05","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":13,"total_weeks":20,"sessions":4,"km":50.04,"days":[{"date":"2026-07-06","weekday":"måndag","distance":"11 km","time":"61 min","moments":[{"type":"Distans medelhård fart","distance":"10 km","time":"50-51 min","reps":null},{"type":"Koordinationslopp","distance":"5x100 m","time":null,"reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-07","weekday":"tisdag","distance":"8 km","time":"68 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-43 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-07-08","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-09","weekday":"torsdag","distance":"11,04 km","time":"53 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Intervaller lång","distance":"2x5x500 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-10","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-11","weekday":"lördag","distance":"20 km","time":"120 min","moments":[{"type":"Långpass lätt fart","distance":"20 km","time":"107-110 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-12","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":14,"total_weeks":20,"sessions":5,"km":54.6,"days":[{"date":"2026-07-13","weekday":"måndag","distance":"11,16 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Tröskelpass","distance":"2x2,5 km","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-14","weekday":"tisdag","distance":"10,24 km","time":"79 min","moments":[{"type":"Distans lätt","distance":"10 km","time":"52-54 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-07-15","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-16","weekday":"torsdag","distance":"9,20 km","time":"53 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"3x5x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-17","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-18","weekday":"lördag","distance":"16 km","time":"96 min","moments":[{"type":"Långpass med fartökning","distance":"16 km","time":"82-86 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-19","weekday":"söndag","distance":"8 km","time":"52 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-42 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]}]},{"week":15,"total_weeks":20,"sessions":3,"km":34.04,"days":[{"date":"2026-07-20","weekday":"måndag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-21","weekday":"tisdag","distance":"8 km","time":"68 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-43 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-07-22","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-23","weekday":"torsdag","distance":"10,04 km","time":"74 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Backlöpning lång backe","distance":"3 km","time":"16 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-24","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-25","weekday":"lördag","distance":"16 km","time":"96 min","moments":[{"type":"Långpass med fartökning","distance":"16 km","time":"82-86 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-26","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":16,"total_weeks":20,"sessions":5,"km":60.44,"days":[{"date":"2026-07-27","weekday":"måndag","distance":"10,16 km","time":"48 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall stege","distance":"3x400-300-200-100 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-28","weekday":"tisdag","distance":"10 km","time":"79 min","moments":[{"type":"Distans lätt","distance":"10 km","time":"52-54 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-07-29","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-07-30","weekday":"torsdag","distance":"12,28 km","time":"76 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Snabbdistans","distance":"5 km","time":"22-23 min","reps":null},{"type":"Intervall kort","distance":"5x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-07-31","weekday":"fredag","distance":"6 km","time":"43 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-33 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-08-01","weekday":"lördag","distance":"22 km","time":"131 min","moments":[{"type":"Långpass lätt fart","distance":"22 km","time":"117-121 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-02","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":17,"total_weeks":20,"sessions":5,"km":58.48,"days":[{"date":"2026-08-03","weekday":"måndag","distance":"11,24 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Intervaller lång","distance":"5x1 km","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-04","weekday":"tisdag","distance":"8 km","time":"68 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-43 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-08-05","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-06","weekday":"torsdag","distance":"9,20 km","time":"54 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16-17 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"5x3x200 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-07","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-08","weekday":"lördag","distance":"10,04 km","time":"74 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Backlöpning lång backe","distance":"3 km","time":"16 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-09","weekday":"söndag","distance":"20 km","time":"118 min","moments":[{"type":"Långpass lätt fart","distance":"20 km","time":"105-108 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]}]},{"week":18,"total_weeks":20,"sessions":4,"km":39.44,"days":[{"date":"2026-08-10","weekday":"måndag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-11","weekday":"tisdag","distance":"11,16 km","time":"48 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall stege","distance":"4x(100-200-300-400) m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-12","weekday":"onsdag","distance":"6 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"6 km","time":"31-32 min","reps":null},{"type":"Styrketräning","distance":null,"time":"15 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-08-13","weekday":"torsdag","distance":"6,28 km","time":"69 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Intervall stege","distance":null,"time":"5-4-3-2-1-1 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-14","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-15","weekday":"lördag","distance":"16 km","time":"96 min","moments":[{"type":"Långpass med fartökning","distance":"16 km","time":"82-86 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-16","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":19,"total_weeks":20,"sessions":4,"km":38.98,"days":[{"date":"2026-08-17","weekday":"måndag","distance":"8,94 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Koordinationslopp","distance":"3x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"3x3x300 m","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-18","weekday":"tisdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-19","weekday":"onsdag","distance":"10 km","time":"74 min","moments":[{"type":"Distans lätt","distance":"10 km","time":"52-54 min","reps":null},{"type":"Styrketräning","distance":null,"time":"10 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-08-20","weekday":"torsdag","distance":"10,04 km","time":"74 min","moments":[{"type":"Uppvärmning","distance":"4 km","time":"21 min","reps":null},{"type":"Löpskolning","distance":"2x20 m","time":"10 min","reps":null},{"type":"Backlöpning kort backe","distance":"3 km","time":"16 min","reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-21","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-22","weekday":"lördag","distance":"10 km","time":"62 min","moments":[{"type":"Uppvärmning","distance":"1 km","time":"5-6 min","reps":null},{"type":"Distans stegrad fart","distance":"8 km","time":"39-40 min","reps":null},{"type":"Nedjogg","distance":"1 km","time":"6 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-23","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]},{"week":20,"total_weeks":20,"sessions":4,"km":43.24,"days":[{"date":"2026-08-24","weekday":"måndag","distance":"7,98 km","time":"43 min","moments":[{"type":"Uppvärmning","distance":"3 km","time":"16 min","reps":null},{"type":"Löpskolning","distance":"1x20 m","time":null,"reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Intervall kort","distance":"3x3x200","time":null,"reps":null},{"type":"Nedjogg","distance":"3 km","time":"16-17 min","reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-25","weekday":"tisdag","distance":"8 km","time":"57 min","moments":[{"type":"Distans lätt","distance":"8 km","time":"41-42 min","reps":null},{"type":"Styrketräning","distance":null,"time":"5 min","reps":null},{"type":"Stretching","distance":null,"time":"10 min","reps":null}]},{"date":"2026-08-26","weekday":"onsdag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-27","weekday":"torsdag","distance":"5,16 km","time":"38 min","moments":[{"type":"Distans lätt","distance":"5 km","time":"27-28 min","reps":null},{"type":"Koordinationslopp","distance":"2x80 m","time":null,"reps":null},{"type":"Stretching","distance":null,"time":"5-10 min","reps":null}]},{"date":"2026-08-28","weekday":"fredag","distance":"0 km","time":"0 min","moments":[]},{"date":"2026-08-29","weekday":"lördag","distance":"22,10 km","time":"6 min","moments":[{"type":"Uppvärmning","distance":"1 km","time":"5-6 min","reps":null},{"type":"Tävling","distance":"21,1 km","time":null,"reps":null}]},{"date":"2026-08-30","weekday":"söndag","distance":"0 km","time":"0 min","moments":[]}]}]</script>
+<script>
+(function(){
+"use strict";
+/* Marks are styled by class from CSS tokens — never by resolved literals —
+   so switching theme after load repaints the charts along with everything else. */
+
+/* ---------------- data ---------------- */
+var LOAD=[[ "7-15",32,41],["7-16",28,40],["7-17",24,40],["7-18",41,42],["7-19",35,41],["7-20",30,40],
+["7-21",34,41],["7-22",29,40],["7-23",25,40],["7-24",21,40],["7-25",18,40],["7-26",16,40],
+["7-27",25,41],["7-28",24,40],["7-29",34,42],["7-30",29,41],["7-31",53,44],["8-1",45,43],
+["8-2",43,43],["8-3",45,43],["8-4",38,42],["8-5",48,44],["8-6",41,43],["8-7",35,42],
+["8-8",30,41],["8-9",26,40],["8-10",22,40],["8-11",19,40]];
+
+var RHR=[["7-13",55],["7-14",54],["7-15",53],["7-16",52],["7-17",52],["7-18",52],["7-19",53],
+["7-20",54],["7-21",51],["7-22",54],["7-23",53],["7-24",52],["7-25",57],["7-27",54],["7-28",53],
+["7-29",54],["7-30",55],["8-2",55],["8-3",55],["8-4",54],["8-5",53],["8-6",54],["8-7",56],
+["8-8",54],["8-9",55]];
+
+var VOL=[[8,50.3,2.0],[9,58.2,1.9],[10,34.2,10.3],[11,55.3,13.6],[12,34.6,4.1],[13,50.0,18.1],
+[14,54.6,8.2],[15,34.0,4.0],[16,60.4,25.4],[17,58.5,8.7],[18,39.4,0],[19,39.0,0],[20,43.2,0]];
+
+var ZONES=[
+ ["Återhämtning","6:30–7:07","Konversationstempo. Ska kännas nästan för lätt.",0],
+ ["Lugn distans","6:00–6:30","Grundpasset. Här ligger de flesta kilometrarna.",0],
+ ["Långpass / tävlingsfart","5:29–5:51","Din halvmarathonfart på loppdagen.",1],
+ ["Tröskel","4:56–5:14","Cirka 60 min maxtempo. Här byggs farthållfasthet.",0],
+ ["Intervall (VO2)","4:28–4:47","3–5 min-intervaller.",0],
+ ["Koordination / kort","4:04–4:22","80–300 m, avspänd snabbhet.",0]];
+
+var SPLITS=[["0–5 km","5:55","0:29:35"],["5–10 km","5:50","0:58:45"],["10–15 km","5:42","1:27:15"],
+["15–20 km","5:38","1:55:25"],["20–21,1 km","5:30","2:01:27"]];
+
+var PLAN=[
+ {t:"Block 1 · bygg uthållighet",n:"11–16 aug · 26 km",d:[
+  {wd:"tis",dn:11,k:"easy",today:1,ti:"Lugn distans + koordination",km:"6 km",
+   m:"6:15–6:45/km. Avsluta med 4×80 m avspänt, full vila mellan.",
+   w:"Nedskalat från intervallstege 11,2 km — 6 dagars uppehåll, och intervaller hinner inte ge effekt till loppdagen."},
+  {wd:"ons",dn:12,k:"rest",ti:"Vila + styrka",km:"15 min",
+   m:"Bålstabilitet, utfallssteg, vadpress. Inga hopp.",w:""},
+  {wd:"tors",dn:13,k:"easy",ti:"Lugn distans",km:"6 km",
+   m:"6:15–6:45/km. Helt lugnt, ingen fartökning.",
+   w:"Grundprogrammets intervallstege struken — benen ska vara fräscha till lördag."},
+  {wd:"fre",dn:14,k:"rest",ti:"Vila",km:"",m:"Ladda kolhydrater kvällen före långpasset.",w:""},
+  {wd:"lör",dn:15,k:"key",ti:"Långpass · nyckelpass",km:"14 km",
+   m:"6:15–6:40/km hela vägen. Ta med dryck och något att äta efter 8 km. Gåpauser är tillåtna.",
+   w:"29 % längre än ditt längsta pass någonsin. Detta passet, inte farten, avgör loppdagen."},
+  {wd:"sön",dn:16,k:"rest",ti:"Vila",km:"",m:"Promenad 20–30 min om benen är stumma.",w:""}]},
+ {t:"Block 2 · loppspecifikt",n:"17–23 aug · 27 km",d:[
+  {wd:"mån",dn:17,k:"rest",ti:"Vila",km:"",m:"",w:""},
+  {wd:"tis",dn:18,k:"easy",ti:"Tävlingsfart · generalrep",km:"8 km",
+   m:"2 km lugnt + 4 km i 5:45/km + 2 km nedjogg. Känn efter hur farten sitter.",
+   w:"Ersätter 3×3×300 m. Du behöver lära känna loppfarten, inte träna snabbhet."},
+  {wd:"ons",dn:19,k:"rest",ti:"Vila + styrka",km:"10 min",m:"Lätt, rörlighet.",w:""},
+  {wd:"tors",dn:20,k:"easy",ti:"Lugn distans",km:"5 km",m:"6:15–6:45/km + 4×80 m.",w:""},
+  {wd:"fre",dn:21,k:"rest",ti:"Vila",km:"",m:"",w:""},
+  {wd:"lör",dn:22,k:"key",ti:"Långpass med avslutning",km:"14 km",
+   m:"9 km i 6:15–6:40 + sista 5 km i 5:45–5:55/km.",
+   w:"Sista långpasset, 7 dagar ut. Att avsluta i loppfart tränar exakt det som spricker på loppdagen."},
+  {wd:"sön",dn:23,k:"rest",ti:"Vila",km:"",m:"",w:""}]},
+ {t:"Block 3 · nedtrappning",n:"24–29 aug · 13 km + lopp",d:[
+  {wd:"mån",dn:24,k:"easy",ti:"Lugn distans",km:"5 km",m:"6:15–6:45/km.",w:""},
+  {wd:"tis",dn:25,k:"rest",ti:"Vila",km:"",m:"",w:""},
+  {wd:"ons",dn:26,k:"easy",ti:"Vässning",km:"5 km",
+   m:"1,5 km lugnt + 3×1000 m i 5:15–5:25 (2 min vila) + 1 km ned.",
+   w:"Låg volym, hög kvalitet. Håller systemet vaket utan att kosta något."},
+  {wd:"tors",dn:27,k:"rest",ti:"Vila",km:"",m:"Packa väskan. Inget nytt på loppdagen — inga nya skor, ingen ny gel.",w:""},
+  {wd:"fre",dn:28,k:"easy",ti:"Shakeout",km:"3 km",m:"Mycket lugnt + 3×80 m. Bara för att lossa på benen.",w:""},
+  {wd:"lör",dn:29,k:"race",ti:"adidas Stockholm Halvmarathon",km:"21,1 km",
+   m:"Plan A: 5:45/km snitt, negativ split. Första 5 km ska kännas för långsamma.",
+   w:"Slutlig strategi väljs efter långpasset 15 aug."},
+  {wd:"sön",dn:30,k:"rest",ti:"Vila",km:"",m:"Grattis.",w:""}]}];
+
+/* ---------------- helpers ---------------- */
+function el(t,c,x){var e=document.createElementNS("http://www.w3.org/2000/svg",t);
+  if(c)e.setAttribute("class",c); if(x)for(var k in x)e.setAttribute(k,x[k]); return e;}
+function txt(x,y,s,c,anc,sz){var t=el("text",c||"axis",{x:x,y:y});
+  if(anc)t.setAttribute("text-anchor",anc); if(sz)t.setAttribute("font-size",sz);
+  t.textContent=s; return t;}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(m){
+  return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];});}
+
+/* ---------------- line chart: load ---------------- */
+(function(){
+var svg=document.getElementById("c-load"); if(!svg)return;
+var W=420,H=130,L=26,R=8,T=10,B=20, iw=W-L-R, ih=H-T-B;
+var max=60,min=0;
+function X(i){return L+i*(iw/(LOAD.length-1));}
+function Y(v){return T+ih-(v-min)/(max-min)*ih;}
+[0,20,40,60].forEach(function(g){
+  svg.appendChild(el("line","gridline",{x1:L,x2:W-R,y1:Y(g),y2:Y(g)}));
+  svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
+function path(idx,kind){
+  var d=LOAD.map(function(r,i){return (i?"L":"M")+X(i).toFixed(1)+" "+Y(r[idx]).toFixed(1);}).join(" ");
+  svg.appendChild(el("path","ln ln-"+kind,{d:d}));
+  var last=LOAD.length-1;
+  svg.appendChild(el("circle","dot-"+kind+" cap",{cx:X(last),cy:Y(LOAD[last][idx]),r:4}));}
+path(2,"agent"); path(1,"data");
+[0,9,17,27].forEach(function(i){
+  svg.appendChild(txt(X(i),H-6,LOAD[i][0].replace("-","/"),"axis",i===0?"start":(i===27?"end":"middle")));});
+var lastL=LOAD[LOAD.length-1];
+svg.appendChild(txt(X(27)-7,Y(lastL[1])+4,lastL[1],"axis halo lbl-data","end",10.5));
+svg.appendChild(txt(X(27)-7,Y(lastL[2])-7,lastL[2],"axis halo lbl-agent","end",10.5));
+})();
+
+/* ---------------- line chart: RHR ---------------- */
+(function(){
+var svg=document.getElementById("c-rhr"); if(!svg)return;
+var W=420,H=108,L=26,R=8,T=12,B=20, iw=W-L-R, ih=H-T-B;
+var min=49,max=59;
+function X(i){return L+i*(iw/(RHR.length-1));}
+function Y(v){return T+ih-(v-min)/(max-min)*ih;}
+svg.appendChild(el("rect","band",{x:L,y:Y(56),width:iw,height:Y(52)-Y(56)}));
+svg.appendChild(el("line","zeroline",{x1:L,x2:W-R,y1:Y(54),y2:Y(54),
+  "stroke-dasharray":"3 3"}));
+svg.appendChild(txt(L+3,Y(54)-5,"baslinje 54","axis halo","start"));
+[50,54,58].forEach(function(g){svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
+var d=RHR.map(function(r,i){return (i?"L":"M")+X(i).toFixed(1)+" "+Y(r[1]).toFixed(1);}).join(" ");
+svg.appendChild(el("path","ln ln-data",{d:d}));
+RHR.forEach(function(r,i){svg.appendChild(el("circle","dot-data",{cx:X(i),cy:Y(r[1]),r:2.4}));});
+var last=RHR.length-1;
+svg.appendChild(el("circle","dot-data cap",{cx:X(last),cy:Y(RHR[last][1]),r:4}));
+[0,12,24].forEach(function(i){
+  svg.appendChild(txt(X(i),H-6,RHR[i][0].replace("-","/"),"axis",i===0?"start":(i===24?"end":"middle")));});
+})();
+
+/* ---------------- bar chart: volume ---------------- */
+(function(){
+var svg=document.getElementById("c-vol"); if(!svg)return;
+var W=420,H=150,L=26,R=8,T=10,B=26, iw=W-L-R, ih=H-T-B;
+var max=65, n=VOL.length, band=iw/n, gap=3, bw=(band-gap*3)/2;
+function Y(v){return T+ih-v/max*ih;}
+[0,20,40,60].forEach(function(g){
+  svg.appendChild(el("line","gridline",{x1:L,x2:W-R,y1:Y(g),y2:Y(g)}));
+  svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
+VOL.forEach(function(r,i){
+  var x0=L+i*band+gap/2;
+  [[r[1],"bar-data",0],[r[2],"bar-agent",1]].forEach(function(s,j){
+    if(s[0]<=0)return;
+    var h=Math.max(2,ih-(Y(s[0])-T));
+    svg.appendChild(el("rect",s[1],{x:(x0+j*(bw+gap)).toFixed(1),y:Y(s[0]).toFixed(1),
+      width:bw.toFixed(1),height:h.toFixed(1),rx:2.5}));});
+  svg.appendChild(txt(x0+band/2-gap/2,H-13,r[0],"axis","middle"));});
+svg.appendChild(el("line","zeroline",{x1:L,x2:W-R,y1:Y(0),y2:Y(0)}));
+svg.appendChild(txt(L+iw/2,H-2,"träningsvecka","axis","middle"));
+var i16=8, x16=L+i16*band+gap/2;
+svg.appendChild(txt(x16+bw+gap+bw/2,Y(25.4)-6,"25,4","axis halo lbl-agent","middle",9.5));
+})();
+
+/* ---------------- plan ---------------- */
+(function(){
+var host=document.getElementById("plan"); if(!host)return;
+host.innerHTML=PLAN.map(function(b){
+  return '<div><div class="block-h"><span class="block-t">'+esc(b.t)+
+    '</span><span class="block-n">'+esc(b.n)+'</span></div><div class="days">'+
+    b.d.map(function(d){
+      return '<div class="day d-'+d.k+(d.today?" d-today":"")+'">'+
+        '<div class="day-d"><span class="wd">'+esc(d.wd)+'</span><span class="dn">'+d.dn+'</span></div>'+
+        '<div class="day-c"><div class="day-top"><span class="day-t">'+esc(d.ti)+'</span>'+
+        (d.km?'<span class="day-km">'+esc(d.km)+'</span>':'')+'</div>'+
+        (d.m?'<span class="day-m">'+esc(d.m)+'</span>':'')+
+        (d.w?'<span class="day-why">'+esc(d.w)+'</span>':'')+'</div></div>';
+    }).join("")+'</div></div>';}).join("");
+})();
+
+/* ---------------- zones + splits ---------------- */
+(function(){
+var z=document.getElementById("zones");
+if(z)z.innerHTML=ZONES.map(function(r){
+  return '<div class="zone'+(r[3]?" z-race":"")+'"><span class="zone-n">'+esc(r[0])+
+    '</span><span class="zone-p">'+esc(r[1])+' /km</span>'+
+    '<span class="zone-d">'+esc(r[2])+'</span></div>';}).join("");
+var s=document.getElementById("splits");
+if(s)s.innerHTML=SPLITS.map(function(r,i){
+  return '<tr'+(i===SPLITS.length-1?' class="hi"':'')+'><td class="em">'+esc(r[0])+
+    '</td><td>'+esc(r[1])+' /km</td><td class="em">'+esc(r[2])+'</td></tr>';}).join("");
+})();
+
+/* ---------------- original program ---------------- */
+(function(){
+var host=document.getElementById("orig"), raw=document.getElementById("prog-data");
+if(!host||!raw)return;
+var prog; try{prog=JSON.parse(raw.textContent);}catch(e){return;}
+host.style.display="flex"; host.style.flexDirection="column"; host.style.gap="14px";
+host.innerHTML=prog.map(function(w){
+  var span=w.days.length?(w.days[0].date.slice(5).replace("-","/")+"–"+
+    w.days[w.days.length-1].date.slice(5).replace("-","/")):"";
+  return '<div class="wk"><div class="wk-h"><span class="wk-t">Vecka '+w.week+
+    ' · '+span+'</span><span class="wk-n">'+(w.km||0)+' km · '+(w.sessions||0)+' pass</span></div>'+
+    '<div class="wk-d">'+w.days.map(function(d){
+      var rest=!d.moments.length||(d.moments.length===1&&d.moments[0].type==="Vila");
+      var m=rest?"Vila":d.moments.map(function(x){
+        var s=x.type;
+        if(x.reps)s+=" "+x.reps;
+        if(x.distance)s+=" "+x.distance;
+        if(x.time)s+=" ("+x.time+")";
+        return s;}).join(" · ");
+      return '<div class="wk-r'+(rest?" rest":"")+'"><span class="a">'+esc(d.weekday||"")+
+        '</span><span class="b">'+esc(rest?"—":(d.distance||""))+'</span>'+
+        '<span class="c">'+esc(m)+'</span></div>';}).join("")+'</div></div>';}).join("");
+})();
+
+/* ---------------- countdown ---------------- */
+(function(){
+var n=document.getElementById("cd-n"); if(!n)return;
+var race=new Date(2026,7,29), now=new Date(2026,7,11);
+var real=new Date(); if(real>now&&real<race)now=real;
+var d=Math.max(0,Math.round((race-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5));
+n.textContent=d;
+})();
+})();
+</script>

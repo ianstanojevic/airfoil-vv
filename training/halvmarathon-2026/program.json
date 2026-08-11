@@ -1,0 +1,3061 @@
+[
+ {
+  "week": 1,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 30.0,
+  "days": [
+   {
+    "date": "2026-04-13",
+    "weekday": "måndag",
+    "distance": "6 km",
+    "time": "42 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-14",
+    "weekday": "tisdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-04-15",
+    "weekday": "onsdag",
+    "distance": "6 km",
+    "time": "52 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-16",
+    "weekday": "torsdag",
+    "distance": "8 km",
+    "time": "51 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "1 km",
+      "time": "5-6 min",
+      "reps": null
+     },
+     {
+      "type": "Distans medelhård fart",
+      "distance": "7 km",
+      "time": "35 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-17",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-04-18",
+    "weekday": "lördag",
+    "distance": "10 km",
+    "time": "64 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "10 km",
+      "time": "52-54 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-19",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 2,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 36.0,
+  "days": [
+   {
+    "date": "2026-04-20",
+    "weekday": "måndag",
+    "distance": "9 km",
+    "time": "52 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-42 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "6x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-21",
+    "weekday": "tisdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-04-22",
+    "weekday": "onsdag",
+    "distance": "6 km",
+    "time": "52 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-23",
+    "weekday": "torsdag",
+    "distance": "9 km",
+    "time": "56 min",
+    "moments": [
+     {
+      "type": "Distans stegrad fart",
+      "distance": "8 km",
+      "time": "39-40 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "1 km",
+      "time": "6 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-24",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-04-25",
+    "weekday": "lördag",
+    "distance": "12 km",
+    "time": "76 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "12 km",
+      "time": "63-66 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-26",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 3,
+  "total_weeks": 20,
+  "sessions": 5,
+  "km": 47.32,
+  "days": [
+   {
+    "date": "2026-04-27",
+    "weekday": "måndag",
+    "distance": "9,16 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "15x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": "3 km",
+      "time": "5-10 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "15x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-28",
+    "weekday": "tisdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-04-29",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-04-30",
+    "weekday": "torsdag",
+    "distance": "9 km",
+    "time": "56 min",
+    "moments": [
+     {
+      "type": "Distans stegrad fart",
+      "distance": "8 km",
+      "time": "39-40 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "1 km",
+      "time": "6 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-01",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-02",
+    "weekday": "lördag",
+    "distance": "14 km",
+    "time": "87 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "14 km",
+      "time": "74-77 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-03",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 4,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 40.32,
+  "days": [
+   {
+    "date": "2026-05-04",
+    "weekday": "måndag",
+    "distance": "9,16 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "15x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-05",
+    "weekday": "tisdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-06",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-07",
+    "weekday": "torsdag",
+    "distance": "10,16 km",
+    "time": "63 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Fartlek",
+      "distance": "4 km",
+      "time": "20 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-08",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-09",
+    "weekday": "lördag",
+    "distance": "15 km",
+    "time": "93 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "15 km",
+      "time": "80-83 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-10",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 5,
+  "total_weeks": 20,
+  "sessions": 3,
+  "km": 30.24,
+  "days": [
+   {
+    "date": "2026-05-11",
+    "weekday": "måndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-12",
+    "weekday": "tisdag",
+    "distance": "10,24 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervaller lång",
+      "distance": "4x1 km",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-13",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-14",
+    "weekday": "torsdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-15",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-16",
+    "weekday": "lördag",
+    "distance": "14 km",
+    "time": "86 min",
+    "moments": [
+     {
+      "type": "Långpass med fartökning",
+      "distance": "14 km",
+      "time": "72-76 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-17",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 6,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 42.32,
+  "days": [
+   {
+    "date": "2026-05-18",
+    "weekday": "måndag",
+    "distance": "11,16 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Tröskelpass",
+      "distance": "2x2,5 km",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-19",
+    "weekday": "tisdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-20",
+    "weekday": "onsdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-21",
+    "weekday": "torsdag",
+    "distance": "9,16 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "15x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-22",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-23",
+    "weekday": "lördag",
+    "distance": "16 km",
+    "time": "98 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "16 km",
+      "time": "85-88 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-24",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 7,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 43.24,
+  "days": [
+   {
+    "date": "2026-05-25",
+    "weekday": "måndag",
+    "distance": "9 km",
+    "time": "50 min",
+    "moments": [
+     {
+      "type": "Långpass medelhårt",
+      "distance": "8 km",
+      "time": "40 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "5x100 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-26",
+    "weekday": "tisdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-27",
+    "weekday": "onsdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-28",
+    "weekday": "torsdag",
+    "distance": "11,24 km",
+    "time": "66 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Snabbdistans",
+      "distance": "5 km",
+      "time": "22-23 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-29",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-05-30",
+    "weekday": "lördag",
+    "distance": "17 km",
+    "time": "104 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "17 km",
+      "time": "90-94 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-05-31",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 8,
+  "total_weeks": 20,
+  "sessions": 5,
+  "km": 50.26,
+  "days": [
+   {
+    "date": "2026-06-01",
+    "weekday": "måndag",
+    "distance": "9,02 km",
+    "time": "52 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-42 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "1x20 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "5x100 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-02",
+    "weekday": "tisdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-03",
+    "weekday": "onsdag",
+    "distance": "7 km",
+    "time": "62 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "7 km",
+      "time": "36-37 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": "7 km",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-04",
+    "weekday": "torsdag",
+    "distance": "11,24 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervaller lång",
+      "distance": "5x1 km",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-05",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-06",
+    "weekday": "lördag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-07",
+    "weekday": "söndag",
+    "distance": "16 km",
+    "time": "98 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "16 km",
+      "time": "85-88 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "week": 9,
+  "total_weeks": 20,
+  "sessions": 6,
+  "km": 58.18,
+  "days": [
+   {
+    "date": "2026-06-08",
+    "weekday": "måndag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-09",
+    "weekday": "tisdag",
+    "distance": "11,16 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Tröskelpass",
+      "distance": "2x2,5 km",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-10",
+    "weekday": "onsdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-11",
+    "weekday": "torsdag",
+    "distance": "11,02 km",
+    "time": "70 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "1x20 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Backlöpning lång backe",
+      "distance": "4 km",
+      "time": "21-22 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-12",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-13",
+    "weekday": "lördag",
+    "distance": "18 km",
+    "time": "110 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "18 km",
+      "time": "96-100 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-14",
+    "weekday": "söndag",
+    "distance": "6 km",
+    "time": "52 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "week": 10,
+  "total_weeks": 20,
+  "sessions": 3,
+  "km": 34.2,
+  "days": [
+   {
+    "date": "2026-06-15",
+    "weekday": "måndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-16",
+    "weekday": "tisdag",
+    "distance": "11,04 km",
+    "time": "71 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21-22 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Backlöpning lång backe",
+      "distance": "4 km",
+      "time": "21-22 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-17",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-18",
+    "weekday": "torsdag",
+    "distance": "9,16 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "3x5x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-19",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-20",
+    "weekday": "lördag",
+    "distance": "14 km",
+    "time": "101 min",
+    "moments": [
+     {
+      "type": "Långpass med fartökning",
+      "distance": "14 km",
+      "time": "72-76 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-21",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 11,
+  "total_weeks": 20,
+  "sessions": 5,
+  "km": 55.28,
+  "days": [
+   {
+    "date": "2026-06-22",
+    "weekday": "måndag",
+    "distance": "11,24 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervaller lång",
+      "distance": "5x1 km",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-23",
+    "weekday": "tisdag",
+    "distance": "7 km",
+    "time": "62 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "7 km",
+      "time": "36-37 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-24",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-25",
+    "weekday": "torsdag",
+    "distance": "11,04 km",
+    "time": "80 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Backlöpning lång backe",
+      "distance": "4 km",
+      "time": "21-22 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-26",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-06-27",
+    "weekday": "lördag",
+    "distance": "18 km",
+    "time": "110 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "18 km",
+      "time": "96-100 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-28",
+    "weekday": "söndag",
+    "distance": "8 km",
+    "time": "53 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-43 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "week": 12,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 34.56,
+  "days": [
+   {
+    "date": "2026-06-29",
+    "weekday": "måndag",
+    "distance": "6,28 km",
+    "time": "69 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall stege",
+      "distance": null,
+      "time": "5-4-3-2-1-1 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-06-30",
+    "weekday": "tisdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-01",
+    "weekday": "onsdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-02",
+    "weekday": "torsdag",
+    "distance": "11,24 km",
+    "time": "66 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Snabbdistans",
+      "distance": "5 km",
+      "time": "22-23 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-03",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-04",
+    "weekday": "lördag",
+    "distance": "11,04 km",
+    "time": "80 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Backlöpning lång backe",
+      "distance": "4 km",
+      "time": "21-22 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-05",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 13,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 50.04,
+  "days": [
+   {
+    "date": "2026-07-06",
+    "weekday": "måndag",
+    "distance": "11 km",
+    "time": "61 min",
+    "moments": [
+     {
+      "type": "Distans medelhård fart",
+      "distance": "10 km",
+      "time": "50-51 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "5x100 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-07",
+    "weekday": "tisdag",
+    "distance": "8 km",
+    "time": "68 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-43 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-08",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-09",
+    "weekday": "torsdag",
+    "distance": "11,04 km",
+    "time": "53 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Intervaller lång",
+      "distance": "2x5x500 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-10",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-11",
+    "weekday": "lördag",
+    "distance": "20 km",
+    "time": "120 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "20 km",
+      "time": "107-110 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-12",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 14,
+  "total_weeks": 20,
+  "sessions": 5,
+  "km": 54.6,
+  "days": [
+   {
+    "date": "2026-07-13",
+    "weekday": "måndag",
+    "distance": "11,16 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Tröskelpass",
+      "distance": "2x2,5 km",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-14",
+    "weekday": "tisdag",
+    "distance": "10,24 km",
+    "time": "79 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "10 km",
+      "time": "52-54 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-15",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-16",
+    "weekday": "torsdag",
+    "distance": "9,20 km",
+    "time": "53 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "3x5x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-17",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-18",
+    "weekday": "lördag",
+    "distance": "16 km",
+    "time": "96 min",
+    "moments": [
+     {
+      "type": "Långpass med fartökning",
+      "distance": "16 km",
+      "time": "82-86 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-19",
+    "weekday": "söndag",
+    "distance": "8 km",
+    "time": "52 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-42 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "week": 15,
+  "total_weeks": 20,
+  "sessions": 3,
+  "km": 34.04,
+  "days": [
+   {
+    "date": "2026-07-20",
+    "weekday": "måndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-21",
+    "weekday": "tisdag",
+    "distance": "8 km",
+    "time": "68 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-43 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-22",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-23",
+    "weekday": "torsdag",
+    "distance": "10,04 km",
+    "time": "74 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Backlöpning lång backe",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-24",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-25",
+    "weekday": "lördag",
+    "distance": "16 km",
+    "time": "96 min",
+    "moments": [
+     {
+      "type": "Långpass med fartökning",
+      "distance": "16 km",
+      "time": "82-86 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-26",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 16,
+  "total_weeks": 20,
+  "sessions": 5,
+  "km": 60.44,
+  "days": [
+   {
+    "date": "2026-07-27",
+    "weekday": "måndag",
+    "distance": "10,16 km",
+    "time": "48 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall stege",
+      "distance": "3x400-300-200-100 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-28",
+    "weekday": "tisdag",
+    "distance": "10 km",
+    "time": "79 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "10 km",
+      "time": "52-54 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-29",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-07-30",
+    "weekday": "torsdag",
+    "distance": "12,28 km",
+    "time": "76 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Snabbdistans",
+      "distance": "5 km",
+      "time": "22-23 min",
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "5x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-07-31",
+    "weekday": "fredag",
+    "distance": "6 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-33 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-01",
+    "weekday": "lördag",
+    "distance": "22 km",
+    "time": "131 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "22 km",
+      "time": "117-121 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-02",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 17,
+  "total_weeks": 20,
+  "sessions": 5,
+  "km": 58.48,
+  "days": [
+   {
+    "date": "2026-08-03",
+    "weekday": "måndag",
+    "distance": "11,24 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervaller lång",
+      "distance": "5x1 km",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-04",
+    "weekday": "tisdag",
+    "distance": "8 km",
+    "time": "68 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-43 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-05",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-06",
+    "weekday": "torsdag",
+    "distance": "9,20 km",
+    "time": "54 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "5x3x200 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-07",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-08",
+    "weekday": "lördag",
+    "distance": "10,04 km",
+    "time": "74 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Backlöpning lång backe",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-09",
+    "weekday": "söndag",
+    "distance": "20 km",
+    "time": "118 min",
+    "moments": [
+     {
+      "type": "Långpass lätt fart",
+      "distance": "20 km",
+      "time": "105-108 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "week": 18,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 39.44,
+  "days": [
+   {
+    "date": "2026-08-10",
+    "weekday": "måndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-11",
+    "weekday": "tisdag",
+    "distance": "11,16 km",
+    "time": "48 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall stege",
+      "distance": "4x(100-200-300-400) m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-12",
+    "weekday": "onsdag",
+    "distance": "6 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "6 km",
+      "time": "31-32 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "15 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-13",
+    "weekday": "torsdag",
+    "distance": "6,28 km",
+    "time": "69 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall stege",
+      "distance": null,
+      "time": "5-4-3-2-1-1 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-14",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-15",
+    "weekday": "lördag",
+    "distance": "16 km",
+    "time": "96 min",
+    "moments": [
+     {
+      "type": "Långpass med fartökning",
+      "distance": "16 km",
+      "time": "82-86 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-16",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 19,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 38.98,
+  "days": [
+   {
+    "date": "2026-08-17",
+    "weekday": "måndag",
+    "distance": "8,94 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "3x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "3x3x300 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-18",
+    "weekday": "tisdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-19",
+    "weekday": "onsdag",
+    "distance": "10 km",
+    "time": "74 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "10 km",
+      "time": "52-54 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-20",
+    "weekday": "torsdag",
+    "distance": "10,04 km",
+    "time": "74 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "4 km",
+      "time": "21 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "2x20 m",
+      "time": "10 min",
+      "reps": null
+     },
+     {
+      "type": "Backlöpning kort backe",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-21",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-22",
+    "weekday": "lördag",
+    "distance": "10 km",
+    "time": "62 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "1 km",
+      "time": "5-6 min",
+      "reps": null
+     },
+     {
+      "type": "Distans stegrad fart",
+      "distance": "8 km",
+      "time": "39-40 min",
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "1 km",
+      "time": "6 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-23",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ },
+ {
+  "week": 20,
+  "total_weeks": 20,
+  "sessions": 4,
+  "km": 43.24,
+  "days": [
+   {
+    "date": "2026-08-24",
+    "weekday": "måndag",
+    "distance": "7,98 km",
+    "time": "43 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "3 km",
+      "time": "16 min",
+      "reps": null
+     },
+     {
+      "type": "Löpskolning",
+      "distance": "1x20 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Intervall kort",
+      "distance": "3x3x200",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Nedjogg",
+      "distance": "3 km",
+      "time": "16-17 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-25",
+    "weekday": "tisdag",
+    "distance": "8 km",
+    "time": "57 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "8 km",
+      "time": "41-42 min",
+      "reps": null
+     },
+     {
+      "type": "Styrketräning",
+      "distance": null,
+      "time": "5 min",
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-26",
+    "weekday": "onsdag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-27",
+    "weekday": "torsdag",
+    "distance": "5,16 km",
+    "time": "38 min",
+    "moments": [
+     {
+      "type": "Distans lätt",
+      "distance": "5 km",
+      "time": "27-28 min",
+      "reps": null
+     },
+     {
+      "type": "Koordinationslopp",
+      "distance": "2x80 m",
+      "time": null,
+      "reps": null
+     },
+     {
+      "type": "Stretching",
+      "distance": null,
+      "time": "5-10 min",
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-28",
+    "weekday": "fredag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   },
+   {
+    "date": "2026-08-29",
+    "weekday": "lördag",
+    "distance": "22,10 km",
+    "time": "6 min",
+    "moments": [
+     {
+      "type": "Uppvärmning",
+      "distance": "1 km",
+      "time": "5-6 min",
+      "reps": null
+     },
+     {
+      "type": "Tävling",
+      "distance": "21,1 km",
+      "time": null,
+      "reps": null
+     }
+    ]
+   },
+   {
+    "date": "2026-08-30",
+    "weekday": "söndag",
+    "distance": "0 km",
+    "time": "0 min",
+    "moments": []
+   }
+  ]
+ }
+]
