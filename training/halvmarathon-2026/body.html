@@ -1,0 +1,241 @@
+<div class="wrap">
+
+<header class="top">
+  <div class="top-l">
+    <div class="race">Halvmarathon 2.10 · 20 veckor</div>
+    <div class="racedate">start måndag 17 augusti</div>
+  </div>
+  <div class="cd"><b id="cd-n">6</b><span>dagar<br>till v1</span></div>
+</header>
+
+<!-- ============ RECOMMENDATION ============ -->
+<section class="card verdict">
+  <div class="card-h"><h2>Vilket program</h2><span class="note">5 nivåer finns</span></div>
+  <div class="card-b">
+    <div class="vhead">
+      <span class="vtitle">Börja med 2.10</span>
+      <span class="pill p-agent"><span class="dot"></span>Rekommendation</span>
+    </div>
+    <p class="tight">Marathon.se har fem nivåer: 1.20, 1.30, 1.40, 2.10 och 2.45. Ditt problem
+      är inte motorn — det är chassit. VO2max 53 och tröskelfart 5:05/km hör hemma
+      kring 1:55. Men 7,4 km i veckan och 10,8 km som längsta pass hör hemma i 2.10.</p>
+
+    <div class="gap">
+      <div class="gap-c">
+        <span class="k">1.40 vecka 1</span>
+        <span class="v v-target">30 km</span>
+        <span class="s">4,1× ditt snitt</span>
+      </div>
+      <span class="gap-arrow">→</span>
+      <div class="gap-c">
+        <span class="k">2.10 vecka 1</span>
+        <span class="v v-good">13 km</span>
+        <span class="s">1,8× ditt snitt</span>
+      </div>
+    </div>
+
+    <p class="tight"><strong>Fyra skäl.</strong></p>
+    <ul class="trace">
+      <li><span class="tflag f-good"></span><span class="tk">Vecka 1 går att starta på</span><span class="tv">13 km · 3 pass</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">Snittvecka ≈ din bästa vecka</span><span class="tv">24 mot 25,4 km</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">Programmets lugna fart</span><span class="tv">6:15–6:30 /km</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">Långpasset slutar ändå på</span><span class="tv">21,1 km</span></li>
+    </ul>
+    <p class="tight">Den tredje raden är den viktigaste: 2.10:s "distans lätt" ligger på
+      6:15–6:30/km, vilket är <em>exakt</em> din lugna zon. Du kan köra programmet
+      som det står — ingen översättning, ingen omskalning. 1.40 kräver att varenda
+      fart och volym räknas om.</p>
+    <p class="tight">Och alla fem programmen slutar på samma långpass: 21,1 km. Det är
+      uthålligheten som avgör en halvmara, och 2.10 tar dig dit lika säkert som 1.40 —
+      bara utan att gå sönder på vägen.</p>
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section class="card">
+  <div class="card-h"><h2>Programmen mot din nivå</h2><span class="note">veckovolym</span></div>
+  <div class="card-b">
+    <div class="legend">
+      <span class="lg"><i style="background:var(--data)"></i>2.10</span>
+      <span class="lg"><i style="background:var(--muted)"></i>1.40</span>
+      <span class="lg"><i style="background:var(--crit)"></i>Din nivå i dag</span>
+    </div>
+    <svg class="chart" id="c-cmp" viewBox="0 0 420 168" role="img"
+      aria-label="Veckovolym över 20 veckor. 2.10 stiger från 13 till som mest 34 km. 1.40 ligger mellan 30 och 60 km. Ditt nuvarande snitt är 7,4 km och din bästa vecka 25,4 km."></svg>
+    <p class="tight">Det röda fältet är där du varit i sommar — snitt 7,4 km, bästa vecka 25,4.
+      2.10:s kurva växer <em>ur</em> det fältet. 1.40 börjar ovanför din bästa vecka någonsin
+      och stannar där i tjugo veckor.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Nivå</th><th>Fart</th><th>V1</th><th>Snitt</th><th>Topp</th><th>Totalt</th></tr></thead>
+        <tbody id="cmptbl"></tbody>
+      </table>
+    </div>
+    <p class="tight">1.20 och 1.30 startar på 40–44 km och snittar 56–61 km i veckan.
+      De är inte i närheten. 2.45 startar på 8 km med gånginslag — du är förbi det,
+      du springer redan 10 km i sträck.</p>
+  </div>
+</section>
+
+<!-- ============ 2.10 CURVE ============ -->
+<section class="card">
+  <div class="card-h"><h2>2.10 över 20 veckor</h2><span class="note">483 km · 17 aug – 3 jan</span></div>
+  <div class="card-b">
+    <div class="legend">
+      <span class="lg"><i style="background:var(--agent)"></i>Långpass</span>
+      <span class="lg"><i style="background:var(--crit)"></i>Ditt rekord i dag · 10,8 km</span>
+    </div>
+    <svg class="chart" id="c-long" viewBox="0 0 420 140" role="img"
+      aria-label="Långpassets längd i 2.10-programmet, från 5 km vecka 1 till 18 km som längst, och 21,1 km på måldagen."></svg>
+    <p class="tight" id="longtext"></p>
+    <p class="tight">Programmet är oförändrat — jag har inte skalat om något den här gången.
+      Det är hela poängen med att välja rätt nivå: 2.10 är redan byggt för någon som
+      står där du står.</p>
+  </div>
+</section>
+
+<!-- ============ WEEK 0 + 1 ============ -->
+<section class="card">
+  <div class="card-h"><h2>Innan v1 · 11–16 aug</h2><span class="note">12 km · 3 pass</span></div>
+  <div class="card-b">
+    <p class="tight">Du har inte sprungit på sex dagar. Den här veckan finns bara för att göra
+      måndagens start till en icke-händelse.</p>
+    <div class="days" id="week0"></div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-h"><h2>Vecka 1 · 17–23 aug</h2><span class="note">13 km · 3 pass</span></div>
+  <div class="card-b">
+    <div class="swap">
+      <div class="swap-row swap-was">
+        <span class="swap-k">Programmet säger</span>
+        <span class="swap-v">Distans med gång · 4 + 4 + 5 km i 7:45/km</span>
+      </div>
+      <div class="swap-row swap-is">
+        <span class="swap-k">Enda ändringen agenten gör</span>
+        <span class="swap-v">Spring hela vägen · 6:15–6:45/km</span>
+        <span class="swap-m">2.10 börjar med gånginslag för nybörjare. Du springer redan
+          10,8 km i sträck — hoppa över gången, behåll distanserna.</span>
+      </div>
+    </div>
+    <div class="days" id="week1"></div>
+  </div>
+</section>
+
+<!-- ============ PACE ============ -->
+<section class="card">
+  <div class="card-h"><h2>Farterna stämmer redan</h2><span class="note">tröskel 5:05</span></div>
+  <div class="card-b">
+    <div class="tw">
+      <table class="fixed">
+        <thead><tr><th class="c1">2.10 säger</th><th class="c2">Din zon</th><th class="c3">Passar?</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td class="em">Distans lätt 6:15–6:30</td><td>6:00–6:30</td><td>Ja — kör som det står</td></tr>
+          <tr class="hi"><td class="em">Långpass 6:30–6:40</td><td>6:00–6:30</td><td>Ja — övre änden</td></tr>
+          <tr><td class="em">Distans med gång 7:45</td><td>6:30–7:07</td><td>Spring istället, utan gång</td></tr>
+          <tr><td class="em">Intervaller 6×500 m</td><td>4:28–4:47</td><td>Kör i din zon, inte 2.10-fart</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="zones" id="zones"></div>
+    <p class="tight">Tre av fyra passtyper kan köras rakt av. Bara på de korta, snabba
+      passen ska du springa fortare än programmet anger — där ligger din motor redan före,
+      och det finns ingen anledning att träna långsammare än du kan.</p>
+  </div>
+</section>
+
+<!-- ============ OUTCOME ============ -->
+<section class="card verdict">
+  <div class="card-h"><h2>Vad du landar på</h2><span class="note">måldag 2 jan</span></div>
+  <div class="card-b">
+    <p class="tight"><strong>2:10 är inte ditt tak — det är programmets namn.</strong>
+      Coros prognos i dag är 1:55, och din tröskelfart 5:05/km räcker redan till betydligt
+      snabbare än 6:10/km. Målet med att välja 2.10 är volymen, inte tiden.</p>
+    <ul class="trace">
+      <li><span class="tflag f-good"></span><span class="tk">Följer programmet &gt; 85 %</span><span class="tv">1:48–1:55</span></li>
+      <li><span class="tflag f-warn"></span><span class="tk">Följer 60–70 %</span><span class="tv">1:56–2:05</span></li>
+      <li><span class="tflag f-crit"></span><span class="tk">Som hittills · 16 %</span><span class="tv">oförändrat</span></li>
+    </ul>
+    <p class="tight">Och det verkliga utfallet ligger inte i tiden. Efter tjugo veckor på
+      2.10 är din nya normalvecka 24 km istället för 7. <strong>Då är 1.40:s program
+      startbart på riktigt</strong> — dess vecka 1 på 30 km blir 1,25× din nivå istället
+      för 4,1×. Det är så du kommer åt 1.40: inte genom att börja där, utan genom att
+      förtjäna ingången.</p>
+  </div>
+</section>
+
+<!-- ============ SIGNALS ============ -->
+<section class="card">
+  <div class="card-h"><h2>Utgångsläget</h2><span class="note">COROS R4 · live</span></div>
+  <div class="card-b">
+    <div class="tiles">
+      <div class="tile"><span class="k">Återhämtning</span><span class="v">100<span class="u">%</span></span><span class="s s-good">tung träning ok</span></div>
+      <div class="tile"><span class="k">Vilopuls</span><span class="v">55<span class="u">bpm</span></span><span class="s s-good">baslinje 54</span></div>
+      <div class="tile"><span class="k">Belastn.kvot</span><span class="v">0,47</span><span class="s s-warn">avtagande</span></div>
+      <div class="tile"><span class="k">VO2max</span><span class="v">53</span><span class="s s-good">nivå 74</span></div>
+      <div class="tile"><span class="k">Tröskelfart</span><span class="v">5:05</span><span class="s s-mut">/km</span></div>
+      <div class="tile"><span class="k">HM-prognos</span><span class="v">1:55</span><span class="s s-mut">Coros</span></div>
+    </div>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--data)"></i>Korttidsbelastning</span>
+      <span class="lg"><i style="background:var(--agent)"></i>Långtidsbelastning</span>
+    </div>
+    <svg class="chart" id="c-load" viewBox="0 0 420 130" role="img"
+      aria-label="Belastning senaste 28 dagarna. Korttidsbelastning faller från 53 den 31 juli till 19 den 11 augusti, långtidsbelastning ligger stilla runt 40."></svg>
+    <p class="tight">Långtidsbelastningen ligger på 40 och korttidsbelastningen har fallit till 19 —
+      utvilad, inte trött. Rätt läge att börja i. Den långa kurvan är siffran som ska klättra
+      de kommande tjugo veckorna; den, inte farten på enskilda pass, är måttet på att
+      programmet biter.</p>
+  </div>
+</section>
+
+<!-- ============ AGENT ============ -->
+<section class="card">
+  <div class="card-h"><h2>Så jobbar agenten</h2><span class="note">per pass · per vecka</span></div>
+  <div class="card-b">
+    <p class="tight">Programmet körs som det står. Agenten lägger sig bara i när dagsformen
+      säger något annat än kalendern.</p>
+    <div class="tw">
+      <table class="fixed">
+        <thead><tr><th class="c1">Signal</th><th class="c2">Tröskel</th><th class="c3">Åtgärd</th></tr></thead>
+        <tbody>
+          <tr><td class="em">Vilopuls</td><td>≥ 59 bpm</td><td>Kvalitetspass blir lugn distans</td></tr>
+          <tr><td class="em">Vilopuls</td><td>≥ 59 två dgr</td><td>Vila, passet flyttas fram</td></tr>
+          <tr><td class="em">Återhämtning</td><td>&lt; 60 %</td><td>Halverad intervallvolym</td></tr>
+          <tr><td class="em">Återhämtning</td><td>&lt; 40 %</td><td>Vila</td></tr>
+          <tr><td class="em">Belastn.kvot</td><td>&gt; 1,50</td><td>Veckovolym ned 25 %</td></tr>
+          <tr><td class="em">Sömnpoäng</td><td>&lt; 50 två nätter</td><td>Veckans kvalitetspass stryks</td></tr>
+          <tr class="hi"><td class="em">Missade pass</td><td>≥ 2 på en vecka</td><td>Veckan upprepas innan planen går vidare</td></tr>
+          <tr><td class="em">Långpass</td><td>—</td><td>Flyttas, aldrig staplat inom 4 dagar</td></tr>
+          <tr><td class="em">Ny tröskelfart</td><td>ändring &gt; 5 s/km</td><td>Alla zoner räknas om</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="caveat">
+      <b>Vad agenten inte kan göra</b>
+      Coros-kopplingen är läsbehörig. Jag läser återhämtning, belastning, vilopuls, sömn och
+      varje pass du laddar upp — men MCP:n har inga skrivverktyg, så passen kan inte pushas ut
+      till klockan automatiskt. Du får lägga in dem manuellt, eller be mig läsa av formen och
+      skriva veckans pass inför varje måndag.
+    </div>
+  </div>
+</section>
+
+<details>
+  <summary>Hela 2.10-programmet · 20 veckor · 483 km</summary>
+  <div class="det-b">
+    <p class="tight">Datumen är satta från start 17 augusti. Innehållet är marathon.se:s
+      program oförändrat.</p>
+    <div id="plan210"></div>
+  </div>
+</details>
+
+<footer>
+  <div>Grundprogram: trana.marathon.se · adidas Stockholm Halvmarathon 2.10 · 20 veckor</div>
+  <div>Fysiologi &amp; dagsform: COROS MCP (läsbehörig) · profil Iansta · COROS R4</div>
+  <div>Data avläst 11 augusti 2026 · vecka 1 startar 17 augusti · måldag 2 januari 2027</div>
+  <div>1.20 vecka 4 anger 211 km på 67 min på marathon.se — uppenbart källfel, räknat som 11 km.</div>
+</footer>
+
+</div>

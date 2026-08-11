@@ -62,13 +62,15 @@ def parse_week(s, wk):
     out["days"] = days
     return out
 
-weeks = []
-for w in range(1, 21):
-    s = fetch(w)
-    pw = parse_week(s, w)
-    weeks.append(pw)
-    print(f"week {pw['week']}: {pw['sessions']} pass, {pw['km']} km, {len(pw['days'])} dagar, "
-          f"{pw['days'][0]['date'] if pw['days'] else '?'} .. {pw['days'][-1]['date'] if pw['days'] else '?'}")
-
-json.dump(weeks, open("program.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-print("TOTAL km:", sum(w["km"] or 0 for w in weeks))
+if __name__ == "__main__":
+    weeks = []
+    for w in range(1, 21):
+        s = fetch(w)
+        pw = parse_week(s, w)
+        weeks.append(pw)
+        print(f"week {pw['week']}: {pw['sessions']} pass, {pw['km']} km, {len(pw['days'])} dagar, "
+              f"{pw['days'][0]['date'] if pw['days'] else '?'} .. {pw['days'][-1]['date'] if pw['days'] else '?'}")
+    
+    json.dump(weeks, open("program.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("TOTAL km:", sum(w["km"] or 0 for w in weeks))
+    
