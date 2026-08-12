@@ -7,13 +7,18 @@ sessionen skapades från det här repot.
 
 En mobil dashboard som kopplar ihop två källor:
 
-1. **Grundprogrammet** — marathon.se:s 20-veckorsprogram "adidas Stockholm
-   Halvmarathon 1.40" (881 km), skrapat i sin helhet.
+1. **Programmet** — marathon.se:s 20-veckorsprogram "adidas Stockholm
+   Halvmarathon 2.10" (483 km), skrapat i sin helhet. Övriga fyra nivåer är
+   också skrapade, som underlag för nivåvalet nedan.
 2. **Faktisk fysiologi** — COROS MCP: återhämtning, träningsbelastning, vilopuls,
    sömn och varje uppladdat pass.
 
-Programmet körs som en 20-veckors uppbyggnad från **17 augusti 2026**, måldag
-lördag 2 januari 2027. Loppet 29 augusti 2026 springs inte.
+Programmet är igång. Vecka 1 är **10–16 augusti 2026** och påbörjas torsdag
+13 augusti — veckans tisdagspass ligger före startbeslutet och hoppas över, så
+vecka 1 blir 9 km på två pass i stället för 13 km på tre. Vecka 2 börjar
+måndag 17 augusti och därifrån följs programmet rakt av.
+
+Måldag: **lördag 26 december 2026**, 21,1 km. Loppet 29 augusti 2026 springs inte.
 
 ## Nivåval
 
@@ -48,10 +53,13 @@ nybörjare — de springs hela, eftersom 10,8 km i sträck redan är gjort.
 | 5–8 | Löpning i sträck | 17 → 26 km | Gånginslagen bort. Intervaller, fartlek, snabbdistans. Långpass når 9 km. |
 | 9–14 | Långpass och styrka | 22 → 34 km | Långpasset blir eget pass. Backlöpning, löpskolning. Volymtopp v13. |
 | 15–18 | Tröskel och distans | 26 → 34 km | Tröskelpass från v15, långpass med fartökning från v17. Längsta passet 18 km i v18. |
-| 19–20 | Nedtrappning | 22 → måldag | Volym ned, skärpa kvar. 2 januari: 21,1 km. |
+| 19–20 | Nedtrappning | 22 → måldag | Volym ned, skärpa kvar. 26 december: 21,1 km. |
 
 Långpasset går 5 → 18 km och passerar nuvarande rekord (10,8 km) i vecka 11.
 Största enskilda steget är 3 km.
+
+Vecka 20 landar 21–27 december, alltså måldag på annandag jul. En extra lugn
+vecka i december flyttar den till 2 januari om det passar bättre.
 
 `plan20.py` innehåller en tidigare omskalning av 1.40-programmet (15 → 48 km
 över 20 veckor) och sparas som referens; den används inte.
@@ -64,7 +72,7 @@ Största enskilda steget är 3 km.
 | `scrape_all.py` | Hämtar alla fem nivåer → `all_levels.json` |
 | `all_levels.json` | Samtliga fem program, pass för pass |
 | `compare.json` | Nivåjämförelse: veckovolym, pass, långpass per nivå |
-| `plan210.json` | 2.10 som 20-veckorsplan med datum från 17 aug |
+| `plan210.json` | 2.10 som 20-veckorsplan med datum från 10 aug |
 | `plan20.py` / `plan20.json` | Tidigare omskalning av 1.40 — referens |
 | `derive.py` | Tempozoner ur tröskelfart, plan mot faktiskt, mellantider |
 | `body.html` / `app.js` | Dashboardens markup och logik |
@@ -86,16 +94,14 @@ JSON-datan; den incheckade filen är redan hopbyggd och öppnas direkt.
 Marathon.se anger 211 km på 67 minuter för 1.20 vecka 4, måndag. Det är
 uppenbart fel och räknas som 11 km i jämförelsen ovan.
 
-`dashboard.html` har datan inbäddad och öppnas direkt i en webbläsare.
-
 ## Begränsning
 
 COROS-MCP:n är läsbehörig. Passen kan inte pushas ut till klockan automatiskt —
-de får läggas in manuellt, eller så läses formen av och planen skrivs om inför
-varje pass.
+de får läggas in manuellt, eller så läses formen av och veckans pass skrivs
+inför varje måndag.
 
 ## Datum
 
-Data avläst 11 augusti 2026. Tempozoner är härledda ur uppmätt tröskelfart
-(5:05/km), inte ur måltiden — det är skillnaden mot grundprogrammet, där
-farterna är satta för någon som redan springer 1.40.
+Coros-data avläst 12 augusti 2026: återhämtning 100 %, belastningskvot 0,40,
+VO2max 53, tröskelfart 5:05/km. Tempozonerna är härledda ur tröskelfarten,
+inte ur måltiden.

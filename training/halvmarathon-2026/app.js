@@ -7,7 +7,7 @@ var LOAD=[["7-15",32,41],["7-16",28,40],["7-17",24,40],["7-18",41,42],["7-19",35
 ["7-21",34,41],["7-22",29,40],["7-23",25,40],["7-24",21,40],["7-25",18,40],["7-26",16,40],
 ["7-27",25,41],["7-28",24,40],["7-29",34,42],["7-30",29,41],["7-31",53,44],["8-1",45,43],
 ["8-2",43,43],["8-3",45,43],["8-4",38,42],["8-5",48,44],["8-6",41,43],["8-7",35,42],
-["8-8",30,41],["8-9",26,40],["8-10",22,40],["8-11",19,40]];
+["8-8",30,41],["8-9",26,40],["8-10",22,40],["8-11",19,40],["8-12",16,40]];
 
 var ZONES=[
  ["Återhämtning","6:30–7:07","Konversationstempo. Ska kännas nästan för lätt.",0],
@@ -22,30 +22,21 @@ var PHASES=[
  [5,8,"Löpning i sträck","17 → 26 km","Gånginslagen försvinner. Första intervallerna, fartlek och snabbdistans. Långpasset når 9 km."],
  [9,14,"Långpass och styrka","22 → 34 km","Långpasset blir ett eget pass. Backlöpning och löpskolning in. Volymtoppen nås i vecka 13."],
  [15,18,"Tröskel och distans","26 → 34 km","Tröskelpass från vecka 15, långpass med fartökning från 17. Längsta passet, 18 km, ligger i vecka 18."],
- [19,20,"Nedtrappning","22 → måldag","Volymen ned, skärpan kvar. Lördag 2 januari: 21,1 km."]];
-
-var WEEK0=[
- {wd:"tis",dn:11,k:"easy",today:1,ti:"Lugn distans",km:"3 km",
-  m:"6:30–7:00/km. Kortare och lugnare än du tror behövs.",
-  w:"Sex dagars uppehåll — första passet tillbaka ska vara nästan pinsamt lätt."},
- {wd:"ons",dn:12,k:"rest",ti:"Vila",km:"",m:"",w:""},
- {wd:"tors",dn:13,k:"easy",ti:"Lugn distans",km:"4 km",m:"6:15–6:45/km.",w:""},
- {wd:"fre",dn:14,k:"rest",ti:"Vila",km:"",m:"",w:""},
- {wd:"lör",dn:15,k:"easy",ti:"Lugn distans",km:"5 km",m:"6:15–6:45/km.",w:""},
- {wd:"sön",dn:16,k:"rest",ti:"Vila",km:"",m:"Programmet börjar i morgon.",w:""}];
+ [19,20,"Nedtrappning","22 → måldag","Volymen ned, skärpan kvar. Lördag 26 december: 21,1 km."]];
 
 var WEEK1=[
- {wd:"mån",dn:17,k:"rest",ti:"Vila",km:"",m:"",w:""},
- {wd:"tis",dn:18,k:"easy",ti:"Lugn distans",km:"4 km",
-  m:"6:15–6:45/km + stretching 5–10 min.",w:""},
- {wd:"ons",dn:19,k:"rest",ti:"Vila",km:"",m:"",w:""},
- {wd:"tors",dn:20,k:"easy",ti:"Lugn distans",km:"4 km",
-  m:"6:15–6:45/km + stretching 5–10 min.",w:""},
- {wd:"fre",dn:21,k:"rest",ti:"Vila",km:"",m:"",w:""},
- {wd:"lör",dn:22,k:"key",ti:"Långpass",km:"5 km",
+ {wd:"mån",dn:10,k:"rest",ti:"Vila",km:"",m:"",w:""},
+ {wd:"tis",dn:11,k:"past",ti:"Lugn distans",km:"4 km",
+  m:"Passerat — låg före beslutet att börja.",w:""},
+ {wd:"ons",dn:12,k:"rest",today:1,ti:"Vila",km:"",m:"Idag. Ha klockan på dig i natt.",w:""},
+ {wd:"tors",dn:13,k:"next",ti:"Lugn distans · första passet",km:"4 km",
+  m:"6:15–6:45/km, cirka 26 min + stretching 5–10 min.",
+  w:"Programmet anger gånginslag för nybörjare — spring hela, behåll distansen."},
+ {wd:"fre",dn:14,k:"rest",ti:"Vila",km:"",m:"",w:""},
+ {wd:"lör",dn:15,k:"key",ti:"Långpass",km:"5 km",
   m:"6:15–6:45/km + stretching 10 min.",
-  w:"Veckans enda pass som måste bli av. Halva ditt rekord — det ska kännas lätt."},
- {wd:"sön",dn:23,k:"rest",ti:"Vila",km:"",m:"",w:""}];
+  w:"Veckans pass som måste bli av. Knappt halva ditt rekord — det ska kännas lätt."},
+ {wd:"sön",dn:16,k:"rest",ti:"Vila",km:"",m:"Vecka 2 börjar i morgon.",w:""}];
 
 function el(t,c,x){var e=document.createElementNS("http://www.w3.org/2000/svg",t);
   if(c)e.setAttribute("class",c); if(x)for(var k in x)e.setAttribute(k,x[k]); return e;}
@@ -141,11 +132,11 @@ function path(idx,kind){
   var last=LOAD.length-1;
   svg.appendChild(el("circle","dot-"+kind+" cap",{cx:X(last),cy:Y(LOAD[last][idx]),r:4}));}
 path(2,"agent"); path(1,"data");
-[0,9,17,27].forEach(function(i){
-  svg.appendChild(txt(X(i),H-6,LOAD[i][0].replace("-","/"),"axis",i===0?"start":(i===27?"end":"middle")));});
+[0,9,17,28].forEach(function(i){
+  svg.appendChild(txt(X(i),H-6,LOAD[i][0].replace("-","/"),"axis",i===0?"start":(i===28?"end":"middle")));});
 var lastL=LOAD[LOAD.length-1];
-svg.appendChild(txt(X(27)-7,Y(lastL[1])+4,lastL[1],"axis halo lbl-data","end",10.5));
-svg.appendChild(txt(X(27)-7,Y(lastL[2])-7,lastL[2],"axis halo lbl-agent","end",10.5));
+svg.appendChild(txt(X(28)-7,Y(lastL[1])+4,lastL[1],"axis halo lbl-data","end",10.5));
+svg.appendChild(txt(X(28)-7,Y(lastL[2])-7,lastL[2],"axis halo lbl-agent","end",10.5));
 })();
 
 /* ---------- day lists ---------- */
@@ -158,7 +149,7 @@ function days(host,arr){
       (d.km?'<span class="day-km">'+esc(d.km)+'</span>':'')+'</div>'+
       (d.m?'<span class="day-m">'+esc(d.m)+'</span>':'')+
       (d.w?'<span class="day-why">'+esc(d.w)+'</span>':'')+'</div></div>';}).join("");}
-days("week0",WEEK0); days("week1",WEEK1);
+days("week1",WEEK1);
 
 /* ---------- phases + zones ---------- */
 (function(){
@@ -193,12 +184,11 @@ P.forEach(function(w,i){
 host.innerHTML=html;
 })();
 
-/* ---------- countdown ---------- */
+/* ---------- countdown to goal day ---------- */
 (function(){
 var n=document.getElementById("cd-n"); if(!n)return;
-var s=new Date(2026,7,17), now=new Date();
-var d=Math.round((s-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
-if(!(d>0)){n.textContent="1"; n.parentNode.querySelector("span").innerHTML="vecka<br>igång"; return;}
-n.textContent=d;
+var g=new Date(2026,11,26), now=new Date();
+var d=Math.round((g-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+n.textContent=d>0?d:0;
 })();
 })();
