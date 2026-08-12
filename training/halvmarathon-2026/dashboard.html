@@ -1,0 +1,676 @@
+<title>adidas Stockholm Halvmarathon 2.10</title>
+<style>
+:root{
+  --ground:#E9EDF2; --surface:#FFFFFF; --surface-2:#F3F6F9; --sunken:#DFE5EC;
+  --ink:#0E1720; --ink-2:#3A4A59; --muted:#657585; --line:#D3DBE4; --line-2:#C2CCD8;
+  --data:#2563D9; --data-soft:#2563D91F; --agent:#D97A06; --agent-soft:#D97A061F;
+  --good:#17754A; --good-soft:#17754A1A; --warn:#A96206; --warn-soft:#A962061A;
+  --crit:#B32D22; --crit-soft:#B32D221A;
+  --font-data:ui-monospace,"SF Mono",SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace;
+  --font-text:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --r:10px; --shadow:0 1px 2px rgba(14,23,32,.06),0 1px 8px rgba(14,23,32,.04);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#080C11; --surface:#131B24; --surface-2:#18222D; --sunken:#0D141B;
+    --ink:#E4ECF4; --ink-2:#B4C3D2; --muted:#8494A5; --line:#233040; --line-2:#2E3E51;
+    --data:#4C8DF6; --data-soft:#4C8DF626; --agent:#C9821C; --agent-soft:#C9821C26;
+    --good:#3FA877; --good-soft:#3FA87722; --warn:#D99136; --warn-soft:#D9913622;
+    --crit:#E5695C; --crit-soft:#E5695C22;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 1px 10px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#080C11; --surface:#131B24; --surface-2:#18222D; --sunken:#0D141B;
+  --ink:#E4ECF4; --ink-2:#B4C3D2; --muted:#8494A5; --line:#233040; --line-2:#2E3E51;
+  --data:#4C8DF6; --data-soft:#4C8DF626; --agent:#C9821C; --agent-soft:#C9821C26;
+  --good:#3FA877; --good-soft:#3FA87722; --warn:#D99136; --warn-soft:#D9913622;
+  --crit:#E5695C; --crit-soft:#E5695C22;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 1px 10px rgba(0,0,0,.25);
+}
+
+*{box-sizing:border-box}
+body{margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--font-text); font-size:15px; line-height:1.5; -webkit-text-size-adjust:100%}
+.wrap{max-width:460px; margin:0 auto; padding:0 12px 40px; display:flex; flex-direction:column; gap:14px}
+
+.top{position:sticky; top:0; z-index:20; margin:0 -12px 0; padding:10px 16px 11px;
+  background:var(--surface); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:12px}
+.top-l{display:flex; flex-direction:column; gap:2px; min-width:0}
+.race{font-family:var(--font-data); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.racedate{font-family:var(--font-data); font-size:13px; font-weight:600; color:var(--ink)}
+.cd{display:flex; align-items:baseline; gap:5px; flex:none}
+.cd b{font-family:var(--font-data); font-size:30px; font-weight:700; line-height:1;
+  letter-spacing:-.03em; font-variant-numeric:tabular-nums; color:var(--data)}
+.cd span{font-family:var(--font-data); font-size:10px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted)}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  box-shadow:var(--shadow); overflow:hidden}
+.card-h{padding:12px 14px 0; display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.card-b{padding:11px 14px 14px; display:flex; flex-direction:column; gap:11px}
+h2{font-family:var(--font-data); font-size:11px; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted); margin:0}
+.card-h .note{font-family:var(--font-data); font-size:10.5px; color:var(--muted);
+  font-variant-numeric:tabular-nums; text-align:right; flex:none}
+p{margin:0; color:var(--ink-2); font-size:14px}
+p.tight{font-size:13.5px; line-height:1.48}
+strong{color:var(--ink); font-weight:650}
+
+.verdict{border-left:3px solid var(--agent)}
+.vhead{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.vtitle{font-family:var(--font-data); font-size:16px; font-weight:700; letter-spacing:-.01em; color:var(--ink)}
+.gap{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px;
+  background:var(--sunken); border-radius:8px; padding:11px 12px}
+.gap-c{display:flex; flex-direction:column; gap:3px; min-width:0}
+.gap-c .k{font-family:var(--font-data); font-size:9.5px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted)}
+.gap-c .v{font-family:var(--font-data); font-size:19px; font-weight:700;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.1}
+.gap-c .s{font-family:var(--font-data); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums}
+.gap-arrow{font-family:var(--font-data); font-size:15px; color:var(--muted)}
+.v-target{color:var(--muted)} .v-real{color:var(--agent)} .v-good{color:var(--good)}
+
+.pill{display:inline-flex; align-items:center; gap:5px; padding:3px 8px; border-radius:20px;
+  font-family:var(--font-data); font-size:10px; font-weight:600; letter-spacing:.05em;
+  text-transform:uppercase; white-space:nowrap; border:1px solid transparent}
+.p-good{background:var(--good-soft); color:var(--good); border-color:var(--good)}
+.p-agent{background:var(--agent-soft); color:var(--agent); border-color:var(--agent)}
+.dot{width:6px; height:6px; border-radius:50%; background:currentColor; flex:none}
+
+.tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+.tile{background:var(--surface-2); border:1px solid var(--line); border-radius:8px;
+  padding:9px 9px 8px; display:flex; flex-direction:column; gap:2px; min-width:0}
+.tile .k{font-family:var(--font-data); font-size:9px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.tile .v{font-family:var(--font-data); font-size:18px; font-weight:700; line-height:1.15;
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums; color:var(--ink)}
+.tile .u{font-size:10px; font-weight:500; color:var(--muted); margin-left:1px}
+.tile .s{font-family:var(--font-data); font-size:9.5px; font-variant-numeric:tabular-nums}
+.s-good{color:var(--good)} .s-warn{color:var(--warn)} .s-mut{color:var(--muted)}
+
+.swap{display:flex; flex-direction:column; border:1px solid var(--line);
+  border-radius:8px; overflow:hidden}
+.swap-row{padding:9px 11px; display:flex; flex-direction:column; gap:3px}
+.swap-was{background:var(--surface-2); border-bottom:1px dashed var(--line-2)}
+.swap-is{background:var(--agent-soft)}
+.swap-k{font-family:var(--font-data); font-size:9px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted)}
+.swap-was .swap-v{font-family:var(--font-data); font-size:13px; color:var(--muted)}
+.swap-is .swap-v{font-family:var(--font-data); font-size:14px; font-weight:650; color:var(--ink)}
+.swap-m{font-size:12.5px; color:var(--ink-2); line-height:1.45}
+
+.trace{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;
+  border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.trace li{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:9px;
+  padding:7px 11px; background:var(--surface-2); border-bottom:1px solid var(--line)}
+.trace li:last-child{border-bottom:0}
+.trace .tk{font-family:var(--font-data); font-size:11px; color:var(--ink-2); white-space:nowrap}
+.trace .tv{font-family:var(--font-data); font-size:11px; font-variant-numeric:tabular-nums;
+  color:var(--muted); text-align:right; white-space:nowrap}
+.tflag{width:7px; height:7px; border-radius:50%; flex:none}
+.f-good{background:var(--good)} .f-warn{background:var(--warn)} .f-crit{background:var(--crit)}
+
+.chart{width:100%; display:block; overflow:visible}
+.legend{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+.lg{display:inline-flex; align-items:center; gap:5px; font-family:var(--font-data);
+  font-size:10.5px; color:var(--ink-2)}
+.lg i{width:11px; height:3px; border-radius:2px; flex:none}
+.lg i.sq{height:9px; width:9px; border-radius:2px}
+.axis{font-family:var(--font-data); font-size:9px; fill:var(--muted)}
+.gridline{stroke:var(--line); stroke-width:1}
+.zeroline{stroke:var(--line-2); stroke-width:1}
+.ln{fill:none; stroke-width:2; stroke-linejoin:round; stroke-linecap:round}
+.ln-data{stroke:var(--data)} .ln-agent{stroke:var(--agent)}
+.ln-ref{stroke:var(--muted); stroke-width:1.5; stroke-dasharray:4 3; fill:none}
+.dot-data{fill:var(--data); stroke:var(--data)} .dot-agent{fill:var(--agent); stroke:var(--agent)}
+.cap{stroke:var(--surface); stroke-width:2}
+.bar-data{fill:var(--data)} .bar-soft{fill:var(--data); opacity:.42}
+.divider{stroke:var(--line-2); stroke-width:1; stroke-dasharray:2 3} .bar-agent{fill:var(--agent)} .bar-down{fill:var(--agent); opacity:.45}
+.area-agent{fill:var(--agent); opacity:.13}
+.band{fill:var(--data); opacity:.08}
+.band-crit{fill:var(--crit); opacity:.10}
+.lbl-data{fill:var(--data)} .lbl-agent{fill:var(--agent)} .lbl-crit{fill:var(--crit)}
+.ref-crit{stroke:var(--crit); stroke-width:1.5; stroke-dasharray:4 3}
+.halo{paint-order:stroke; stroke:var(--surface); stroke-width:3px; stroke-linejoin:round}
+
+.blocks{display:flex; flex-direction:column; gap:12px}
+.block-h{display:flex; align-items:baseline; justify-content:space-between; gap:8px;
+  padding-bottom:2px; border-bottom:1px solid var(--line)}
+.block-t{font-family:var(--font-data); font-size:11.5px; font-weight:650; letter-spacing:.03em;
+  text-transform:uppercase; color:var(--ink)}
+.block-n{font-family:var(--font-data); font-size:10px; color:var(--muted); font-variant-numeric:tabular-nums}
+.days{display:flex; flex-direction:column; gap:6px; margin-top:7px}
+.day{display:grid; grid-template-columns:38px 1fr; gap:10px; padding:8px 10px 8px 9px;
+  background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--line-2);
+  border-radius:7px}
+.day-d{display:flex; flex-direction:column; align-items:center; justify-content:center}
+.day-d .wd{font-family:var(--font-data); font-size:9px; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--muted)}
+.day-d .dn{font-family:var(--font-data); font-size:16px; font-weight:700; line-height:1.1;
+  font-variant-numeric:tabular-nums; color:var(--ink)}
+.day-c{display:flex; flex-direction:column; gap:3px; min-width:0}
+.day-top{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
+.day-t{font-family:var(--font-data); font-size:13px; font-weight:650; color:var(--ink)}
+.day-km{font-family:var(--font-data); font-size:11px; color:var(--muted);
+  font-variant-numeric:tabular-nums; white-space:nowrap}
+.day-m{font-size:12.5px; color:var(--ink-2); line-height:1.45}
+.day-why{font-size:11.5px; color:var(--agent); line-height:1.42; display:flex; gap:5px}
+.day-why::before{content:"⤷"; flex:none; opacity:.8}
+.d-rest{border-left-color:var(--line-2); opacity:.72}
+.d-easy{border-left-color:var(--data)}
+.d-key{border-left-color:var(--agent); background:var(--agent-soft)}
+.d-race{border-left-color:var(--crit); background:var(--crit-soft)}
+.d-today{outline:2px solid var(--data); outline-offset:1px}
+.d-past{border-left-color:var(--line-2); opacity:.5}
+.d-past .day-t,.d-past .day-km,.d-past .day-d .dn{text-decoration:line-through;
+  text-decoration-thickness:1px}
+.d-next{border-left-color:var(--good); background:var(--good-soft);
+  outline:2px solid var(--good); outline-offset:1px}
+.d-next .day-t{color:var(--good)}
+.next{border-left:3px solid var(--good)}
+.next .v-good{color:var(--good)}
+
+.tw{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line); border-radius:8px}
+table{border-collapse:collapse; width:100%; font-family:var(--font-data); font-size:11.5px}
+th{text-align:left; font-weight:600; font-size:9.5px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted); padding:8px 10px; background:var(--surface-2);
+  border-bottom:1px solid var(--line); white-space:nowrap}
+td{padding:7px 10px; border-bottom:1px solid var(--line); color:var(--ink-2);
+  font-variant-numeric:tabular-nums; white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.em{color:var(--ink); font-weight:650}
+tr.hi td{background:var(--agent-soft)}
+tr.dim td{color:var(--muted)}
+table.fixed{table-layout:fixed}
+table.fixed td,table.fixed th{white-space:normal; overflow-wrap:anywhere}
+table.fixed .c1{width:32%} table.fixed .c2{width:24%} table.fixed .c3{width:44%}
+table.plan .cw{width:34px} table.plan .cd{width:56px}
+table.plan td{padding:6px 7px; font-size:11px}
+table.plan th{padding:7px 7px}
+table.plan td.fx{white-space:normal; font-family:var(--font-text); font-size:11.5px;
+  line-height:1.35; color:var(--muted)}
+
+.zones{display:flex; flex-direction:column; gap:7px}
+.zone{display:grid; grid-template-columns:1fr auto; gap:4px 10px; padding:8px 10px;
+  background:var(--surface-2); border:1px solid var(--line); border-radius:7px;
+  border-left:3px solid var(--data)}
+.zone-n{font-family:var(--font-data); font-size:12px; font-weight:650; color:var(--ink)}
+.zone-p{font-family:var(--font-data); font-size:12.5px; font-weight:700;
+  font-variant-numeric:tabular-nums; color:var(--data); white-space:nowrap}
+.zone-d{grid-column:1/-1; font-size:11.5px; color:var(--muted); line-height:1.4}
+.z-race{border-left-color:var(--agent)} .z-race .zone-p{color:var(--agent)}
+
+.loop{display:flex; flex-direction:column}
+.step{display:grid; grid-template-columns:auto 1fr; gap:10px; padding:0 0 13px; position:relative}
+.step:last-child{padding-bottom:0}
+.step::before{content:""; position:absolute; left:10px; top:22px; bottom:0; width:1px; background:var(--line-2)}
+.step:last-child::before{display:none}
+.step-n{width:21px; height:21px; border-radius:50%; background:var(--data); color:#fff;
+  font-family:var(--font-data); font-size:10px; font-weight:700; display:flex;
+  align-items:center; justify-content:center; flex:none; z-index:1}
+.step-c{display:flex; flex-direction:column; gap:2px; padding-top:1px}
+.step-t{font-family:var(--font-data); font-size:12px; font-weight:650; color:var(--ink)}
+.step-d{font-size:12.5px; color:var(--ink-2); line-height:1.45}
+.step-src{font-family:var(--font-data); font-size:10.5px; color:var(--muted); margin-top:1px}
+
+details{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  box-shadow:var(--shadow); overflow:hidden}
+summary{padding:12px 14px; cursor:pointer; display:flex; align-items:center;
+  justify-content:space-between; gap:10px; list-style:none;
+  font-family:var(--font-data); font-size:11px; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; font-size:15px; font-weight:400; color:var(--muted); flex:none}
+details[open] summary::after{content:"−"}
+details[open] summary{border-bottom:1px solid var(--line)}
+.det-b{padding:12px 14px 14px; display:flex; flex-direction:column; gap:12px}
+.wk{display:flex; flex-direction:column; gap:5px}
+.wk-h{display:flex; align-items:baseline; justify-content:space-between; gap:8px; font-family:var(--font-data)}
+.wk-t{font-size:11.5px; font-weight:650; color:var(--ink)}
+.wk-n{font-size:10px; color:var(--muted); font-variant-numeric:tabular-nums}
+.wk-d{display:flex; flex-direction:column; gap:2px}
+.wk-r{display:grid; grid-template-columns:52px 46px 1fr; gap:8px; font-family:var(--font-data);
+  font-size:10.5px; padding:3px 0; border-bottom:1px solid var(--line)}
+.wk-r:last-child{border-bottom:0}
+.wk-r .a{color:var(--muted); font-variant-numeric:tabular-nums}
+.wk-r .b{color:var(--ink-2); font-variant-numeric:tabular-nums; text-align:right}
+.wk-r .c{color:var(--ink-2); white-space:normal; line-height:1.4}
+.wk-r.rest .c,.wk-r.rest .a,.wk-r.rest .b{color:var(--muted); opacity:.75}
+
+footer{font-family:var(--font-data); font-size:10px; color:var(--muted); line-height:1.6;
+  padding:2px 4px; display:flex; flex-direction:column; gap:3px}
+.caveat{background:var(--warn-soft); border:1px solid var(--warn); border-radius:8px;
+  padding:10px 12px; font-size:12.5px; color:var(--ink-2); line-height:1.5}
+.caveat b{color:var(--warn); font-family:var(--font-data); font-size:10px; letter-spacing:.07em;
+  text-transform:uppercase; display:block; margin-bottom:3px}
+:focus-visible{outline:2px solid var(--data); outline-offset:2px; border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+@media (max-width:360px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .gap{grid-template-columns:1fr; gap:9px}
+  .gap-arrow{display:none}
+}
+
+.phases{display:flex; flex-direction:column; gap:7px}
+.phase{background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--data);
+  border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:3px}
+.phase-h{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+.phase-n{font-family:var(--font-data); font-size:9.5px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.phase-t{font-family:var(--font-data); font-size:12.5px; font-weight:650; color:var(--ink)}
+.phase-k{font-family:var(--font-data); font-size:10.5px; color:var(--data);
+  font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap}
+.phase-d{font-size:11.5px; color:var(--muted); line-height:1.42}
+.phase-bar{font-family:var(--font-data); font-size:10px; font-weight:650; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--data); background:var(--data-soft);
+  border-radius:5px; padding:5px 9px; margin:4px 0 2px}
+#plan210{display:flex; flex-direction:column; gap:11px}
+.wk-light .wk-t::after{content:" · lättare vecka"; color:var(--muted); font-weight:400}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="top-l">
+    <div class="race">Stockholm Halvmarathon · 2.10</div>
+    <div class="racedate">vecka 1 av 20 · igång</div>
+  </div>
+  <div class="cd"><b id="cd-n">136</b><span>dagar<br>till måldag</span></div>
+</header>
+
+<!-- ============ NEXT SESSION ============ -->
+<section class="card next">
+  <div class="card-h"><h2>Nästa pass · imorgon</h2><span class="note">torsdag 13 aug</span></div>
+  <div class="card-b">
+    <div class="vhead">
+      <span class="vtitle">Lugn distans · 4 km</span>
+      <span class="pill p-good"><span class="dot"></span>Kör</span>
+    </div>
+    <div class="gap">
+      <div class="gap-c">
+        <span class="k">Fart</span>
+        <span class="v v-good">6:15–6:45</span>
+        <span class="s">per km</span>
+      </div>
+      <span class="gap-arrow">·</span>
+      <div class="gap-c">
+        <span class="k">Tid</span>
+        <span class="v v-target">~26</span>
+        <span class="s">min + stretching</span>
+      </div>
+    </div>
+    <p class="tight">Programmet skriver "distans med gång" — det är till för nybörjare.
+      Du springer redan 10,8 km i sträck, så <strong>spring hela vägen</strong> och behåll
+      distansen. Farten ska kännas för lätt: du ska kunna prata hela passet.</p>
+    <ul class="trace">
+      <li><span class="tflag f-good"></span><span class="tk">Återhämtning</span><span class="tv">100 % · tung träning ok</span></li>
+      <li><span class="tflag f-good"></span><span class="tk">Belastningskvot</span><span class="tv">0,40 · under 0,80</span></li>
+      <li><span class="tflag f-warn"></span><span class="tk">Vilopuls</span><span class="tv">saknas sedan 9 aug</span></li>
+    </ul>
+    <p class="tight">Alla signaler är gröna. <strong>Ha klockan på dig i natt</strong> —
+      vilopulsen har inte registrerats sedan 9 augusti, och det är den siffran agenten
+      läser först när något är på väg åt fel håll.</p>
+  </div>
+</section>
+
+<!-- ============ WEEK 1 ============ -->
+<section class="card">
+  <div class="card-h"><h2>Vecka 1 · 10–16 aug</h2><span class="note">9 km kvar · 2 pass</span></div>
+  <div class="card-b">
+    <div class="days" id="week1"></div>
+    <p class="tight">Vecka 1 var redan igång när du bestämde dig — tisdagens 4 km ligger bakom oss.
+      Det gör ingenting: 9 km på två pass är en mjukare ingång än programmets 13 km, och du
+      kommer in på rätt veckodagar direkt. <strong>Vecka 2 börjar måndag 17 augusti</strong>
+      och därifrån följer du programmet rakt av.</p>
+  </div>
+</section>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="card verdict">
+  <div class="card-h"><h2>Programmet</h2><span class="note">10 aug – 27 dec</span></div>
+  <div class="card-b">
+    <div class="tiles">
+      <div class="tile"><span class="k">Längd</span><span class="v">20<span class="u">v</span></span><span class="s s-mut">10 aug – 27 dec</span></div>
+      <div class="tile"><span class="k">Total volym</span><span class="v">483<span class="u">km</span></span><span class="s s-mut">snitt 24 km/v</span></div>
+      <div class="tile"><span class="k">Pass/vecka</span><span class="v">3–4</span><span class="s s-mut">topp 34 km</span></div>
+      <div class="tile"><span class="k">Långpass</span><span class="v">5→18</span><span class="s s-mut">km</span></div>
+      <div class="tile"><span class="k">Måldag</span><span class="v">26 dec</span><span class="s s-mut">lördag</span></div>
+      <div class="tile"><span class="k">Distans</span><span class="v">21,1<span class="u">km</span></span><span class="s s-mut">halvmarathon</span></div>
+    </div>
+    <p class="tight">Programmet bygger i fem faser. Varje fas introducerar en ny typ av pass
+      och låter den sätta sig innan nästa kommer.</p>
+    <div class="phases" id="phases"></div>
+    <div class="caveat">
+      <b>Måldagen ligger på annandag jul</b>
+      Att starta nu i stället för på måndag flyttar hela kalendern en vecka framåt, och
+      vecka 20 landar 21–27 december. Vill du hellre ha måldagen 2 januari lägger jag in
+      en extra lugn vecka någonstans i december — säg till, så gör jag det.
+    </div>
+  </div>
+</section>
+
+<!-- ============ CURVES ============ -->
+<section class="card">
+  <div class="card-h"><h2>Uppbyggnaden</h2><span class="note">20 veckor</span></div>
+  <div class="card-b">
+    <svg class="chart" id="c-vol" viewBox="0 0 420 158" role="img"
+      aria-label="Veckovolym över 20 veckor, från 13 km vecka 1 till som mest 34 km vecka 13, med lättare veckor inlagda och nedtrappning i vecka 19."></svg>
+    <p class="tight">Volymen växer i vågor — tre veckor upp, en lättare. Toppen ligger på
+      34 km i vecka 13 och 15. Det är i de lättare veckorna anpassningen faktiskt sker,
+      så de är lika viktiga som de tunga.</p>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--agent)"></i>Långpass</span>
+      <span class="lg"><i style="background:var(--crit)"></i>Ditt rekord i dag · 10,8 km</span>
+    </div>
+    <svg class="chart" id="c-long" viewBox="0 0 420 140" role="img"
+      aria-label="Långpassets längd per vecka, från 5 km vecka 1 till 18 km vecka 18, och 21,1 km på måldagen."></svg>
+    <p class="tight" id="longtext"></p>
+  </div>
+</section>
+
+<!-- ============ PACE ============ -->
+<section class="card">
+  <div class="card-h"><h2>Dina farter</h2><span class="note">tröskel 5:05 /km</span></div>
+  <div class="card-b">
+    <p class="tight">Zonerna är räknade ur din uppmätta tröskelfart. Programmets lugna pass
+      ligger redan i din lugna zon — dem kör du precis som de står. På de korta, snabba
+      passen håller du din egen zon.</p>
+    <div class="zones" id="zones"></div>
+    <p class="tight">Zonerna räknas om varje gång Coros uppdaterar tröskelfarten.
+      Blir du snabbare flyttas alla pass med.</p>
+  </div>
+</section>
+
+<!-- ============ OUTCOME ============ -->
+<section class="card verdict">
+  <div class="card-h"><h2>Vad du landar på</h2><span class="note">måldag 26 dec</span></div>
+  <div class="card-b">
+    <p class="tight">Coros prognos i dag är <strong>1:55</strong>, byggd på VO2max 53 och
+      tröskelfart 5:05/km. Din motor ligger alltså redan före programmets namn — det du
+      saknar är kilometrarna i benen, och det är precis vad de här tjugo veckorna lägger till.</p>
+    <ul class="trace">
+      <li><span class="tflag f-good"></span><span class="tk">Följer programmet &gt; 85 %</span><span class="tv">1:48–1:55</span></li>
+      <li><span class="tflag f-warn"></span><span class="tk">Följer 60–70 %</span><span class="tv">1:56–2:05</span></li>
+      <li><span class="tflag f-crit"></span><span class="tk">Följer under 30 %</span><span class="tv">oförändrat</span></li>
+    </ul>
+    <p class="tight">Det avgörande är följsamheten, inte talangen. Därför är veckorna korta
+      i början — två pass, 9 km. Ett program du fullföljer slår ett optimalt program
+      du hoppar av.</p>
+  </div>
+</section>
+
+<!-- ============ SIGNALS ============ -->
+<section class="card">
+  <div class="card-h"><h2>Utgångsläge</h2><span class="note">COROS R4 · 12 aug</span></div>
+  <div class="card-b">
+    <div class="tiles">
+      <div class="tile"><span class="k">Återhämtning</span><span class="v">100<span class="u">%</span></span><span class="s s-good">tung träning ok</span></div>
+      <div class="tile"><span class="k">Vilopuls</span><span class="v">55<span class="u">bpm</span></span><span class="s s-warn">senast 9 aug</span></div>
+      <div class="tile"><span class="k">Belastn.kvot</span><span class="v">0,40</span><span class="s s-warn">avtagande</span></div>
+      <div class="tile"><span class="k">VO2max</span><span class="v">53</span><span class="s s-good">nivå 74</span></div>
+      <div class="tile"><span class="k">Tröskelfart</span><span class="v">5:05</span><span class="s s-mut">/km</span></div>
+      <div class="tile"><span class="k">HM-prognos</span><span class="v">1:55</span><span class="s s-mut">Coros</span></div>
+    </div>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--data)"></i>Korttidsbelastning</span>
+      <span class="lg"><i style="background:var(--agent)"></i>Långtidsbelastning</span>
+    </div>
+    <svg class="chart" id="c-load" viewBox="0 0 420 130" role="img"
+      aria-label="Belastning senaste 29 dagarna. Korttidsbelastning faller från 53 den 31 juli till 16 den 12 augusti, långtidsbelastning ligger stilla runt 40."></svg>
+    <p class="tight">Korttidsbelastningen har fallit till 16 medan långtidsbelastningen ligger
+      kvar på 40. Kvoten 0,40 betyder utvilad — men också att formen tappar långsamt.
+      Att börja i morgon är rätt tajmat. Den långa kurvan är siffran som ska klättra de
+      kommande tjugo veckorna; den, inte farten på enskilda pass, är måttet på att
+      programmet biter.</p>
+  </div>
+</section>
+
+<!-- ============ AGENT ============ -->
+<section class="card">
+  <div class="card-h"><h2>Så anpassas programmet</h2><span class="note">per pass</span></div>
+  <div class="card-b">
+    <p class="tight">Programmet körs som det står. Agenten lägger sig bara i när dagsformen
+      säger något annat än kalendern — och varje ändring har en utlösande signal.</p>
+    <div class="tw">
+      <table class="fixed">
+        <thead><tr><th class="c1">Signal</th><th class="c2">Tröskel</th><th class="c3">Åtgärd</th></tr></thead>
+        <tbody>
+          <tr><td class="em">Vilopuls</td><td>≥ 59 bpm</td><td>Kvalitetspass blir lugn distans</td></tr>
+          <tr><td class="em">Vilopuls</td><td>≥ 59 två dgr</td><td>Vila, passet flyttas fram</td></tr>
+          <tr><td class="em">Återhämtning</td><td>&lt; 60 %</td><td>Halverad intervallvolym</td></tr>
+          <tr><td class="em">Återhämtning</td><td>&lt; 40 %</td><td>Vila</td></tr>
+          <tr><td class="em">Belastn.kvot</td><td>&gt; 1,50</td><td>Veckovolym ned 25 %</td></tr>
+          <tr><td class="em">Sömnpoäng</td><td>&lt; 50 två nätter</td><td>Veckans kvalitetspass stryks</td></tr>
+          <tr class="hi"><td class="em">Missade pass</td><td>≥ 2 på en vecka</td><td>Veckan upprepas innan planen går vidare</td></tr>
+          <tr><td class="em">Långpass</td><td>—</td><td>Flyttas, aldrig staplat inom 4 dagar</td></tr>
+          <tr><td class="em">Ny tröskelfart</td><td>ändring &gt; 5 s/km</td><td>Alla zoner räknas om</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="caveat">
+      <b>Vad agenten inte kan göra</b>
+      Coros-kopplingen är läsbehörig. Jag läser återhämtning, belastning, vilopuls, sömn och
+      varje pass du laddar upp — men MCP:n har inga skrivverktyg, så passen kan inte pushas ut
+      till klockan automatiskt. Du får lägga in dem manuellt, eller be mig läsa av formen och
+      skriva veckans pass inför varje måndag.
+    </div>
+  </div>
+</section>
+
+<!-- ============ FULL PROGRAM ============ -->
+<section class="card">
+  <div class="card-h"><h2>Hela programmet</h2><span class="note">20 veckor · 483 km</span></div>
+  <div class="card-b">
+    <p class="tight">Vecka för vecka, pass för pass. Lättare veckor är markerade.</p>
+    <div id="plan210"></div>
+  </div>
+</section>
+
+<footer>
+  <div>Program: trana.marathon.se · adidas Stockholm Halvmarathon 2.10 · 20 veckor</div>
+  <div>Fysiologi &amp; dagsform: COROS MCP (läsbehörig) · profil Iansta · COROS R4</div>
+  <div>Start torsdag 13 augusti 2026 · vecka 1 = 10–16 aug · måldag lördag 26 december</div>
+</footer>
+
+</div>
+
+<script id="plan-data" type="application/json">[[1,"10/8–16/8",13.0,3,5.0,[["måndag","—","Vila","2026-08-10",0],["tisdag","4 km","Distans med gång 4 km (31 min) · Stretching (5-10 min)","2026-08-11",1],["onsdag","—","Vila","2026-08-12",0],["torsdag","4 km","Distans med gång 4 km (31 min) · Stretching (5-10 min)","2026-08-13",2],["fredag","—","Vila","2026-08-14",0],["lördag","5 km","Distans med gång 5 km (39 min) · Stretching (10 min)","2026-08-15",0],["söndag","—","Vila","2026-08-16",0]]],[2,"17/8–23/8",14.0,3,5.0,[["måndag","—","Vila","2026-08-17",0],["tisdag","4 km","Distans med gång 4 km (31 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-08-18",0],["onsdag","—","Vila","2026-08-19",0],["torsdag","5 km","Distans med gång 5 km (39 min) · Stretching (10 min)","2026-08-20",0],["fredag","—","Vila","2026-08-21",0],["lördag","5 km","Distans med gång 5 km (36 min) · Stretching (5-10 min)","2026-08-22",0],["söndag","—","Vila","2026-08-23",0]]],[3,"24/8–30/8",16.0,3,6.0,[["måndag","—","Vila","2026-08-24",0],["tisdag","5 km","Distans med gång 5 km (38 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-08-25",0],["onsdag","—","Vila","2026-08-26",0],["torsdag","5 km","Distans med gång 5 km (38 min) · Stretching (5-10 min)","2026-08-27",0],["fredag","—","Vila","2026-08-28",0],["lördag","6 km","Distans med gång 6 km (42 min) · Stretching (10 min)","2026-08-29",0],["söndag","—","Vila","2026-08-30",0]]],[4,"31/8–6/9",19.2,3,7.5,[["måndag","—","Vila","2026-08-31",0],["tisdag","6 km","Distans med gång 6 km (42 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-09-01",0],["onsdag","—","Vila","2026-09-02",0],["torsdag","5,68 km","Distans med gång 5,5 km (37 min) · Koordinationslopp 3x60 m · Stretching (5-10 min)","2026-09-03",0],["fredag","—","Vila","2026-09-04",0],["lördag","7,50 km","Distans med gång 7,5 km (52 min) · Stretching (5-10 min)","2026-09-05",0],["söndag","—","Vila","2026-09-06",0]]],[5,"7/9–13/9",17.1,3,7.0,[["måndag","—","Vila","2026-09-07",0],["tisdag","6,12 km","Uppvärmning 2,5 km (16 min) · Koordinationslopp 2x60 m · Intervall kort 10x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-09-08",0],["onsdag","—","Vila","2026-09-09",0],["torsdag","4 km","Distans lätt 4 km (26 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-09-10",0],["fredag","—","Vila","2026-09-11",0],["lördag","7 km","Distans lätt 7 km (45 min) · Stretching (5-10 min)","2026-09-12",0],["söndag","—","Vila","2026-09-13",0]]],[6,"14/9–20/9",19.1,3,8.0,[["måndag","—","Vila","2026-09-14",0],["tisdag","7,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Fartlek 4 km (24-25 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)","2026-09-15",0],["onsdag","—","Vila","2026-09-16",0],["torsdag","4 km","Distans lätt 4 km (25-26 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-09-17",0],["fredag","—","Vila","2026-09-18",0],["lördag","8 km","Distans lätt 8 km (52 min) · Stretching (5-10 min)","2026-09-19",0],["söndag","—","Vila","2026-09-20",0]]],[7,"21/9–27/9",26.2,4,8.1,[["måndag","—","Vila","2026-09-21",0],["tisdag","6,12 km","Uppvärmning 2,5 km (16 min) · Koordinationslopp 2x60 m · Intervall kort 10x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-09-22",0],["onsdag","—","Vila","2026-09-23",0],["torsdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Snabbdistans 5 km (30 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)","2026-09-24",0],["fredag","—","Vila","2026-09-25",0],["lördag","4 km","Distans lätt 4 km (26 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-09-26",0],["söndag","8 km","Distans lätt 8 km (52 min) · Stretching (5-10 min)","2026-09-27",0]]],[8,"28/9–4/10",21.1,3,9.0,[["måndag","—","Vila","2026-09-28",0],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-09-29",0],["onsdag","—","Vila","2026-09-30",0],["torsdag","7,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervaller lång 6x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-10-01",0],["fredag","—","Vila","2026-10-02",0],["lördag","9 km","Distans lätt 9 km (58-60 min) · Stretching (5-10 min)","2026-10-03",0],["söndag","—","Vila","2026-10-04",0]]],[9,"5/10–11/10",22.1,3,10.0,[["måndag","—","Vila","2026-10-05",0],["tisdag","5,12 km","Distans stegrad fart 5 km (31 min) · Koordinationslopp 2x60 m · Allmän styrketräning (15 min) · Stretching (10 min)","2026-10-06",0],["onsdag","—","Vila","2026-10-07",0],["torsdag","7,02 km","Uppvärmning 3 km (19-20 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-10-08",0],["fredag","—","Vila","2026-10-09",0],["lördag","10 km","Långpass lätt fart 10 km (66-67 min) · Stretching (10 min)","2026-10-10",0],["söndag","—","Vila","2026-10-11",0]]],[10,"12/10–18/10",26.9,4,10.0,[["måndag","—","Vila","2026-10-12",0],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (15 min) · Stretching (10 min)","2026-10-13",0],["onsdag","—","Vila","2026-10-14",0],["torsdag","5,92 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervall kort 3x4x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-10-15",0],["fredag","—","Vila","2026-10-16",0],["lördag","6,02 km","Uppvärmning 2 km (13 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-10-17",0],["söndag","10 km","Långpass lätt fart 10 km (66-68 min) · Stretching (5-10 min)","2026-10-18",0]]],[11,"19/10–25/10",23.0,3,11.0,[["måndag","—","Vila","2026-10-19",0],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (15 min) · Stretching (10 min)","2026-10-20",0],["onsdag","—","Vila","2026-10-21",0],["torsdag","7,04 km","Uppvärmning 3 km (19-20 min) · Löpskolning 2x20 m (10 min) · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-10-22",0],["fredag","—","Vila","2026-10-23",0],["lördag","11 km","Långpass lätt fart 11 km (72-74 min) · Stretching (5-10 min)","2026-10-24",0],["söndag","—","Vila","2026-10-25",0]]],[12,"26/10–1/11",31.3,4,12.0,[["måndag","—","Vila","2026-10-26",0],["tisdag","7,04 km","Uppvärmning 3 km (19-20 min) · Löpskolning 2x20 m (10 min) · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Styrketräning (15 min) · Stretching (10 min)","2026-10-27",0],["onsdag","—","Vila","2026-10-28",0],["torsdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Snabbdistans 5 km (29-30 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)","2026-10-29",0],["fredag","—","Vila","2026-10-30",0],["lördag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Stretching (5-10 min)","2026-10-31",0],["söndag","12 km","Långpass lätt fart 12 km (79-81 min) · Stretching (5-10 min)","2026-11-01",0]]],[13,"2/11–8/11",34.3,4,13.0,[["måndag","—","Vila","2026-11-02",0],["tisdag","10 km","Distans lätt 10 km (65-67 min) · Allmän styrketräning (15 min) · Stretching (10 min)","2026-11-03",0],["onsdag","—","Vila","2026-11-04",0],["torsdag","7,16 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m · Koordinationslopp 2x60 m · Intervaller lång 6x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-11-05",0],["fredag","—","Vila","2026-11-06",0],["lördag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Stretching (5-10 min)","2026-11-07",0],["söndag","13 km","Långpass lätt fart 13 km (85-87 min) · Stretching (5-10 min)","2026-11-08",0]]],[14,"9/11–15/11",24.0,3,13.0,[["måndag","—","Vila","2026-11-09",0],["tisdag","5 km","Distans lätt 5 km (32-33 min) · Allmän styrketräning (15 min) · Stretching (10 min)","2026-11-10",0],["onsdag","—","Vila","2026-11-11",0],["torsdag","5,96 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervall kort 4x3x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-11-12",0],["fredag","—","Vila","2026-11-13",0],["lördag","13 km","Långpass lätt fart 13 km (85-87 min) · Stretching (5-10 min)","2026-11-14",0],["söndag","—","Vila","2026-11-15",0]]],[15,"16/11–22/11",34.3,4,15.0,[["måndag","—","Vila","2026-11-16",0],["tisdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Tröskelpass 2x2 km · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-11-17",0],["onsdag","—","Vila","2026-11-18",0],["torsdag","7,02 km","Uppvärmning 3 km (19-20 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-11-19",0],["fredag","—","Vila","2026-11-20",0],["lördag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Allmän styrketräning (15 min) · Stretching (10 min)","2026-11-21",0],["söndag","15 km","Långpass lätt fart 15 km (99-101 min) · Stretching (10 min)","2026-11-22",0]]],[16,"23/11–29/11",31.3,3,16.0,[["måndag","—","Vila","2026-11-23",0],["tisdag","7,12 km","Uppvärmning 3 km (19-20 min) · Koordinationslopp 2x60 m · Intervall kort 2x5x200 m · Nedjogg 2 km (13-14 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-11-24",0],["onsdag","—","Vila","2026-11-25",0],["torsdag","8,16 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Snabbdistans 5 km (28-29 min) · Nedjogg 1 km (6-7 min) · Stretching (5-10 min)","2026-11-26",0],["fredag","—","Vila","2026-11-27",0],["lördag","—","Vila","2026-11-28",0],["söndag","16 km","Långpass lätt fart 16 km (105-108 min) · Stretching (5-10 min)","2026-11-29",0]]],[17,"30/11–6/12",32.1,4,15.0,[["måndag","—","Vila","2026-11-30",0],["tisdag","7,14 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervaller lång 6x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-12-01",0],["onsdag","—","Vila","2026-12-02",0],["torsdag","5,96 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervall kort 4x3x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-12-03",0],["fredag","—","Vila","2026-12-04",0],["lördag","4 km","Distans lätt 4 km (26 min) · Allmän styrketräning (15 min) · Stretching (10 min)","2026-12-05",0],["söndag","15 km","Långpass med fartökning 15 km (96-98 min) · Stretching (5-10 min)","2026-12-06",0]]],[18,"7/12–13/12",26.3,3,18.0,[["måndag","—","Vila","2026-12-07",0],["tisdag","4,18 km","Distans lätt 4 km (26 min) · Koordinationslopp 3x60 m · Allmän styrketräning (15 min) · Stretching (10 min)","2026-12-08",0],["onsdag","—","Vila","2026-12-09",0],["torsdag","4,16 km","Uppvärmning 2 km (13 min) · Löpskolning 2x20 m (10 min) · Koordinationslopp 2x60 m · Intervall stege (18 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-12-10",0],["fredag","—","Vila","2026-12-11",0],["lördag","18 km","Långpass lätt fart 18 km (118-121 min) · Stretching (5-10 min)","2026-12-12",0],["söndag","—","Vila","2026-12-13",0]]],[19,"14/12–20/12",22.3,3,8.1,[["måndag","—","Vila","2026-12-14",0],["tisdag","8,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Tröskelpass 2x2 km · Nedjogg 2 km (13-14 min) · Allmän styrketräning (10 min) · Stretching (10 min)","2026-12-15",0],["onsdag","—","Vila","2026-12-16",0],["torsdag","7,02 km","Uppvärmning 3 km (19-20 min) · Löpskolning 1x20 m · Backlöpning 2 km (12-14 min) · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-12-17",0],["fredag","—","Vila","2026-12-18",0],["lördag","7,12 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervaller lång 2x3x500 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-12-19",0],["söndag","—","Vila","2026-12-20",0]]],[20,"21/12–27/12",29.5,3,21.1,[["måndag","5,32 km","Uppvärmning 2 km (13 min) · Koordinationslopp 2x60 m · Intervall kort 2x4x150 m · Nedjogg 2 km (13-14 min) · Stretching (5-10 min)","2026-12-21",0],["tisdag","—","Vila","2026-12-22",0],["onsdag","—","Vila","2026-12-23",0],["torsdag","3,12 km","Distans lätt 3 km (20 min) · Koordinationslopp 2x60 m · Stretching (5-10 min)","2026-12-24",0],["fredag","—","Vila","2026-12-25",0],["lördag","21,10 km","Tävling 21,1 km","2026-12-26",0],["söndag","—","Vila","2026-12-27",0]]]]</script>
+<script>
+(function(){
+"use strict";
+/* Marks wear classes from CSS tokens — never resolved literals — so a theme
+   switch after load repaints the charts along with everything else. */
+
+var LOAD=[["7-15",32,41],["7-16",28,40],["7-17",24,40],["7-18",41,42],["7-19",35,41],["7-20",30,40],
+["7-21",34,41],["7-22",29,40],["7-23",25,40],["7-24",21,40],["7-25",18,40],["7-26",16,40],
+["7-27",25,41],["7-28",24,40],["7-29",34,42],["7-30",29,41],["7-31",53,44],["8-1",45,43],
+["8-2",43,43],["8-3",45,43],["8-4",38,42],["8-5",48,44],["8-6",41,43],["8-7",35,42],
+["8-8",30,41],["8-9",26,40],["8-10",22,40],["8-11",19,40],["8-12",16,40]];
+
+var ZONES=[
+ ["Återhämtning","6:30–7:07","Konversationstempo. Ska kännas nästan för lätt.",0],
+ ["Lugn distans","6:00–6:30","Grundpasset. Här ligger nästan hela programmet.",1],
+ ["Snabbdistans","5:29–5:51","Stegrad fart och snabbdistans.",0],
+ ["Tröskel","4:56–5:14","Tröskelpassen från vecka 15.",0],
+ ["Intervall (VO2)","4:28–4:47","Långa intervaller, 500 m och uppåt.",0],
+ ["Koordination / kort","4:04–4:22","60–300 m, avspänd snabbhet.",0]];
+
+var PHASES=[
+ [1,4,"Grundvänjning","13 → 19 km","Tre pass i veckan. Styrka från vecka 2, koordinationslopp från vecka 4. Långpasset går 5 → 7,5 km."],
+ [5,8,"Löpning i sträck","17 → 26 km","Gånginslagen försvinner. Första intervallerna, fartlek och snabbdistans. Långpasset når 9 km."],
+ [9,14,"Långpass och styrka","22 → 34 km","Långpasset blir ett eget pass. Backlöpning och löpskolning in. Volymtoppen nås i vecka 13."],
+ [15,18,"Tröskel och distans","26 → 34 km","Tröskelpass från vecka 15, långpass med fartökning från 17. Längsta passet, 18 km, ligger i vecka 18."],
+ [19,20,"Nedtrappning","22 → måldag","Volymen ned, skärpan kvar. Lördag 26 december: 21,1 km."]];
+
+var WEEK1=[
+ {wd:"mån",dn:10,k:"rest",ti:"Vila",km:"",m:"",w:""},
+ {wd:"tis",dn:11,k:"past",ti:"Lugn distans",km:"4 km",
+  m:"Passerat — låg före beslutet att börja.",w:""},
+ {wd:"ons",dn:12,k:"rest",today:1,ti:"Vila",km:"",m:"Idag. Ha klockan på dig i natt.",w:""},
+ {wd:"tors",dn:13,k:"next",ti:"Lugn distans · första passet",km:"4 km",
+  m:"6:15–6:45/km, cirka 26 min + stretching 5–10 min.",
+  w:"Programmet anger gånginslag för nybörjare — spring hela, behåll distansen."},
+ {wd:"fre",dn:14,k:"rest",ti:"Vila",km:"",m:"",w:""},
+ {wd:"lör",dn:15,k:"key",ti:"Långpass",km:"5 km",
+  m:"6:15–6:45/km + stretching 10 min.",
+  w:"Veckans pass som måste bli av. Knappt halva ditt rekord — det ska kännas lätt."},
+ {wd:"sön",dn:16,k:"rest",ti:"Vila",km:"",m:"Vecka 2 börjar i morgon.",w:""}];
+
+function el(t,c,x){var e=document.createElementNS("http://www.w3.org/2000/svg",t);
+  if(c)e.setAttribute("class",c); if(x)for(var k in x)e.setAttribute(k,x[k]); return e;}
+function txt(x,y,s,c,anc,sz){var t=el("text",c||"axis",{x:x,y:y});
+  if(anc)t.setAttribute("text-anchor",anc); if(sz)t.setAttribute("font-size",sz);
+  t.textContent=s; return t;}
+function sv(n){return String(n).replace(".",",");}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(m){
+  return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];});}
+function J(id){var n=document.getElementById(id);
+  try{return JSON.parse(n.textContent);}catch(e){return null;}}
+
+var P=J("plan-data")||[];                    // [w, label, km, sess, long, days[]]
+var KM=P.map(function(r){return r[2];});
+var LG=P.map(function(r){return r[4];});
+function phaseOf(w){for(var i=0;i<PHASES.length;i++) if(w>=PHASES[i][0]&&w<=PHASES[i][1]) return PHASES[i][2]; return "";}
+function isLight(i){return i>0 && KM[i]<KM[i-1];}
+
+/* ---------- weekly volume ---------- */
+(function(){
+var svg=document.getElementById("c-vol"); if(!svg||!KM.length)return;
+var W=420,H=158,L=26,R=8,T=12,B=32, iw=W-L-R, ih=H-T-B, n=KM.length, max=40;
+var band=iw/n, bw=band*0.64;
+function Y(v){return T+ih-v/max*ih;}
+function Xc(i){return L+i*band+band/2;}
+[0,10,20,30,40].forEach(function(g){
+  svg.appendChild(el("line","gridline",{x1:L,x2:W-R,y1:Y(g),y2:Y(g)}));
+  svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
+/* phase dividers */
+PHASES.slice(1).forEach(function(p){
+  var x=L+(p[0]-1)*band;
+  svg.appendChild(el("line","divider",{x1:x,x2:x,y1:T,y2:T+ih}));});
+KM.forEach(function(v,i){
+  svg.appendChild(el("rect",isLight(i)?"bar-soft":"bar-data",
+    {x:(Xc(i)-bw/2).toFixed(1),y:Y(v).toFixed(1),width:bw.toFixed(1),
+     height:Math.max(2,ih-(Y(v)-T)).toFixed(1),rx:2}));});
+svg.appendChild(el("line","zeroline",{x1:L,x2:W-R,y1:Y(0),y2:Y(0)}));
+var pk=KM.indexOf(Math.max.apply(null,KM.slice(0,19)));
+svg.appendChild(txt(Xc(pk),Y(KM[pk])-6,sv(KM[pk])+" km","axis halo lbl-data","middle",9.5));
+svg.appendChild(txt(Xc(0),Y(KM[0])-6,sv(KM[0]),"axis halo lbl-data","middle",9.5));
+[0,4,9,14,19].forEach(function(i){
+  svg.appendChild(txt(Xc(i),H-14,"v"+(i+1),"axis","middle"));});
+svg.appendChild(txt(L+iw/2,H-2,"veckovolym, km · streck = fasgräns","axis","middle"));
+})();
+
+/* ---------- long run ---------- */
+(function(){
+var svg=document.getElementById("c-long"); if(!svg||!LG.length)return;
+var W=420,H=140,L=26,R=8,T=12,B=28, iw=W-L-R, ih=H-T-B, n=LG.length, max=24;
+function X(i){return L+i*(iw/(n-1));}
+function Y(v){return T+ih-v/max*ih;}
+[0,5,10,15,20].forEach(function(g){
+  svg.appendChild(el("line","gridline",{x1:L,x2:W-R,y1:Y(g),y2:Y(g)}));
+  svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
+var pts=LG.map(function(v,i){return [X(i),Y(v)];});
+svg.appendChild(el("path","area-agent",{d:"M"+pts[0][0]+" "+Y(0)+" "+
+  pts.map(function(p){return "L"+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ")+
+  " L"+pts[n-1][0]+" "+Y(0)+" Z"}));
+svg.appendChild(el("path","ln ln-agent",{d:pts.map(function(p,i){
+  return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ")}));
+svg.appendChild(el("line","ref-crit",{x1:L,x2:W-R,y1:Y(10.8),y2:Y(10.8)}));
+svg.appendChild(txt(W-R,Y(10.8)+11,"rekord i dag 10,8","axis halo lbl-crit","end"));
+var rec=-1,peak=0,pi=0;
+LG.forEach(function(v,i){if(rec<0&&v>10.8)rec=i; if(i<n-1&&v>peak){peak=v;pi=i;}});
+[rec,pi,n-1].forEach(function(i){if(i>=0)
+  svg.appendChild(el("circle","dot-agent cap",{cx:pts[i][0],cy:pts[i][1],r:4}));});
+if(rec>=0)svg.appendChild(txt(X(rec),Y(LG[rec])-8,"v"+(rec+1)+" · rekord","axis halo lbl-agent","middle",9));
+svg.appendChild(txt(X(pi),Y(peak)-8,sv(peak)+" km","axis halo lbl-agent","middle",9.5));
+svg.appendChild(txt(X(n-1),Y(LG[n-1])+13,"21,1","axis halo lbl-agent","end",9.5));
+[0,4,9,14,19].forEach(function(i){
+  svg.appendChild(txt(X(i),H-14,"v"+(i+1),"axis",i===0?"start":(i===19?"end":"middle")));});
+svg.appendChild(txt(L+iw/2,H-2,"långpassets längd, km","axis","middle"));
+var step=0;
+for(var i=1;i<n-1;i++) step=Math.max(step,LG[i]-LG[i-1]);
+var t=document.getElementById("longtext");
+if(t)t.innerHTML="Långpasset är passet som avgör halvmaran. Det går "+sv(LG[0])+" → "+sv(peak)+
+  " km och passerar ditt nuvarande rekord på 10,8 km <strong>i vecka "+(rec+1)+"</strong>. "+
+  "Största enskilda steget är "+sv(Math.round(step*10)/10)+" km — resten växer en kilometer i taget.";
+})();
+
+/* ---------- load ---------- */
+(function(){
+var svg=document.getElementById("c-load"); if(!svg)return;
+var W=420,H=130,L=26,R=8,T=10,B=20, iw=W-L-R, ih=H-T-B, max=60;
+function X(i){return L+i*(iw/(LOAD.length-1));}
+function Y(v){return T+ih-v/max*ih;}
+[0,20,40,60].forEach(function(g){
+  svg.appendChild(el("line","gridline",{x1:L,x2:W-R,y1:Y(g),y2:Y(g)}));
+  svg.appendChild(txt(L-5,Y(g)+3,g,"axis","end"));});
+function path(idx,kind){
+  svg.appendChild(el("path","ln ln-"+kind,{d:LOAD.map(function(r,i){
+    return (i?"L":"M")+X(i).toFixed(1)+" "+Y(r[idx]).toFixed(1);}).join(" ")}));
+  var last=LOAD.length-1;
+  svg.appendChild(el("circle","dot-"+kind+" cap",{cx:X(last),cy:Y(LOAD[last][idx]),r:4}));}
+path(2,"agent"); path(1,"data");
+[0,9,17,28].forEach(function(i){
+  svg.appendChild(txt(X(i),H-6,LOAD[i][0].replace("-","/"),"axis",i===0?"start":(i===28?"end":"middle")));});
+var lastL=LOAD[LOAD.length-1];
+svg.appendChild(txt(X(28)-7,Y(lastL[1])+4,lastL[1],"axis halo lbl-data","end",10.5));
+svg.appendChild(txt(X(28)-7,Y(lastL[2])-7,lastL[2],"axis halo lbl-agent","end",10.5));
+})();
+
+/* ---------- day lists ---------- */
+function days(host,arr){
+  var h=document.getElementById(host); if(!h)return;
+  h.innerHTML=arr.map(function(d){
+    return '<div class="day d-'+d.k+(d.today?" d-today":"")+'">'+
+      '<div class="day-d"><span class="wd">'+esc(d.wd)+'</span><span class="dn">'+d.dn+'</span></div>'+
+      '<div class="day-c"><div class="day-top"><span class="day-t">'+esc(d.ti)+'</span>'+
+      (d.km?'<span class="day-km">'+esc(d.km)+'</span>':'')+'</div>'+
+      (d.m?'<span class="day-m">'+esc(d.m)+'</span>':'')+
+      (d.w?'<span class="day-why">'+esc(d.w)+'</span>':'')+'</div></div>';}).join("");}
+days("week1",WEEK1);
+
+/* ---------- phases + zones ---------- */
+(function(){
+var f=document.getElementById("phases");
+if(f)f.innerHTML=PHASES.map(function(p){
+  return '<div class="phase"><div class="phase-h"><span class="phase-n">Vecka '+p[0]+
+    (p[1]>p[0]?"–"+p[1]:"")+'</span><span class="phase-t">'+esc(p[2])+
+    '</span><span class="phase-k">'+esc(p[3])+'</span></div>'+
+    '<span class="phase-d">'+esc(p[4])+'</span></div>';}).join("");
+var z=document.getElementById("zones");
+if(z)z.innerHTML=ZONES.map(function(r){
+  return '<div class="zone'+(r[3]?" z-race":"")+'"><span class="zone-n">'+esc(r[0])+
+    '</span><span class="zone-p">'+esc(r[1])+' /km</span>'+
+    '<span class="zone-d">'+esc(r[2])+'</span></div>';}).join("");
+})();
+
+/* ---------- full program ---------- */
+(function(){
+var host=document.getElementById("plan210"); if(!host||!P.length)return;
+var html="", cur=null;
+P.forEach(function(w,i){
+  var ph=phaseOf(w[0]);
+  if(ph!==cur){cur=ph; html+='<div class="phase-bar">'+esc(ph)+'</div>';}
+  html+='<div class="wk'+(isLight(i)?" wk-light":"")+'">'+
+    '<div class="wk-h"><span class="wk-t">Vecka '+w[0]+' · '+esc(w[1])+'</span>'+
+    '<span class="wk-n">'+w[2]+' km · '+w[3]+' pass</span></div><div class="wk-d">'+
+    w[5].map(function(d){
+      var rest=d[2]==="Vila";
+      return '<div class="wk-r'+(rest?" rest":"")+'"><span class="a">'+esc(d[0])+
+        '</span><span class="b">'+esc(d[1])+'</span><span class="c">'+esc(d[2])+'</span></div>';
+    }).join("")+'</div></div>';});
+host.innerHTML=html;
+})();
+
+/* ---------- countdown to goal day ---------- */
+(function(){
+var n=document.getElementById("cd-n"); if(!n)return;
+var g=new Date(2026,11,26), now=new Date();
+var d=Math.round((g-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+n.textContent=d>0?d:0;
+})();
+})();
+</script>
